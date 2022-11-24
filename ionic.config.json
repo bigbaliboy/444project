@@ -1,0 +1,7 @@
+{
+  "name": "projv1",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

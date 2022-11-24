@@ -1,0 +1,89 @@
+<ion-header [translucent]="true" class="ion-no-border">
+  <div
+    align="center"
+    style="
+      background-color: #d8f3dc;
+      height: 200px;
+      border-bottom-left-radius: 50px;
+      border-bottom-right-radius: 50px;
+    "
+  >
+    <div  style="padding-top: 60px; font-size: 1.5em;"><ion-label><span style="padding-top:40px;"><b>Akheel is good</b></span></ion-label></div>
+
+    <div style="padding-top: 50px">
+      <ion-icon
+        style="font-size: 7em; color: white"
+        name="person-circle"
+      ></ion-icon>
+    </div>
+  </div>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <br /><br />
+  <br /><br />
+
+  <ion-list>
+    <ion-item lines="inset" style="font-size: 1.5em">
+      <ion-icon size="large" slot="start" name="person-outline"></ion-icon>
+      <ion-input [disabled]="isEdit">Akheel Nazim</ion-input>
+    </ion-item>
+    <ion-item lines="inset" style="font-size: 1.5em">
+      <ion-icon size="large" slot="start" name="call-outline"></ion-icon>
+      <ion-input [disabled]="isEdit">35653271</ion-input>
+    </ion-item>
+    <ion-item lines="inset" style="font-size: 1.5em">
+      <ion-icon
+        size="large"
+        slot="start"
+        name="calendar-number-outline"
+      ></ion-icon>
+      <ion-input [disabled]="isEdit">20/05/2001</ion-input>
+    </ion-item>
+    <ion-item lines="inset" style="font-size: 1.5em">
+      <ion-icon size="large" slot="start" name="add"></ion-icon>
+      <ion-input [disabled]="isEdit">Awesome Label</ion-input>
+    </ion-item>
+    <ion-item lines="inset" style="font-size: 1.5em">
+      <ion-icon size="large" slot="start" name="add"></ion-icon>
+      <ion-input [disabled]="isEdit">Awesome Label</ion-input>
+    </ion-item>
+  </ion-list>
+
+  <ion-button
+    size="large"
+    (click)="Edit()"
+    expand="block"
+    fill="clear"
+    shape="round"
+    *ngIf="isEdit"
+  >
+    <ion-icon slot="start" name="pencil"></ion-icon>
+    <ion-label>Edit</ion-label>
+  </ion-button>
+
+  <ion-item *ngIf="isSave" lines="none">
+    <ion-button
+      size="large"
+      (click)="Save()"
+      expand="block"
+      fill="clear"
+      shape="round"
+    >
+      <ion-icon slot="start" name="save"></ion-icon>
+      <ion-label>Save</ion-label>
+    </ion-button>
+
+    <ion-button
+      size="large"
+      color="danger"
+      (click)="Edit()"
+      expand="block"
+      fill="clear"
+      shape="round"
+    >
+      <ion-icon slot="start" name="close-outline"></ion-icon>
+      <ion-label>Cancel</ion-label>
+    </ion-button>
+  </ion-item>
+</ion-content>
