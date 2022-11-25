@@ -1,45 +1,114 @@
-<ion-header class="ion-no-border">
+<ion-header color="primary">
   <ion-toolbar>
-    <ion-title align="center">notification</ion-title>
+    <ion-item lines="none">
+    <ion-icon size="large" slot="start" name="arrow-back-circle-outline"></ion-icon>
+
+        <ion-label><h1>Notifications</h1></ion-label>
+      </ion-item>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-item lines="none">
-    <ion-label><b> Request notification </b></ion-label>
-  </ion-item>
-  <ion-list>
-    <ion-item style="padding-right: 20px">
-      <ion-label>Employee 1 has requested to trade</ion-label>
-      <ion-icon color="green" name="checkmark-outline"></ion-icon>
-      <ion-icon color="danger" name="close-outline"></ion-icon>
-    </ion-item>
-    <ion-item style="padding-right: 20px">
-      <ion-label>Employee 5 has requested to trade</ion-label>
-      <ion-icon color="green" name="checkmark-outline"></ion-icon>
-      <ion-icon color="danger" name="close-outline"></ion-icon>
-    </ion-item>
-    <ion-item style="padding-right: 20px">
-      <ion-label>Item 5 stock is low, notify supplier 4</ion-label>
-      <ion-icon color="green" name="checkmark-outline"></ion-icon>
-      <ion-icon color="danger" name="close-outline"></ion-icon>
-    </ion-item>
-  </ion-list>
-  
-<br><br><br>
 
-  <ion-item lines="none">
-    <ion-label><b> Other notification</b></ion-label>
-  </ion-item>
+
+
+ <ion-content [fullscreen]="true">
+
+
+  
+  
+
+   
+   <ion-segment [(ngModel)]="selectTabs">
+    <ion-segment-button value="stock">
+      <ion-label><b>stock</b>
+        <ion-badge>3</ion-badge>
+      </ion-label>
+    </ion-segment-button>
+
+    <ion-segment-button value="shifts">
+      <ion-label><b>Shifts</b>
+        <ion-badge>1</ion-badge>
+      </ion-label>
+    </ion-segment-button>
+
+    <ion-segment-button value="suppliers">
+      <ion-label><b>Suppliers</b>
+        <ion-badge>2</ion-badge>
+      </ion-label>
+    </ion-segment-button>
+    
+  </ion-segment>
+
+  
+  <div *ngIf="selectTabs == 'stock'">
   <ion-list>
-    <ion-item>
-      <ion-label>notification 1</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>notification 2</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>Notification 3</ion-label>
-    </ion-item>
-  </ion-list>
+    <ion-item-sliding>
+      <ion-item>
+        <ion-label>Arwa Drinking Water 6 x 1.5Litre is running low</ion-label>
+      </ion-item>
+  
+      <ion-item-options side="end">
+        <ion-item-option>Reorder</ion-item-option>
+        <ion-item-option color="danger">Delete</ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+
+    <ion-item-sliding>
+      <ion-item>
+        <ion-label><h2>Almarai Orange Juice 1Litre is running low</h2></ion-label>
+      </ion-item>
+  
+      <ion-item-options side="end">
+        <ion-item-option>Reorder</ion-item-option>
+        <ion-item-option color="danger">Delete</ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+
+    <ion-item-sliding>
+      <ion-item>
+        <ion-label>Banana Yellow India 1kg is running low</ion-label>
+      </ion-item>
+  
+      <ion-item-options side="end">
+        <ion-item-option>Reorder</ion-item-option>
+        <ion-item-option color="danger">Delete</ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+   </ion-list>
+  </div>
+  <div *ngIf="selectTabs == 'shifts'">
+    <ion-item-sliding>
+      <ion-item>
+        <ion-label class="ion-text-wrap">Ahmad Ali has requested to change morning shift on 24/12/22 with Khalid Salman</ion-label>
+      </ion-item>
+  
+      <ion-item-options side="end">
+        <ion-item-option>Approve</ion-item-option>
+        <ion-item-option color="danger">Reject</ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </div>
+  <div *ngIf="selectTabs == 'suppliers'">
+    <ion-item-sliding>
+      <ion-item>
+        <ion-label class="ion-text-wrap">Almarai has accepted your order request of 10 Lacto Free Milk 1 Litre</ion-label>
+      </ion-item>
+  
+      <ion-item-options side="end">
+        <ion-item-option color="danger" expandable>Reject</ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+
+    <ion-item-sliding>
+      <ion-item>
+        <ion-label class="ion-text-wrap">Awal has accepted your order request of 30 Full Cream Yoghurt 6 x 160 g</ion-label>
+      </ion-item>
+  
+      <ion-item-options side="end">
+        <ion-item-option color="danger" expandable>Reject</ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </div>
+
+
 </ion-content>
