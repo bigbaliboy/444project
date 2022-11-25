@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./notification.page.scss'],
 })
 export class NotificationPage implements OnInit {
+selectTabs = 'stock';
+
 
   constructor() { }
 
