@@ -1,9 +1,29 @@
 ion-content{
+    --ion-background-color:#B7E4C7;
 
-    --ion-background-color:#95D5B2;
 }
 
 ion-header{
-    --ion-background-color:#95D5B2;
+    --ion-background-color:#B7E4C7;
+}
 
+
+ion-title{
+    margin-top: 6%;
+    font-size: 2.5rem;
+    font-weight: 500;
+}
+
+.logo{
+    position: absolute;
+    left: 71%;
+    top: 59%;
+    scale: 240%;
+}
+
+.titleLogo{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
 }
