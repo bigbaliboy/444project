@@ -1,8 +1,27 @@
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Courgette&family=Poppins:wght@400;500;600;700&display=swap');
+</style>
+
 <ion-header [translucent]="true" class="ion-no-border">
   <ion-toolbar>
-    <ion-title align="center">
-      Tasks
-    </ion-title>
+    <div class="titleLogo">
+      <ion-grid fixed>
+        <ion-row>
+          <ion-col size="1">
+            <ion-button fill="clear" id="settings">
+              <ion-icon name="settings" style="color: #424242"></ion-icon>
+            </ion-button>
+          </ion-col>
+          <ion-col offset="2" size="8">
+            <ion-title>
+             <span style="font-size: 2rem; font-family: 'Courgette', cursive;"> Coldstore </span>
+             <ion-icon name="storefront" style="font-size: 1.2rem; padding-left: 0.4rem;" class="logo"></ion-icon>
+            </ion-title>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+    </div>
   </ion-toolbar>
 </ion-header>
 
@@ -13,83 +32,82 @@
     </ion-toolbar>
   </ion-header>
 
-  <div style="background-color:#D8F3DC; border-top-left-radius:50px; border-top-right-radius:50px; height: 94.7%; margin-top: 10%;">
-    
-  <ion-grid fixed>
-    <ion-row>
-      <ion-col size="6">
-        
-      
-        <ion-card (click)="goTo()" class="card" style="border-radius:13% ;" align="center" color="primary">
-        
-          <ion-card-header>
-      
-            <ion-icon style="font-size:6em;" name="person"></ion-icon>
-            <ion-card-title>Employees</ion-card-title>
-            <ion-card-subtitle>Manage employee details and timings.</ion-card-subtitle>
-    
-          </ion-card-header>
-        </ion-card>
-      </ion-col>
-      <ion-col size="6">
-        <ion-card class="card" style="border-radius:13% ;" align="center" color="primary">
-          <ion-card-header>
-            <ion-icon style="font-size:6em;" name="cube"></ion-icon>
-            <ion-card-title>Stock</ion-card-title>
-            <ion-card-subtitle>Add, edit stock and more.</ion-card-subtitle>
-  
+  <div
+    style="background-color: #FFFBF9; border-top-left-radius:50px; border-top-right-radius:50px; height: 96.4%; margin-top: 7%;">
 
+    <!-- <ion-title align="center"style="font-size: 1.8rem; font-family: 'Poppins', sans-serif;">Tasks</ion-title> -->
 
+    <ion-grid fixed>
+      <ion-row style="margin-top: 10%;">
+        <ion-col size="6">
 
+          <ion-card (click)="goTo()" class="card" style="border-radius:13% ;" align="center" color="mint">
 
-          </ion-card-header>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col size="6">
-        <ion-card class="card" style="border-radius:13% ;" align="center" color="primary">
-          <ion-card-header>
-            <ion-icon style="font-size:6em;" name="people"></ion-icon>
-            <ion-card-title>Supplier</ion-card-title>
-            <ion-card-subtitle>Manage supplier information</ion-card-subtitle>
-          </ion-card-header>
-        </ion-card>
-      </ion-col>
-      <ion-col size="6">
-        <ion-card class="card" style="border-radius:13% ;" align="center" color="primary">
-          <ion-card-header>
-            <ion-img style="height: 6em;" src='assets/images/order-delivery.png'></ion-img>
-            <ion-card-title>Orders</ion-card-title>
-            <ion-card-subtitle>Make new orders or view history</ion-card-subtitle>
-          </ion-card-header>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col size="6">
-        <ion-card class="card" style="border-radius:13% ;" align="center" color="primary">
-          <ion-card-header>
-            <ion-icon style="font-size:6em;" name="bar-chart"></ion-icon>
-            <ion-card-title>Reports</ion-card-title>
-            <ion-card-subtitle>View items, sales and stock reports</ion-card-subtitle>
-          </ion-card-header>
-        </ion-card>
-      </ion-col>
-      <ion-col size="6">
-        <ion-card class="card" style="border-radius:13% ;" align="center" color="primary" routerLink="/notification" routerDirection="root">
-          <ion-card-header>
-            <ion-icon style="font-size:6em;" name="notifications"></ion-icon>
-            <ion-card-title>Notifications</ion-card-title>
-            <ion-card-subtitle>View notifications and shift trades</ion-card-subtitle>
-          </ion-card-header>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+            <ion-card-header>
+
+              <ion-icon style="font-size:6em;" name="person"></ion-icon>
+              <ion-card-title>Employees</ion-card-title>
+              <ion-card-subtitle>Manage employee details and timings.</ion-card-subtitle>
+
+            </ion-card-header>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6">
+          <ion-card class="card" style="border-radius:13% ;" align="center" color="mint">
+            <ion-card-header>
+              <ion-icon style="font-size:6em;" name="cube"></ion-icon>
+              <ion-card-title>Stock</ion-card-title>
+              <ion-card-subtitle>Add, edit stock and more.</ion-card-subtitle>
+
+            </ion-card-header>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6">
+          <ion-card class="card" style="border-radius:13% ;" align="center" color="mint">
+            <ion-card-header>
+              <ion-icon style="font-size:6em;" name="people"></ion-icon>
+              <ion-card-title>Supplier</ion-card-title>
+              <ion-card-subtitle>Manage supplier information</ion-card-subtitle>
+            </ion-card-header>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6">
+          <ion-card class="card" style="border-radius:13% ;" align="center" color="mint">
+            <ion-card-header>
+              <!-- <ion-img style="height: 6em;" src='assets/images/order-delivery.png'></ion-img> -->
+              <ion-icon style="font-size: 6em;" name="clipboard"></ion-icon>
+              <ion-card-title>Orders</ion-card-title>
+              <ion-card-subtitle>Make new orders or view history</ion-card-subtitle>
+            </ion-card-header>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6">
+          <ion-card class="card" style="border-radius:13% ;" align="center" color="mint">
+            <ion-card-header>
+              <ion-icon style="font-size:6em;" name="bar-chart"></ion-icon>
+              <ion-card-title>Reports</ion-card-title>
+              <ion-card-subtitle>View items, sales and stock reports</ion-card-subtitle>
+            </ion-card-header>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6">
+          <ion-card class="card" style="border-radius:13% ;" align="center" color="mint">
+            <ion-card-header>
+              <ion-icon style="font-size:6em;" name="notifications"></ion-icon>
+              <ion-card-title>Notifications</ion-card-title>
+              <ion-card-subtitle>View notifications and shift trades</ion-card-subtitle>
+            </ion-card-header>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </div>
 
 
-  
+
 
 </ion-content>
