@@ -1,0 +1,541 @@
+<div class="ion-page ion-page2">
+
+<ion-header color="primary">
+  <ion-toolbar>
+    <ion-item lines="none">
+      <ion-button routerLink="/" routerDirection="root" fill="clear"
+        ><ion-icon
+          size="large"
+          slot="start"
+          name="arrow-back-circle-outline"
+        ></ion-icon
+      ></ion-button>
+      <ion-label><h1>Employee</h1></ion-label>
+    </ion-item>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding" [fullscreen]="true">
+  <ion-searchbar show-clear-button="focus" value=""></ion-searchbar>
+  <!-- <ion-item lines="none"> -->
+
+
+
+  <ion-grid [fixed]="true">
+    <ion-row>
+      <!-- <ion-item> -->
+      <ion-col size="6">
+
+        <ion-button color="danger" fill="clear">
+          <ion-icon
+            size="medium"
+            slot="start"
+            name="calendar-outline"
+          ></ion-icon>
+          <ion-label>Schedule Timings</ion-label>
+        </ion-button>
+      </ion-col>
+      <ion-col size="6">
+        <ion-button id="open-modal" color="danger" fill="clear">
+          <ion-icon
+            size="medium"
+            slot="start"
+            name="person-add-outline"
+          ></ion-icon>
+          <ion-label>Add employee</ion-label>
+        </ion-button>
+      </ion-col>
+      
+    <!-- </ion-item> -->
+    </ion-row>
+
+<!-- Titles of table -->
+    <br>
+    <ion-row class="headline">
+      <ion-col size="2">
+        <ion-label><h3><b>S.NO</b></h3></ion-label
+        >
+      </ion-col>
+      <ion-col size="6">
+        <ion-label
+          ><h3><b>Name</b></h3></ion-label
+        >
+      </ion-col>
+      <ion-col size="3">
+        <ion-label
+          ><h3><b>Role</b></h3></ion-label
+        >
+      </ion-col>
+    </ion-row>
+
+    <!-- Entries -->
+    <ion-row  (click)="view(members)" class="entry" *ngFor="let members of EmployeeList; let i = index" id="">
+
+        <!-- <ion-item class="entry"> -->
+      <ion-col size="2">
+        <ion-label><h3>{{i+1}}</h3></ion-label
+        >
+      </ion-col>
+      <ion-col size="6">
+        <ion-label><h3>{{members.name}}</h3></ion-label>
+      </ion-col>
+      <ion-col size="4">
+        <ion-label><h3>{{members.jobRole}}</h3></ion-label>
+      </ion-col>
+    <!-- </ion-item> -->
+      <!-- <ion-item-options side="end">
+  
+        <ion-item-option color="danger" >Delete</ion-item-option>
+        <ion-item-option id="open-modal2" color="primary">View</ion-item-option>
+
+      </ion-item-options> -->
+
+
+
+    </ion-row>
+  </ion-grid>
+  
+
+    <!-- Modal Add Employee -->
+    <ion-modal  #modal trigger="open-modal" [swipeToClose]="true" [canDismiss]="canDismiss" [presentingElement]="presentingElement">
+      <ng-template>
+        <ion-header>
+          <ion-toolbar>
+            <ion-item lines="none">
+            <ion-button (click)="modal.dismiss()" fill="clear"
+            ><ion-icon
+              size="large"
+              slot="start"
+              name="arrow-back-circle-outline"
+            ></ion-icon
+          ></ion-button>
+            <ion-label><h1>Add a New Employee</h1></ion-label>
+            <!-- <ion-buttons slot="end">
+              <ion-button (click)="modal.dismiss()">Close</ion-button>
+            </ion-buttons> -->
+            </ion-item>
+          </ion-toolbar>
+        </ion-header>
+        <!-- modal page content -->
+        <ion-content class="ion-padding">
+        <form [formGroup]="ionicForm"  (ngSubmit)="confirmAdd()" novalidate>
+          <ion-list>
+            <ion-list-header>
+              <ion-label><h1>Enter new employee details </h1></ion-label>
+
+
+            </ion-list-header>
+            
+            <ion-item lines="none">
+              <ion-label size="large" >Full Name:<span style="color:red; ">*</span></ion-label>
+            </ion-item>
+            <ion-item lines="inset">
+              <ion-input formControlName="name"  placeholder="Name"></ion-input>
+            </ion-item>
+            <ion-item lines="none" *ngIf="ionicForm.controls['name'].hasError('minlength') &&!ionicForm.controls['name'].hasError('required') && ionicForm.controls['name'].touched && isSubmitted==true" >
+              <p><ion-label color="danger"> Sorry, name size should be 5-30 characters</ion-label></p></ion-item>
+              <ion-item lines="none" *ngIf="ionicForm.controls['name'].hasError('required') && ionicForm.controls['name'].touched && isSubmitted==true" >
+                <p><ion-label color="danger"> Sorry, name is a required field</ion-label></p></ion-item>
+
+
+
+
+            <ion-item lines="none">
+              <ion-label size="large"  >Select Job Role:<span style="color:red; ">*</span></ion-label>
+            </ion-item>
+            <ion-item>
+            <ion-select formControlName="jobRole" interface="popover" placeholder="Select Role">
+              <ion-select-option value="Cashier">Cashier</ion-select-option>
+              <ion-select-option value="Deliverer">Deliverer</ion-select-option>
+              <ion-select-option value="Shop Keeper">Shop Keeper</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item lines="none" *ngIf="ionicForm.controls['jobRole'].hasError('required') && ionicForm.controls['jobRole'].touched && isSubmitted==true" >
+            <p><ion-label color="danger"> Sorry, Job Role is a required field</ion-label></p></ion-item>
+
+            
+            <ion-item lines="none">
+              <ion-label size="large" >CPR Number:<span style="color:red; ">*</span></ion-label>
+            </ion-item>
+            <ion-item lines="inset">
+              <ion-input formControlName="cpr"  placeholder="CPR"></ion-input>
+            </ion-item>
+            <ion-item lines="none" *ngIf="ionicForm.controls['cpr'].hasError('required') && ionicForm.controls['cpr'].touched && isSubmitted==true" >
+                <p><ion-label color="danger"> Sorry, cpr is a required field</ion-label></p></ion-item>
+
+            <ion-item lines="none">
+              <ion-label size="large">Mobile Number:<span style="color:red; ">*</span></ion-label>
+            </ion-item>
+            <ion-item lines="inset">
+              <ion-input formControlName="mobile"  type="tel" placeholder="Mobile Number"></ion-input>
+            </ion-item>
+            <ion-item lines="none" *ngIf="ionicForm.controls['mobile'].hasError('required') && ionicForm.controls['mobile'].touched && isSubmitted==true" >
+              <p><ion-label color="danger"> Sorry, Mobile Number is a required field</ion-label></p></ion-item>
+
+            <ion-item lines="inset">
+              <ion-label size="large" >Gender:<span style="color:red; ">*</span></ion-label>
+            <!-- </ion-item>
+            <ion-item > -->
+              <ion-select formControlName="gender"   interface="popover" placeholder="Select Gender">
+                <ion-select-option value="Male">Male</ion-select-option>
+                <ion-select-option value="Female">Female</ion-select-option>
+                <ion-select-option value="Other">Other</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item lines="none" *ngIf="ionicForm.controls['gender'].hasError('required') && ionicForm.controls['gender'].touched && isSubmitted==true" >
+              <p><ion-label color="danger"> Sorry, gender is a required field</ion-label></p></ion-item>
+
+
+            <!-- DATE -->
+
+            <!-- <ion-item lines="inset">
+              <ion-label size="large" >Date of Birth:<span style="color:red; ">*</span></ion-label>
+              <ion-input
+              value="{{ date | date: 'dd.MM.yyyy' }}"
+              id="date"
+              formControlName="myDate"
+              class="ion-text-end"
+              placeholder="Select Date"
+            ></ion-input>
+            <ion-popover trigger="date" size="cover">
+              <ng-template>
+                <ion-datetime
+                  presentation="date"
+                  [(ngModel)]="dob"
+                ></ion-datetime>
+              </ng-template>
+            </ion-popover>
+            </ion-item> -->
+
+
+            <!-- BACKUP DATE -->
+
+            
+            <ion-item>
+              <ion-label size="large" >Date of Birth:<span style="color:red; ">*</span></ion-label>
+              <ion-input
+              formControlName="dob" 
+              displayFormat="MMMM YYYY"  max="2020-10-31"             
+              type="date"
+              class="ion-text-end"
+              
+              ></ion-input>
+
+            </ion-item>
+            <ion-item lines="none" *ngIf="ionicForm.controls['dob'].hasError('required') && ionicForm.controls['dob'].touched && isSubmitted==true" >
+              <p><ion-label color="danger"> Sorry, Date of Birth is a required field</ion-label></p></ion-item>
+
+            
+            <ion-item lines="none">
+              <ion-label size="large" >Email address:<span style="color:red; ">*</span></ion-label>
+            </ion-item>
+            <ion-item lines="inset">
+              <ion-input formControlName="email"   placeholder="Email"></ion-input>
+            </ion-item>
+            <ion-item lines="none" *ngIf="ionicForm.controls['email'].hasError('required') && ionicForm.controls['email'].touched && isSubmitted==true" >
+              <p><ion-label color="danger"> Sorry, Email is a required field</ion-label></p></ion-item>
+
+            <ion-item lines="none">
+              <ion-label size="large" >Set password:<span style="color:red; ">*</span></ion-label>
+            </ion-item>
+            <ion-item lines="inset">
+              <ion-input formControlName="pwd"   type="password" placeholder="Password"></ion-input>
+            </ion-item>
+            <ion-item lines="none" *ngIf="ionicForm.controls['pwd'].hasError('required') && ionicForm.controls['pwd'].touched && isSubmitted==true" >
+              <p><ion-label color="danger"> Sorry, Password is a required field</ion-label></p></ion-item>
+
+            <ion-item lines="none">
+              <ion-label size="large" >Confirm password:<span style="color:red; ">*</span></ion-label>
+            </ion-item>
+            <ion-item lines="inset">
+              <ion-input formControlName="confirmPwd"  type="password" placeholder="Password"></ion-input>
+            </ion-item>
+            <ion-item lines="none" *ngIf="ionicForm.controls['pwd'].value != ionicForm.controls['confirmPwd'].value && ionicForm.controls['confirmPwd'].touched && isSubmitted==true" >
+              <p><ion-label color="danger"> Passwords do not match</ion-label></p></ion-item>
+
+
+          </ion-list>
+         
+          <ion-button
+            size="large"
+            type="submit"
+            expand="block"
+            fill="clear"
+            shape="round"
+
+          >
+            <ion-icon slot="start" name="add"></ion-icon>
+            <ion-label>Add</ion-label>
+          </ion-button>
+        </form>
+
+
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+<!-- ------------------------------------------------------------------------------------------------ -->
+<!-- modal page for View -->
+
+
+<!-- <ion-modal *ngIf="value" #modal2 trigger="open-modal2" [swipeToClose]="true" [canDismiss]="canDismissForView" [presentingElement]="presentingElement2">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-item lines="none">
+        <ion-button (click)="modal2.dismiss()" fill="clear"
+        ><ion-icon
+          size="large"
+          slot="start"
+          name="arrow-back-circle-outline"
+        ></ion-icon
+      ></ion-button>
+        <ion-label><h1>View Details</h1></ion-label>
+
+        </ion-item>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <div
+        align="center"
+        style="
+          
+          height: 200px;
+          border-bottom-left-radius: 50px;
+          border-bottom-right-radius: 50px;
+        "
+      >
+        <div  style="padding-top: 60px; font-size: 1.5em;"><ion-label><span style="padding-top:40px;"><b>Akheel is good</b></span></ion-label></div>
+    
+        <div style="padding-top: 50px">
+          <ion-icon
+            style="font-size: 7em; color: white"
+            name="person-circle"
+          ></ion-icon>
+        </div>
+      </div> -->
+    
+<!--     
+      <br /><br />
+      <br /><br />
+    
+      <ion-list >
+        <ion-item lines="inset" style="font-size: 1.5em">
+          <ion-icon size="large" slot="start" name="person-outline"></ion-icon>
+          <ion-input [disabled]="isEdit">{{EmployeeList[0].name}}</ion-input>
+        </ion-item>
+        <ion-item lines="inset" style="font-size: 1.5em">
+          <ion-icon size="large" slot="start" name="call-outline"></ion-icon>
+          <ion-input [disabled]="isEdit">35653271</ion-input>
+        </ion-item>
+        <ion-item lines="inset" style="font-size: 1.5em">
+          <ion-icon
+            size="large"
+            slot="start"
+            name="calendar-number-outline"
+          ></ion-icon>
+          <ion-input [disabled]="isEdit">20/05/2001</ion-input>
+        </ion-item>
+        <ion-item lines="inset" style="font-size: 1.5em">
+          <ion-icon size="large" slot="start" name="add"></ion-icon>
+          <ion-input [disabled]="isEdit">Awesome Label</ion-input>
+        </ion-item>
+        <ion-item lines="inset" style="font-size: 1.5em">
+          <ion-icon size="large" slot="start" name="add"></ion-icon>
+          <ion-input [disabled]="isEdit">Awesome Label</ion-input>
+        </ion-item>
+      </ion-list>
+    
+      <ion-button
+        size="large"
+        (click)="Edit()"
+        expand="block"
+        fill="clear"
+        shape="round"
+        *ngIf="isEdit"
+      >
+        <ion-icon slot="start" name="pencil"></ion-icon>
+        <ion-label>Edit</ion-label>
+      </ion-button>
+    
+      <ion-item *ngIf="isSave" lines="none">
+        <ion-button
+          size="large"
+          (click)="Save()"
+          expand="block"
+          fill="clear"
+          shape="round"
+        >
+          <ion-icon slot="start" name="save"></ion-icon>
+          <ion-label>Save</ion-label>
+        </ion-button>
+    
+        <ion-button
+          size="large"
+          color="danger"
+          (click)="Edit()"
+          expand="block"
+          fill="clear"
+          shape="round"
+        >
+          <ion-icon slot="start" name="close-outline"></ion-icon>
+          <ion-label>Cancel</ion-label>
+        </ion-button>
+      </ion-item>
+     -->
+    <!-- modal page content -->
+    
+<!-- 
+    </ion-content>
+  </ng-template>
+</ion-modal> -->
+
+
+
+<ion-content class="ion-padding">
+  
+  <ion-modal [isOpen]="isModalOpen">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-item lines="none">
+          <ion-button (click)="close()" fill="clear"
+          ><ion-icon
+            size="large"
+            slot="start"
+            name="arrow-back-circle-outline"
+          ></ion-icon
+        ></ion-button>
+          <ion-label><h1>View Details</h1></ion-label>
+  
+          </ion-item>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <div
+          align="center"
+          style="
+            
+            height: 200px;
+            border-bottom-left-radius: 50px;
+            border-bottom-right-radius: 50px;
+          "
+        >
+      
+          <div style="padding-top: 50px">
+            <ion-icon
+              style="font-size: 7em; color: white"
+              name="person-circle"
+            ></ion-icon>
+          </div>
+        </div> 
+      
+      
+        <br /><br />
+        <br /><br />
+      
+        <ion-list >
+          <ion-item lines="inset" style="font-size: 1.5em">
+            <ion-icon size="large" slot="start" name="person-outline"></ion-icon>
+            <ion-input  id="test" [disabled]="isEdit" [(ngModel)]="revertName"></ion-input>
+          </ion-item>
+          <ion-item lines="inset" style="font-size: 1.5em" type="number">
+            <ion-icon size="large" slot="start" name="bag-handle-outline"></ion-icon>
+  
+              <ion-select lines="none" [disabled]="isEdit" interface="popover" [(ngModel)]="revertJobRole" value="">
+                <ion-select-option value="Cashier">Cashier</ion-select-option>
+                <ion-select-option value="Deliverer">Deliverer</ion-select-option>
+                <ion-select-option value="Shop Keeper">Shop Keeper</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item lines="inset" style="font-size: 1.5em">
+              <ion-icon size="large" slot="start" name="id-card-outline"></ion-icon>
+              <ion-input [disabled]="isEdit" [(ngModel)]="revertCPR"></ion-input>
+            </ion-item>
+          <ion-item lines="inset" style="font-size: 1.5em" type="number">
+            <ion-icon size="large" slot="start" name="call-outline"></ion-icon>
+            <ion-input [disabled]="isEdit" [(ngModel)]="revertMobile"></ion-input>
+          </ion-item>
+          <ion-item lines="inset" style="font-size: 1.5em">
+            <ion-icon
+              size="large"
+              slot="start"
+              name="calendar-number-outline"
+            ></ion-icon>
+            <ion-input [disabled]="isEdit"  [(ngModel)]="revertDOB"></ion-input>
+          </ion-item>
+
+          <ion-item lines="inset" style="font-size: 1.5em">
+            <ion-icon
+              size="large"
+              slot="start"
+              name="calendar-number-outline"
+            ></ion-icon>
+            <ion-input
+            [disabled]="isEdit"  
+            displayFormat="MMMM YYYY"  max="2020-10-31"             
+            type="date"
+            [(ngModel)]="revertDOB"
+            ></ion-input>
+
+          </ion-item>
+          <ion-item lines="inset" style="font-size: 1.5em">
+            <ion-icon size="large" slot="start" name="mail-outline"></ion-icon>
+            <ion-input [disabled]="isEdit" [(ngModel)]="revertEmail"></ion-input>
+          </ion-item>
+          
+        </ion-list>
+      
+        <ion-button
+          size="large"
+          (click)="Edit()"
+          expand="block"
+          fill="clear"
+          shape="round"
+          *ngIf="isEdit"
+        >
+          <ion-icon slot="start" name="pencil"></ion-icon>
+          <ion-label>Edit</ion-label>
+        </ion-button>
+      
+        <ion-item *ngIf="isSave" lines="none">
+          <ion-button
+            size="large"
+            (click)="Save()"
+            expand="block"
+            fill="clear"
+            shape="round"
+          >
+            <ion-icon slot="start" name="save"></ion-icon>
+            <ion-label>Save</ion-label>
+          </ion-button>
+      
+          <ion-button
+            size="large"
+            color="danger"
+            (click)="Cancel()"
+            expand="block"
+            fill="clear"
+            shape="round"
+          >
+            <ion-icon slot="start" name="close-outline"></ion-icon>
+            <ion-label>Cancel</ion-label>
+          </ion-button>
+        </ion-item>
+      
+      <!-- modal page content -->
+      <!-- gandu -->
+      
+  
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+
+
+</ion-content>
+<!-- ------------------------------------------------------------------------------------------------ -->
+
+
+
+  <!-- </ion-item> -->
+</ion-content>
+</div>

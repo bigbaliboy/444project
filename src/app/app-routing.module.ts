@@ -9,9 +9,18 @@ const routes: Routes = [
   {
     path: 'home',
     loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
-  },  {
+  },
+  {
     path: 'notification',
     loadChildren: () => import('./notification/notification.module').then( m => m.NotificationPageModule)
+  },
+  {
+    path: 'o-employee-card',
+    loadChildren: () => import('./o-employee-card/o-employee-card.module').then( m => m.OEmployeeCardPageModule)
+  },
+  {
+    path: 'o-stock-card',
+    loadChildren: () => import('./o-stock-card/o-stock-card.module').then( m => m.OStockCardPageModule)
   }
 
 ];
