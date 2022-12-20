@@ -7,3 +7,24 @@ ion-header{
     --ion-background-color:#95D5B2;
 
 }
+
+.notif{
+
+    min-height: 70px;
+    display: flex;
+    justify-content: center;
+}
+
+.sec{
+    background-color:#D8F3DC;
+    border-top-left-radius:50px;
+    border-top-right-radius:50px;
+    height: 94.7%;
+    margin-top: 10%;
+}
+
+.welcome{
+    font-weight: 700;
+    font-size: x-large;
+}
+
