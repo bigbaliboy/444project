@@ -13,7 +13,7 @@ export interface Employee{
   cpr:string
   mobile:string
   gender:string
-  dob:string
+  // dob:string
   email:string
   pwd: string
   
@@ -34,7 +34,7 @@ export class OEmployeeCardPage implements OnInit {
   isModalOpen = false;
   chosenModel : Employee 
   revertName : string 
-  revertDOB: string
+  // revertDOB: string
   revertCPR : string
   revertMobile: string
   revertEmail:string
@@ -54,7 +54,7 @@ export class OEmployeeCardPage implements OnInit {
      this.revertCPR=this.chosenModel.cpr
      this.revertMobile=this.chosenModel.mobile
      this.revertEmail=this.chosenModel.email
-     this.revertDOB=this.chosenModel.dob
+    //  this.revertDOB=this.chosenModel.dob
      this.revertJobRole=this.chosenModel.jobRole
     
   }
@@ -83,7 +83,7 @@ export class OEmployeeCardPage implements OnInit {
 
   //  this.test.
    this.chosenModel.name= this.revertName
-   this.chosenModel.dob=this.revertDOB
+  //  this.chosenModel.dob=this.revertDOB
    this.chosenModel.cpr=this.revertCPR
    this.chosenModel.email=this.revertEmail
    this.chosenModel.mobile=this.revertMobile
@@ -101,7 +101,7 @@ export class OEmployeeCardPage implements OnInit {
      this.revertCPR=this.chosenModel.cpr
      this.revertMobile=this.chosenModel.mobile
      this.revertEmail=this.chosenModel.email
-     this.revertDOB=this.chosenModel.dob
+    //  this.revertDOB=this.chosenModel.dob
      this.revertJobRole=this.chosenModel.jobRole
  }
 
@@ -141,7 +141,7 @@ export class OEmployeeCardPage implements OnInit {
     this.isEdit=true
     this.chosenModel=this.EmployeeList[0]
     this.revertName=""
-    this.revertDOB=""
+    // this.revertDOB=""
     this.revertMobile=""
     this.revertEmail=""
     this.revertCPR=""
@@ -157,8 +157,7 @@ export class OEmployeeCardPage implements OnInit {
       cpr: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
       pwd: ['', Validators.compose([Validators.required,  Validators.minLength(8), Validators.maxLength(30), Validators.pattern('^[0-9]+$')])],
       gender: ['',[Validators.required ]],
-      confirmPwd:['',[Validators.required,  ]],
-      dob:['',[Validators.required ]]},{
+      confirmPwd:['',[Validators.required,  ]]},{
       validators: this.pwd.bind(this)
       
     })
@@ -274,7 +273,7 @@ export class OEmployeeCardPage implements OnInit {
       newMember.cpr=this.ionicForm.value.cpr
       newMember.mobile=this.ionicForm.value.mobile
       newMember.gender=this.ionicForm.value.gender
-      newMember.dob=this.ionicForm.value.dob
+      // newMember.dob=this.ionicForm.value.dob
       newMember.email=this.ionicForm.value.email
       newMember.pwd=this.ionicForm.value.pwd
   

@@ -209,18 +209,9 @@
 
             <!-- BACKUP DATE -->
 
-            
-            <ion-item>
-              <ion-label size="large" >Date of Birth:<span style="color:red; ">*</span></ion-label>
-              <ion-input
-              formControlName="dob" 
-              displayFormat="MMMM YYYY"  max="2020-10-31"             
-              type="date"
-              class="ion-text-end"
-              
-              ></ion-input>
 
-            </ion-item>
+
+            <!-- </ion-item> -->
             <ion-item lines="none" *ngIf="ionicForm.controls['dob'].hasError('required') && ionicForm.controls['dob'].touched && isSubmitted==true" >
               <p><ion-label color="danger"> Sorry, Date of Birth is a required field</ion-label></p></ion-item>
 
@@ -454,29 +445,33 @@
             <ion-icon size="large" slot="start" name="call-outline"></ion-icon>
             <ion-input [disabled]="isEdit" [(ngModel)]="revertMobile"></ion-input>
           </ion-item>
-          <ion-item lines="inset" style="font-size: 1.5em">
+          <!-- <ion-item lines="inset" style="font-size: 1.5em">
             <ion-icon
               size="large"
               slot="start"
               name="calendar-number-outline"
             ></ion-icon>
             <ion-input [disabled]="isEdit"  [(ngModel)]="revertDOB"></ion-input>
-          </ion-item>
+          </ion-item> -->
 
-          <ion-item lines="inset" style="font-size: 1.5em">
+          <!-- <ion-item lines="inset" style="font-size: 1.5em">
             <ion-icon
               size="large"
               slot="start"
               name="calendar-number-outline"
             ></ion-icon>
-            <ion-input
-            [disabled]="isEdit"  
-            displayFormat="MMMM YYYY"  max="2020-10-31"             
+            <ion-input type="text" placeholder="Awesome Input">
+            
+            </ion-input> -->
+            <!-- <ion-input
+            [datisabledat]="isEdit"  
+            displayFormat="dd-mm-yyyy"  max="2020-10-31"             
             type="date"
+            presentation="month-year"
             [(ngModel)]="revertDOB"
-            ></ion-input>
+            ></ion-input> -->
 
-          </ion-item>
+          <!-- </ion-item> -->
           <ion-item lines="inset" style="font-size: 1.5em">
             <ion-icon size="large" slot="start" name="mail-outline"></ion-icon>
             <ion-input [disabled]="isEdit" [(ngModel)]="revertEmail"></ion-input>
