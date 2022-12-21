@@ -12,17 +12,17 @@ const routes: Routes = [
   },
   {
     path: 'notification',
-    loadChildren: () => import('./notification/notification.module').then( m => m.NotificationPageModule)
-    path: 'employees-card',
-    loadChildren: () => import('./employees-card/employees-card.module').then( m => m.EmployeesCardPageModule)
-  },
+    loadChildren: () => import('./notification/notification.module').then( m => m.NotificationPageModule)},
+
   {
     path: 'o-employee-card',
     loadChildren: () => import('./o-employee-card/o-employee-card.module').then( m => m.OEmployeeCardPageModule)
   },
   {
     path: 'o-stock-card',
-    loadChildren: () => import('./o-stock-card/o-stock-card.module').then( m => m.OStockCardPageModule)
+    loadChildren: () => import('./o-stock-card/o-stock-card.module').then( m => m.OStockCardPageModule)},{
+
+    
     path: 'settings',
     loadChildren: () => import('./settings/settings.module').then( m => m.SettingsPageModule)
   },
