@@ -13,6 +13,8 @@ const routes: Routes = [
   {
     path: 'notification',
     loadChildren: () => import('./notification/notification.module').then( m => m.NotificationPageModule)
+    path: 'employees-card',
+    loadChildren: () => import('./employees-card/employees-card.module').then( m => m.EmployeesCardPageModule)
   },
   {
     path: 'o-employee-card',
@@ -21,6 +23,12 @@ const routes: Routes = [
   {
     path: 'o-stock-card',
     loadChildren: () => import('./o-stock-card/o-stock-card.module').then( m => m.OStockCardPageModule)
+    path: 'settings',
+    loadChildren: () => import('./settings/settings.module').then( m => m.SettingsPageModule)
+  },
+  {
+    path: 'reports',
+    loadChildren: () => import('./reports/reports.module').then( m => m.ReportsPageModule)
   }
 
 ];
