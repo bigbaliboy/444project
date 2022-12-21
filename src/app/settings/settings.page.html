@@ -1,0 +1,104 @@
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Courgette&family=Poppins:wght@400;500;600;700&display=swap');
+</style>
+<ion-header>
+  <ion-toolbar>
+    <ion-grid fixed>
+      <ion-row>
+        <ion-col size="1">
+          <ion-button fill="none" routerLink="/" routerDirection="root">
+            <ion-icon name="arrow-back-circle-outline" size="large" slot="start"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <ion-col offset="3" size="6" style="margin-top: 2.5%;">
+          <ion-title style="font-size: 1.5rem; font-family: 'Courgette', cursive;">Settings</ion-title>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-icon slot="start" name="moon"></ion-icon>
+      <ion-label>Dark Mode</ion-label>
+      <ion-toggle slot="end" (ionChange)='toggleTheme($event)'></ion-toggle>
+    </ion-item>
+
+    <ion-item (click)="contactShown = !contactShown">
+      <ion-icon slot="start" name="call"></ion-icon>
+      <ion-label> Contact Us</ion-label>
+      <ion-icon slot="end" [name]="contactShown ? 'chevron-up' :'chevron-down'"></ion-icon>
+    </ion-item>
+    <ion-item id="contacts" *ngIf="contactShown">
+      <ion-list lines="none">
+        <ion-item>
+          <ion-icon name="call" style="padding-right: 2%;"></ion-icon>
+          <ion-label>Telephone: +973 33339999</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="mail" style="padding-right: 2%;"></ion-icon>
+          <ion-label>E-mail: coldstore@gmail.com</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-item>
+
+
+    <ion-item (click)="helpShown = !helpShown">
+      <ion-icon slot="start" name="information-circle"></ion-icon>
+      <ion-label>Help</ion-label>
+      <ion-icon slot="end" [name]="helpShown ? 'chevron-up' :'chevron-down'"></ion-icon>
+
+      <!-- <ion-modal [isOpen]="isModalOpen">
+        <ng-template>
+          <ion-header>
+            <ion-toolbar>
+              <ion-title>Get Help</ion-title>
+              <ion-buttons slot="end">
+                <ion-button (click)="setOpen(false)">Close</ion-button>
+              </ion-buttons>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content class="ion-padding">
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni illum quidem recusandae ducimus quos
+              reprehenderit. Veniam, molestias quos, dolorum consequuntur nisi deserunt omnis id illo sit cum qui.
+              Eaque,
+              dicta.
+            </p>
+          </ion-content>
+        </ng-template>
+      </ion-modal> -->
+
+    </ion-item>
+    <ion-item id="help" *ngIf="helpShown">
+      <ion-text style="padding: 2% 0%;">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni illum quidem recusandae ducimus quos
+        reprehenderit. Veniam, molestias quos, dolorum consequuntur nisi deserunt omnis id illo sit cum qui.
+        Eaque, dicta.
+      </ion-text>
+    </ion-item>
+
+
+    <ion-item (click)="locationShown = !locationShown;">
+      <ion-icon slot="start" name="navigate"></ion-icon>
+      <ion-label>Location</ion-label>
+      <ion-icon slot="end" [name]="locationShown ? 'chevron-up' :'chevron-down'"></ion-icon>
+    </ion-item>
+    <ion-item id="location" *ngIf="locationShown">
+      <ion-card>
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14326.81592885023!2d50.4975052!3d26.1411931!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x2110d6574de4d11c!2sFatima%20Cold%20Store!5e0!3m2!1sen!2sbh!4v1670328168457!5m2!1sen!2sbh"
+          width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </ion-card>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon slot="start" name="log-out"></ion-icon>
+      <ion-label>Sign Out</ion-label>
+      <ion-icon slot="end" name="chevron-down"></ion-icon>
+    </ion-item>
+  </ion-list>
+</ion-content>
