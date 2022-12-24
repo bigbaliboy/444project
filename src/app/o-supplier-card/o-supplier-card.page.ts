@@ -11,46 +11,57 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import {Employee, Supplier, Items } from '../data.service';
 
-export interface Employee {
-  name: string;
-  jobRole: string;
-  cpr: string;
-  mobile: string;
-  gender: string;
-  email: string;
-  pwd: string;
-}
+// export interface Supplier {
+//   id: string;
+//   name: string;
+//   // jobRole: string;
+//   items:string[]
+//   website: string;
+//   mobile: string;
+//   //gender: string;
+//   email: string;
+//   pwd: string;
+// }
 
 @Component({
-  selector: 'app-o-employee-card',
-  templateUrl: './o-employee-card.page.html',
-  styleUrls: ['./o-employee-card.page.scss'],
+  selector: 'app-o-supplier-card',
+  templateUrl: './o-supplier-card.page.html',
+  styleUrls: ['./o-supplier-card.page.scss'],
 })
-export class OEmployeeCardPage implements OnInit {
+export class OSupplierCardPage implements OnInit {
   test = document.querySelector('#test');
+  searchTerm!: string;
   isModalOpen = false;
-  chosenModel: Employee;
+  chosenModel: Supplier;
   revertName: string;
-  revertCPR: string;
+  revertwebsite: string;
   revertMobile: string;
   revertEmail: string;
-  revertJobRole: string;
 
-  // If clicked on an employee
-  view(members: Employee) {
+  itemList:string[];
+
+  // If clicked on an Supplier
+  view(members: Supplier) {
     this.isEdit = true;
     this.isSave = false;
     this.isShowError = false;
     this.isModalOpen = true;
     this.chosenModel = members;
     this.revertName = this.chosenModel.name;
-    this.revertCPR = this.chosenModel.cpr;
+    this.revertwebsite = this.chosenModel.website;
     this.revertMobile = this.chosenModel.mobile;
     this.revertEmail = this.chosenModel.email;
-    this.revertJobRole = this.chosenModel.jobRole;
+    
+    this.itemList = []
 
-    // Form Group for Edit Employee Details and its Validators
+    for(let items of members.itemSup)
+    {
+     this.itemList.push(items.itemName)
+    }
+
+    // Form Group for Edit Supplier Details and its Validators
     this.ionicForm2 = new FormGroup({
       name: new FormControl(
         this.revertName,
@@ -70,18 +81,17 @@ export class OEmployeeCardPage implements OnInit {
         Validators.minLength(8),
         Validators.maxLength(8),
       ]),
-      cpr: new FormControl(this.revertCPR, [
+      website: new FormControl(this.revertwebsite, [
         Validators.required,
-        Validators.pattern('^[0-9]+$'),
-        Validators.minLength(9),
-        Validators.maxLength(9),
+        Validators.pattern("(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?"),
+        Validators.minLength(4),
+        Validators.maxLength(30),
       ]),
-      jobRole: new FormControl(this.revertJobRole, Validators.required),
     });
     this.ionicForm2.disable();
   }
 
-  // Closing Add employee MODAL
+  // Closing Add Supplier MODAL
   close() {
     this.isModalOpen = false;
   }
@@ -108,8 +118,9 @@ export class OEmployeeCardPage implements OnInit {
   async Save() {
     if (this.ionicForm2.valid == false) {
       this.isShowError = true;
-
+      console.log(this.ionicForm2.status)
       const alert = await this.alertController.create({
+      
         header: 'Values are not valid, please enter in correct format',
         message: '',
         buttons: [
@@ -125,19 +136,17 @@ export class OEmployeeCardPage implements OnInit {
       await alert.present();
     } else {
       this.chosenModel.name = this.ionicForm2.value.name;
-      this.chosenModel.cpr = this.ionicForm2.value.cpr;
+      this.chosenModel.website = this.ionicForm2.value.website;
       this.chosenModel.email = this.ionicForm2.value.email;
       this.chosenModel.mobile = this.ionicForm2.value.mobile;
-      this.chosenModel.jobRole = this.ionicForm2.value.jobRole;
       this.ionicForm2.disable();
       this.isEdit = true;
       this.isSave = false;
 
       this.revertName = this.chosenModel.name;
-      this.revertCPR = this.chosenModel.cpr;
+      this.revertwebsite = this.chosenModel.website;
       this.revertEmail = this.chosenModel.email;
       this.revertMobile = this.chosenModel.mobile;
-      this.revertJobRole = this.chosenModel.jobRole;
     }
   }
 
@@ -148,8 +157,8 @@ export class OEmployeeCardPage implements OnInit {
     this.isShowError = false;
     this.ionicForm2.reset({
       name: { value: this.revertName, disabled: true },
-      jobRole: { value: this.revertJobRole, disabled: true },
-      cpr: { value: this.revertCPR, disabled: true },
+      // jobRole: { value: this.revertJobRole, disabled: true },
+      website: { value: this.revertwebsite, disabled: true },
       mobile: { value: this.revertMobile, disabled: true },
       email: { value: this.revertEmail, disabled: true },
     });
@@ -160,8 +169,8 @@ export class OEmployeeCardPage implements OnInit {
     name: new FormControl(),
     email: new FormControl(),
     mobile: new FormControl(),
-    cpr: new FormControl(),
-    jobRole: new FormControl(),
+    website: new FormControl(),
+    // jobRole: new FormControl(),
   });
 
   // Form Group of Add Member
@@ -169,14 +178,13 @@ export class OEmployeeCardPage implements OnInit {
     name: new FormControl(),
     email: new FormControl(),
     mobile: new FormControl(),
-    cpr: new FormControl(),
+    website: new FormControl(),
     pwd: new FormControl(),
     confirmPwd: new FormControl(),
-    jobRole: new FormControl(),
-    gender: new FormControl(),
+    //gender: new FormControl(),
   });
 
-  // for add employee modal
+  // for add Supplier modal
   presentingElement = undefined;
 
   // Constructor
@@ -189,14 +197,16 @@ export class OEmployeeCardPage implements OnInit {
     public formBuilder2: FormBuilder
   ) {
     this.isEdit = true;
-    this.chosenModel = this.EmployeeList[0];
+    this.chosenModel = this.SupplierList[0];
     this.revertName = '';
     this.revertMobile = '';
     this.revertEmail = '';
-    this.revertCPR = '';
-    this.revertJobRole = '';
+    this.revertwebsite = '';
+    // this.revertJobRole = '';
+    this.itemList = ['']
 
-    // Validators for Add Employee
+
+    // Validators for Add Supplier
     this.ionicForm = this.formBuilder.group(
       {
         name: [
@@ -207,24 +217,13 @@ export class OEmployeeCardPage implements OnInit {
             Validators.maxLength(30),
           ]),
         ],
-        jobRole: ['', [Validators.required]],
-        email: ['', [Validators.required, Validators.email]],
-        mobile: [
+        website: [
           '',
           [
             Validators.required,
-            Validators.pattern('^[0-9]+$'),
-            Validators.minLength(8),
-            Validators.maxLength(8),
-          ],
-        ],
-        cpr: [
-          '',
-          [
-            Validators.required,
-            Validators.pattern('^[0-9]+$'),
-            Validators.minLength(9),
-            Validators.maxLength(9),
+             Validators.pattern("(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?"),
+            Validators.minLength(5),
+            Validators.maxLength(18),
           ],
         ],
         pwd: [
@@ -236,8 +235,18 @@ export class OEmployeeCardPage implements OnInit {
             Validators.pattern('^[0-9]+$'),
           ]),
         ],
-        gender: ['', [Validators.required]],
+        //gender: ['', [Validators.required]],
         confirmPwd: ['', [Validators.required]],
+        email: new FormControl('', [
+          Validators.required,
+          Validators.email,
+        ]),
+        mobile: new FormControl('', [
+          Validators.required,
+          Validators.pattern('^[0-9]+$'),
+          Validators.minLength(8),
+          Validators.maxLength(8),
+        ]),
       }
       //   {
       //   validators: this.pwd.bind(this)
@@ -260,8 +269,8 @@ export class OEmployeeCardPage implements OnInit {
 
   // }
 
-  // Calling EmployeeObj from DataService
-  EmployeeList = this.DataSrv.EmployeeObj;
+  // Calling SupplierObj from DataService
+  SupplierList = this.DataSrv.SupplierObj;
 
   // Modal page for add
   canDismiss = async () => {
@@ -292,9 +301,10 @@ export class OEmployeeCardPage implements OnInit {
 
   // fuction to Add emplyee
   async confirmAdd() {
-    let newMember = {} as Employee;
+    let newMember = {} as Supplier;
     this.isSubmitted = true;
 
+    console.log(this.ionicForm.status)
     if (this.ionicForm.valid == false) {
       const alert = await this.alertController.create({
         header: 'Please provide all the required values!',
@@ -327,14 +337,12 @@ export class OEmployeeCardPage implements OnInit {
       });
       // Assigning value to each newMember variable
       newMember.name = this.ionicForm.value.name;
-      newMember.jobRole = this.ionicForm.value.jobRole;
-      newMember.cpr = this.ionicForm.value.cpr;
+      newMember.website = this.ionicForm.value.website;
       newMember.mobile = this.ionicForm.value.mobile;
-      newMember.gender = this.ionicForm.value.gender;
       newMember.email = this.ionicForm.value.email;
       newMember.pwd = this.ionicForm.value.pwd;
 
-      this.DataSrv.EmployeeObj.push(newMember);
+      this.DataSrv.SupplierObj.push(newMember);
       this.ionicForm.reset();
 
       await alert.present();

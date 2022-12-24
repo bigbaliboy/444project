@@ -21,6 +21,10 @@ const routes: Routes = [
   {
     path: 'o-stock-card',
     loadChildren: () => import('./o-stock-card/o-stock-card.module').then( m => m.OStockCardPageModule)
+  },
+  {
+    path: 'o-supplier-card',
+    loadChildren: () => import('./o-supplier-card/o-supplier-card.module').then( m => m.OSupplierCardPageModule)
   }
 
 ];
