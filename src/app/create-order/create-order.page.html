@@ -1,0 +1,92 @@
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Courgette&family=Poppins:wght@400;500;600;700&display=swap');
+</style>
+
+<ion-header>
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="1">
+          <ion-button fill="none" routerLink="/orders">
+            <ion-icon name="close" size="large" slot="start"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <ion-col offset="2.5" size="6" style="margin-top: 2.5%;">
+          <ion-title style="font-size: 1.5rem; font-family: 'Courgette', cursive;">New Order</ion-title>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div>
+    <!-- <ion-grid>
+      <ion-row>
+        <ion-col> -->
+      <ion-item lines="none" style="margin-top: 5%;">
+        <ion-label>Items:</ion-label>
+        <ion-button id="open-modal">Add an Item</ion-button>
+      </ion-item>
+      <!-- </ion-col>
+      </ion-row>
+    </ion-grid> -->
+      <ion-modal #modal trigger="open-modal" [presentingElement]="presentingElement">
+        <ng-template>
+
+          <ion-header>
+            <ion-toolbar>
+              <ion-title>Items</ion-title>
+              <ion-buttons slot="end">
+                <ion-button (click)="modal.dismiss()">
+                  <ion-icon name="close"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-toolbar>
+          </ion-header>
+
+          <ion-content>
+            <ion-searchbar placeholder="Search" [(ngModel)]="searchTerm" showCancelButton="focus" animated>
+            </ion-searchbar>
+            <ion-item-group *ngFor="let item of (items|async) | filter:searchTerm">
+              <ion-item (click)="modal.dismiss()" (click)="saveItem(item)">
+                <ion-thumbnail>
+                  <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+                </ion-thumbnail>
+                <ion-label style="padding-left: 4%;">{{item.Name}}</ion-label>
+                <ion-label>{{item.Quantity}} Pieces</ion-label>
+              </ion-item>
+            </ion-item-group>
+          </ion-content>
+        </ng-template>
+      </ion-modal>
+
+      <div *ngIf="chosenItem && isSelected">
+        <ion-list>
+          <ion-item>
+            <ion-button fill="clear" (click)="clearItem()">
+              <ion-icon name="close"></ion-icon>
+            </ion-button>
+            <ion-label>{{chosenItem.Name}}</ion-label>
+          </ion-item>
+
+        </ion-list>
+      </div>
+
+      
+      <ion-item>
+        <ion-label>Quantity: </ion-label>
+        <ion-input [(ngModel)]="orderQuantity"></ion-input>
+      </ion-item>
+
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-button (click)="makeOrder(chosenItem)">Place Order</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+  </div>
+</ion-content>

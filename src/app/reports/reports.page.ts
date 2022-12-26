@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { NgModel } from '@angular/forms';
 // import { EChartsOption } from 'echarts';
 import { Observable } from 'rxjs';
 import { FBsrvService, Employees, Orders, Invoices, Items } from '../fbsrv.service';
@@ -37,8 +38,19 @@ export class ReportsPage implements OnInit {
   //   }
   // ];
 
+  qt = 0;
+  Supplier = "";
+  Quantity = this.qt.toString();
+  Demand = "";
+  Category = "";
+
+  // totalSales = 0;
+
+
   constructor(private dataService: FBsrvService) {
   }
+
+
 
 
   segmentChanged(ev: any) {
@@ -48,6 +60,7 @@ export class ReportsPage implements OnInit {
   selectTabs = 'orders';
 
 
+  presentingElement: any;
 
   ngOnInit() {
     this.employees = this.dataService.getEmployees();
@@ -55,8 +68,20 @@ export class ReportsPage implements OnInit {
     this.invoices = this.dataService.getInvoices();
     this.items = this.dataService.getItems();
 
+    this.presentingElement = document.querySelector('.ion-page');
+    // setTotalSales()
+
   }
 
+
+  clear() {
+
+    this.Supplier = '';
+    this.Quantity = '';
+    this.qt = 0;
+    this.Demand = '';
+    this.Category = '';
+  }
 
   insert() {
     this.dataService.addEmployee(this.employee).then((response) => {
@@ -65,6 +90,24 @@ export class ReportsPage implements OnInit {
     });
   }
 
+
+  testAndClose(){
+    this.Quantity = this.qt.toString();
+    console.log(this.qt, this.Quantity);
+  }
+  
+  // async setTotalSales(){
+
+  //   for(let invSale of this.invoices)
+
+  //   }
+  // }
+
+
+
+  pinFormatter(value: number) {
+    return `${value}`;
+  }
 
 
 }

@@ -9,8 +9,10 @@ import { EChartsOption } from 'echarts';
 })
 
 export class AppComponent {
+
   constructor(
     
   ) {}
+
 
 }

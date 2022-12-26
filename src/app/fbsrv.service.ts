@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { DocumentReference } from '@angular/fire/compat/firestore';
 import { map, take } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+
 
 export interface Employees {
   id?: string,
@@ -11,28 +13,36 @@ export interface Employees {
 
 export interface Orders {
   id?: string,
-  Quantity: string,
+  Quantity: number,
+  items: string,
   Supplier: string,
-  orderNumber: string
+  orderNumber?: string
 }
 
 export interface Invoices {
   id?: string,
   invoiceNumber: string,
-  Products: string, 
+  Products: string,
   Quantity: string,
   totalPrice: string
 }
 
-export interface Items{
-  Demand: string, 
+export interface Items {
+  id?: string,
+  Demand: string,
   Category: string,
-  Price: string, 
-  Quantity: string, 
-  Supplier: string, 
+  Price: number,
+  Quantity: number,
+  Supplier: string,
   Name: string,
-  thresholdQuantity: string
+  thresholdQuantity: number
+}
 
+export interface Favorites {
+  id?: string,
+  orderSupplier: string,
+  orderQuantity: number
+  orderItems: string
 }
 
 @Injectable({
@@ -51,7 +61,10 @@ export class FBsrvService {
   public items: Observable<Items[]>;
   public itemsCollection: AngularFirestoreCollection<Items>;
 
-  constructor(private afs: AngularFirestore) {
+  public favoriteItem: Observable<Favorites[]>;
+  public favoritesCollection: AngularFirestoreCollection<Favorites>;
+
+  constructor(private afs: AngularFirestore, private afAuth: AngularFireAuthModule) {
     this.employeeCollection = this.afs.collection<Employees>('Employees');
     this.employees = this.employeeCollection.snapshotChanges().pipe(
       map(actions => {
@@ -96,7 +109,24 @@ export class FBsrvService {
       })
     );
 
+    this.favoritesCollection = this.afs.collection<Favorites>('Favorites');
+    this.favoriteItem = this.favoritesCollection.snapshotChanges().pipe(
+      map(actions => {
+        return actions.map(a => {
+          const data = a.payload.doc.data();
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        });
+      })
+    );
+
   }
+
+  // loginUser(newEmail: string, newPassword: string): Promise<any> {
+  //   return this.afAuth.auth.signInWithEmailAndPassword
+  //     (newEmail, newPassword);
+  // }
+
 
   getEmployees(): Observable<Employees[]> {
     return this.employees;
@@ -119,12 +149,29 @@ export class FBsrvService {
     return this.orders;
   }
 
-  getInvoices(): Observable<Invoices[]>{
+  getInvoices(): Observable<Invoices[]> {
     return this.invoices;
   }
- 
-  getItems(): Observable<Items[]>{
+
+  addInvoices(invoices: Invoices): Promise<DocumentReference> {
+    return this.invoicesCollection.add(invoices);
+  }
+
+  addOrders(orders: Orders): Promise<DocumentReference> {
+    return this.ordersCollection.add(orders);
+  }
+
+
+  getItems(): Observable<Items[]> {
     return this.items;
+  }
+
+  getFavorites(): Observable<Favorites[]> {
+    return this.favoriteItem;
+  }
+
+  addFavorites(favorites: Favorites): Promise<DocumentReference> {
+    return this.favoritesCollection.add(favorites);
   }
 
 
