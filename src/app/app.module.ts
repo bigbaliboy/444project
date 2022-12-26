@@ -12,7 +12,10 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { Subscriber } from 'rxjs';
-import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import {Ng2SearchPipeModule} from 'ng2-search-filter';
+import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { environment } from '../environments/environment';
+import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 
 var firebaseConfig = {
   apiKey: "AIzaSyAko6tZ6MqiNvKzox-xsfe5e12iRnMgCRI",
@@ -33,7 +36,9 @@ var firebaseConfig = {
     // Import the AngularFireDatabaseModule to use database
     AngularFirestoreModule,
     Ng2SearchPipeModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideFirestore(() => getFirestore())
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
