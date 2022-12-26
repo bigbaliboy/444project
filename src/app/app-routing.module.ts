@@ -19,6 +19,10 @@ const routes: Routes = [
     loadChildren: () => import('./o-employee-card/o-employee-card.module').then( m => m.OEmployeeCardPageModule)
   },
   {
+    path: 'o-supplier-card',
+    loadChildren: () => import('./o-supplier-card/o-supplier-card.module').then( m => m.OSupplierCardPageModule)
+  },
+  {
     path: 'o-stock-card',
     loadChildren: () => import('./o-stock-card/o-stock-card.module').then( m => m.OStockCardPageModule)},{
 

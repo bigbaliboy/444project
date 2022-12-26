@@ -11,7 +11,9 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import {Employee, Supplier, Items } from '../data.service';
+import {Employee, Items } from '../data.service';
+import { FBsrvService, Suppliers } from '../fbsrv.service';
+import { Observable } from 'rxjs/internal/Observable';
 
 // export interface Supplier {
 //   id: string;
@@ -31,10 +33,13 @@ import {Employee, Supplier, Items } from '../data.service';
   styleUrls: ['./o-supplier-card.page.scss'],
 })
 export class OSupplierCardPage implements OnInit {
-  test = document.querySelector('#test');
+
+  public supplier: Suppliers = {} as Suppliers;
+  public suppliers!: Observable<Suppliers[]>;
+  // test = document.querySelector('#test');
   searchTerm!: string;
   isModalOpen = false;
-  chosenModel: Supplier;
+  chosenModel: Suppliers;
   revertName: string;
   revertwebsite: string;
   revertMobile: string;
@@ -43,7 +48,7 @@ export class OSupplierCardPage implements OnInit {
   itemList:string[];
 
   // If clicked on an Supplier
-  view(members: Supplier) {
+  view(members: Suppliers) {
     this.isEdit = true;
     this.isSave = false;
     this.isShowError = false;
@@ -55,11 +60,13 @@ export class OSupplierCardPage implements OnInit {
     this.revertEmail = this.chosenModel.email;
     
     this.itemList = []
-
+if(members.itemSup){
+  console.log("hello")
     for(let items of members.itemSup)
     {
      this.itemList.push(items.itemName)
     }
+  }
 
     // Form Group for Edit Supplier Details and its Validators
     this.ionicForm2 = new FormGroup({
@@ -108,17 +115,43 @@ export class OSupplierCardPage implements OnInit {
 
 
   // Function of Edit Button in View Member MODAL
-  Edit() {
+  edit() {
     this.isEdit = false;
     this.isSave = true;
     this.ionicForm2.enable();
   }
 
+//to delete a supplier
+  delete(){
+
+    this.supplier=this.chosenModel
+    this.dataService.deleteSupplier(this.supplier.id).then(async (response) => {
+      console.log(this.supplier)
+      const alert = await this.alertController.create({
+        header: 'Deleted Succesfully!',
+        message: '',
+        buttons: [
+          {
+            text: 'Okay',
+            handler: () => {
+              window.location.reload();
+
+            },
+          },
+        ],
+      });
+      await alert.present();
+
+
+
+    });
+
+
+  }
   // Fuction of Save Button in View Member MODAL 
-  async Save() {
+  async save() {
     if (this.ionicForm2.valid == false) {
       this.isShowError = true;
-      console.log(this.ionicForm2.status)
       const alert = await this.alertController.create({
       
         header: 'Values are not valid, please enter in correct format',
@@ -135,23 +168,50 @@ export class OSupplierCardPage implements OnInit {
 
       await alert.present();
     } else {
-      this.chosenModel.name = this.ionicForm2.value.name;
-      this.chosenModel.website = this.ionicForm2.value.website;
-      this.chosenModel.email = this.ionicForm2.value.email;
-      this.chosenModel.mobile = this.ionicForm2.value.mobile;
-      this.ionicForm2.disable();
-      this.isEdit = true;
-      this.isSave = false;
+      this.supplier.name = this.ionicForm2.value.name;
+      this.supplier.website = this.ionicForm2.value.website;
+      this.supplier.mobile = this.ionicForm2.value.mobile;
+      this.supplier.email = this.ionicForm2.value.email;
+      this.supplier.id=this.chosenModel.id
+      this.itemList = []
+      if(this.chosenModel.itemSup){
+          for(let items of this.chosenModel.itemSup)
+          {
+           this.itemList.push(items.itemName)
+          }
+        }
+      // this.supplier.itemSup=this.chosenModel.itemSup
+      this.dataService.updateSupplier(this.supplier).then(async (response) => {
+
+        const alert = await this.alertController.create({
+          header: 'Updated Succesfully!',
+          message: '',
+          buttons: [
+           
+            {
+              text: 'Okay',
+              handler: () => {
+              },
+            },
+          ],
+        });
+        this.supplier = {} as Suppliers;
+        await alert.present();
+        this.ionicForm2.disable();
+        this.isEdit = true;
+        this.isSave = false;
+  
 
       this.revertName = this.chosenModel.name;
       this.revertwebsite = this.chosenModel.website;
       this.revertEmail = this.chosenModel.email;
       this.revertMobile = this.chosenModel.mobile;
+    });
     }
   }
 
   //  Function of Cancel Button in View Member MODAL 
-  Cancel() {
+  cancel() {
     this.isEdit = true;
     this.isSave = false;
     this.isShowError = false;
@@ -163,6 +223,7 @@ export class OSupplierCardPage implements OnInit {
       email: { value: this.revertEmail, disabled: true },
     });
   }
+  
 
   // Form Group of View Member
   ionicForm2 = new FormGroup({
@@ -194,7 +255,9 @@ export class OSupplierCardPage implements OnInit {
     private router: Router,
     public DataSrv: DataService,
     public formBuilder: FormBuilder,
-    public formBuilder2: FormBuilder
+    public formBuilder2: FormBuilder,
+    private dataService: FBsrvService
+
   ) {
     this.isEdit = true;
     this.chosenModel = this.SupplierList[0];
@@ -259,6 +322,8 @@ export class OSupplierCardPage implements OnInit {
   ngOnInit() {
     // part of modal add
     this.presentingElement = document.querySelector('.ion-page') as any;
+    this.suppliers = this.dataService.getSuppliers();
+
   }
   // VALIDATION FOR CONFIRM PASSWORD
   // pwd(formGroup: FormGroup) {
@@ -301,7 +366,7 @@ export class OSupplierCardPage implements OnInit {
 
   // fuction to Add emplyee
   async confirmAdd() {
-    let newMember = {} as Supplier;
+    let newMember = {} as Suppliers;
     this.isSubmitted = true;
 
     console.log(this.ionicForm.status)
@@ -323,29 +388,38 @@ export class OSupplierCardPage implements OnInit {
 
       return;
     } else {
-      const alert = await this.alertController.create({
-        header: 'Added Succesfully!',
-        message: '',
-        buttons: [
-         
-          {
-            text: 'Okay',
-            handler: () => {
-            },
-          },
-        ],
-      });
-      // Assigning value to each newMember variable
-      newMember.name = this.ionicForm.value.name;
-      newMember.website = this.ionicForm.value.website;
-      newMember.mobile = this.ionicForm.value.mobile;
-      newMember.email = this.ionicForm.value.email;
-      newMember.pwd = this.ionicForm.value.pwd;
 
-      this.DataSrv.SupplierObj.push(newMember);
+      this.supplier.name = this.ionicForm.value.name;
+      this.supplier.website = this.ionicForm.value.website;
+      this.supplier.mobile = this.ionicForm.value.mobile;
+      this.supplier.email = this.ionicForm.value.email;
+      this.supplier.pwd = this.ionicForm.value.pwd;
+
+
+      this.dataService.addSupplier(this.supplier).then(async (response) => {
+
+        const alert = await this.alertController.create({
+          header: 'Added Succesfully!',
+          message: '',
+          buttons: [
+           
+            {
+              text: 'Okay',
+              handler: () => {
+              },
+            },
+          ],
+        });
+        this.supplier = {} as Suppliers;
+        await alert.present();
+      });
+    
+      // Assigning value to each newMember variable
+
+
+      // this.DataSrv.SupplierObj.push(newMember);
       this.ionicForm.reset();
 
-      await alert.present();
     }
   }
 

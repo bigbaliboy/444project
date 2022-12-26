@@ -11,6 +11,8 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { FBsrvService,Employees } from '../fbsrv.service';
+import { Observable } from 'rxjs';
 
 export interface Employee {
   name: string;
@@ -28,9 +30,14 @@ export interface Employee {
   styleUrls: ['./o-employee-card.page.scss'],
 })
 export class OEmployeeCardPage implements OnInit {
+
+  public employee: Employees = {} as Employees;
+  public employees!: Observable<Employees[]>;
+
+
   test = document.querySelector('#test');
   isModalOpen = false;
-  chosenModel: Employee;
+  chosenModel: Employees;
   revertName: string;
   revertCPR: string;
   revertMobile: string;
@@ -98,14 +105,14 @@ export class OEmployeeCardPage implements OnInit {
 
 
   // Function of Edit Button in View Member MODAL
-  Edit() {
+  edit() {
     this.isEdit = false;
     this.isSave = true;
     this.ionicForm2.enable();
   }
 
   // Fuction of Save Button in View Member MODAL 
-  async Save() {
+  async save() {
     if (this.ionicForm2.valid == false) {
       this.isShowError = true;
 
@@ -124,25 +131,47 @@ export class OEmployeeCardPage implements OnInit {
 
       await alert.present();
     } else {
-      this.chosenModel.name = this.ionicForm2.value.name;
-      this.chosenModel.cpr = this.ionicForm2.value.cpr;
-      this.chosenModel.email = this.ionicForm2.value.email;
-      this.chosenModel.mobile = this.ionicForm2.value.mobile;
-      this.chosenModel.jobRole = this.ionicForm2.value.jobRole;
-      this.ionicForm2.disable();
-      this.isEdit = true;
-      this.isSave = false;
 
-      this.revertName = this.chosenModel.name;
-      this.revertCPR = this.chosenModel.cpr;
-      this.revertEmail = this.chosenModel.email;
-      this.revertMobile = this.chosenModel.mobile;
-      this.revertJobRole = this.chosenModel.jobRole;
+      this.employee.name = this.ionicForm2.value.name;
+      this.employee.jobRole = this.ionicForm2.value.jobRole;
+      this.employee.cpr = this.ionicForm2.value.cpr;
+      this.employee.mobile = this.ionicForm2.value.mobile;
+      this.employee.email = this.ionicForm2.value.email;
+      this.employee.id=this.chosenModel.id
+      this.dataService.updateEmployee(this.employee).then(async (response) => {
+
+        const alert = await this.alertController.create({
+          header: 'Updated Succesfully!',
+          message: '',
+          buttons: [
+           
+            {
+              text: 'Okay',
+              handler: () => {
+              },
+            },
+          ],
+        });
+        this.employee = {} as Employees;
+        await alert.present();
+        this.ionicForm2.disable();
+        this.isEdit = true;
+        this.isSave = false;
+  
+        this.revertName = this.employee.name;
+        this.revertCPR = this.employee.cpr;
+        this.revertEmail = this.employee.email;
+        this.revertMobile = this.employee.mobile;
+        this.revertJobRole = this.employee.jobRole;
+      });
+    
+      
+
     }
   }
 
   //  Function of Cancel Button in View Member MODAL 
-  Cancel() {
+  cancel() {
     this.isEdit = true;
     this.isSave = false;
     this.isShowError = false;
@@ -153,6 +182,31 @@ export class OEmployeeCardPage implements OnInit {
       mobile: { value: this.revertMobile, disabled: true },
       email: { value: this.revertEmail, disabled: true },
     });
+  }
+
+  //delete user
+  delete(){
+    this.employee=this.chosenModel
+    this.dataService.deleteEmployee(this.employee.id).then(async (response) => {
+      const alert = await this.alertController.create({
+        header: 'Deleted Succesfully!',
+        message: '',
+        buttons: [
+          {
+            text: 'Okay',
+            handler: () => {
+              window.location.reload();
+
+            },
+          },
+        ],
+      });
+      await alert.present();
+
+
+
+    });
+
   }
 
   // Form Group of View Member
@@ -186,8 +240,10 @@ export class OEmployeeCardPage implements OnInit {
     private router: Router,
     public DataSrv: DataService,
     public formBuilder: FormBuilder,
-    public formBuilder2: FormBuilder
+    public formBuilder2: FormBuilder,
+    private dataService: FBsrvService
   ) {
+    
     this.isEdit = true;
     this.chosenModel = this.EmployeeList[0];
     this.revertName = '';
@@ -250,6 +306,7 @@ export class OEmployeeCardPage implements OnInit {
   ngOnInit() {
     // part of modal add
     this.presentingElement = document.querySelector('.ion-page') as any;
+    this.employees = this.dataService.getEmployees();
   }
   // VALIDATION FOR CONFIRM PASSWORD
   // pwd(formGroup: FormGroup) {
@@ -292,7 +349,7 @@ export class OEmployeeCardPage implements OnInit {
 
   // fuction to Add emplyee
   async confirmAdd() {
-    let newMember = {} as Employee;
+    // let newMember = {} as Employee;
     this.isSubmitted = true;
 
     if (this.ionicForm.valid == false) {
@@ -309,10 +366,22 @@ export class OEmployeeCardPage implements OnInit {
         ],
       });
 
+
+
+
       await alert.present();
 
       return;
     } else {
+      this.employee.name = this.ionicForm.value.name;
+      this.employee.jobRole = this.ionicForm.value.jobRole;
+      this.employee.cpr = this.ionicForm.value.cpr;
+      this.employee.mobile = this.ionicForm.value.mobile;
+      this.employee.gender = this.ionicForm.value.gender;
+      this.employee.email = this.ionicForm.value.email;
+      this.employee.pwd = this.ionicForm.value.pwd;
+    this.dataService.addEmployee(this.employee).then(async (response) => {
+
       const alert = await this.alertController.create({
         header: 'Added Succesfully!',
         message: '',
@@ -325,19 +394,19 @@ export class OEmployeeCardPage implements OnInit {
           },
         ],
       });
-      // Assigning value to each newMember variable
-      newMember.name = this.ionicForm.value.name;
-      newMember.jobRole = this.ionicForm.value.jobRole;
-      newMember.cpr = this.ionicForm.value.cpr;
-      newMember.mobile = this.ionicForm.value.mobile;
-      newMember.gender = this.ionicForm.value.gender;
-      newMember.email = this.ionicForm.value.email;
-      newMember.pwd = this.ionicForm.value.pwd;
+      this.employee = {} as Employees;
+      await alert.present();
+    });
+  
 
-      this.DataSrv.EmployeeObj.push(newMember);
+
+      // Assigning value to each newMember variable
+
+
+      // this.DataSrv.EmployeeObj.push(newMember);
       this.ionicForm.reset();
 
-      await alert.present();
+
     }
   }
 

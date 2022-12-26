@@ -66,8 +66,7 @@
       <ion-row
         (click)="view(members)"
         class="entry"
-        *ngFor="let members of EmployeeList; let i = index"
-        id=""
+        *ngFor="let members of (employees|async); let i = index"
       >
         <ion-col size="2">
           <ion-label>
@@ -535,9 +534,9 @@
             </form>
             <ion-button
               size="large"
-              (click)="Edit()"
+              (click)="edit()"
               expand="block"
-              fill="clear"
+              fill="outline"
               shape="round"
               *ngIf="isEdit"
             >
@@ -545,12 +544,12 @@
               <ion-label>Edit</ion-label>
             </ion-button>
 
-            <ion-item *ngIf="isSave" lines="none">
+            <ion-item-group *ngIf="isSave" lines="none">
               <ion-button
                 size="large"
-                (click)="Save()"
+                (click)="save()"
                 expand="block"
-                fill="clear"
+                fill="outline"
                 shape="round"
               >
                 <ion-icon slot="start" name="save"></ion-icon>
@@ -558,17 +557,30 @@
               </ion-button>
 
               <ion-button
+              size="large"
+              color="danger"
+              (click)="delete()"
+              expand="block"
+              fill="outline"
+              shape="round"
+            >
+              <ion-icon slot="start" name="close-outline"></ion-icon>
+              <ion-label>Delete</ion-label>
+            </ion-button>
+
+
+              <ion-button
                 size="large"
                 color="danger"
-                (click)="Cancel()"
+                (click)="cancel()"
                 expand="block"
-                fill="clear"
+                fill="outline"
                 shape="round"
               >
                 <ion-icon slot="start" name="close-outline"></ion-icon>
                 <ion-label>Cancel</ion-label>
               </ion-button>
-            </ion-item>
+            </ion-item-group>
           </ion-content>
         </ng-template>
       </ion-modal>
