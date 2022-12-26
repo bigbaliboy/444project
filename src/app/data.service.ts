@@ -6,7 +6,6 @@ export interface Employee{
   cpr:string
   mobile:string
   gender:string
-  // dob:string
   email:string
   pwd: string
 }
