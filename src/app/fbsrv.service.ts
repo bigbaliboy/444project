@@ -44,6 +44,11 @@ export interface Notifications{
 
 }
 
+export interface ToBeOrdered {
+  id?: string,
+  itemID: string
+}
+
 export interface Invoices {
   id?: string,
   invoiceNumber: string,
@@ -99,6 +104,9 @@ export class FBsrvService {
 
   public notifications: Observable<Notifications[]>;
   public notificationsCollection: AngularFirestoreCollection<Notifications>;
+
+  public tobeordered: Observable<ToBeOrdered[]>;
+  public tobeorderedCollection: AngularFirestoreCollection<ToBeOrdered>;
 
   constructor(private afs: AngularFirestore) {
     this.employeeCollection = this.afs.collection<Employees>('Employees');
@@ -167,6 +175,17 @@ export class FBsrvService {
       })
     );
 
+    this.tobeorderedCollection = this.afs.collection<ToBeOrdered>('ToBeOrdered');
+    this.tobeordered = this.tobeorderedCollection.snapshotChanges().pipe(
+      map(actions => {
+        return actions.map(a => {
+          const data = a.payload.doc.data();
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        });
+      })
+    );
+
   }
 
 
@@ -208,6 +227,10 @@ export class FBsrvService {
 
   deleteNotification(id: string): Promise<void> {
     return this.notificationsCollection.doc(id).delete();
+  }
+
+  addToBeOrdered(tobeordered: ToBeOrdered): Promise<DocumentReference> {
+    return this.tobeorderedCollection.add(tobeordered);
   }
 
 

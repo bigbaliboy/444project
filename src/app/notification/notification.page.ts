@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { FBsrvService, Employees, Orders, Invoices, Items, Notifications } from '../fbsrv.service';
+import { FBsrvService, Employees, Orders, Invoices, Items, Notifications,ToBeOrdered } from '../fbsrv.service';
 
 
 @Component({
@@ -13,10 +13,14 @@ selectTabs = 'stock';
 
 public notifications!: Observable<Notifications[]>;
 public notification: Notifications = {} as Notifications;
+
+public tobeordereds!: Observable<ToBeOrdered[]>;
+public tobeordered: ToBeOrdered = {} as ToBeOrdered;
   constructor(private dataService:FBsrvService) { }
 
   ngOnInit() {
     this.notifications = this.dataService.getNotifications();
+    
   }
 
 
@@ -26,4 +30,28 @@ public notification: Notifications = {} as Notifications;
   //     this.notification = {} as Notifications;
   //   });
   // }
+
+  remove(notif:Notifications){
+    notif.exists=false;
+    this.dataService.updateNotifications(notif)
+    console.log(notif)
+  }
+
+  reject(notif:Notifications){
+    notif.exists=false;
+    this.dataService.updateNotifications(notif)
+  }
+
+  reorder(notif:Notifications){
+   // this.reject(notif)
+    if(notif.itemID){
+    this.tobeordered.itemID=notif.itemID
+    }
+    this.dataService.addToBeOrdered(this.tobeordered).then((response) => {
+      
+      this.tobeordered = {} as ToBeOrdered;
+
+    });
+  }
+
 }
