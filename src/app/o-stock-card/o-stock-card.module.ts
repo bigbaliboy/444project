@@ -6,6 +6,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { OStockCardPageRoutingModule } from './o-stock-card-routing.module';
 
+import {Ng2SearchPipeModule} from 'ng2-search-filter';
+
 import { OStockCardPage } from './o-stock-card.page';
 
 @NgModule({
@@ -14,7 +16,9 @@ import { OStockCardPage } from './o-stock-card.page';
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
-    OStockCardPageRoutingModule
+    OStockCardPageRoutingModule,
+    Ng2SearchPipeModule
+
   ],
   declarations: [OStockCardPage]
 })

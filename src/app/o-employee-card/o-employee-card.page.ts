@@ -34,7 +34,7 @@ export class OEmployeeCardPage implements OnInit {
   public employee: Employees = {} as Employees;
   public employees!: Observable<Employees[]>;
 
-
+  searchTerm!: string;
   test = document.querySelector('#test');
   isModalOpen = false;
   chosenModel: Employees;

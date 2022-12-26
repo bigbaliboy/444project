@@ -12,7 +12,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { FBsrvService, Items } from '../fbsrv.service';
+import { FBsrvService, Items, Suppliers } from '../fbsrv.service';
 
 
 
@@ -25,7 +25,8 @@ import { FBsrvService, Items } from '../fbsrv.service';
 })
 export class OStockCardPage implements OnInit {
 
-
+  public supplier: Suppliers = {} as Suppliers;
+  public suppliers!: Observable<Suppliers[]>;
 
   //check if isModalOpen is needed
   public item: Items = {} as Items;
@@ -40,7 +41,6 @@ export class OStockCardPage implements OnInit {
   revertName: string;
   revertDemand!: string;
   revertCategory!: string;
-  revertEmail!: string;
   revertPrice!: number;
   revertQuantity!: number;
   revertSupplier!: string;
@@ -85,11 +85,11 @@ export class OStockCardPage implements OnInit {
       ]),
       Price: new FormControl(this.revertPrice, [
         Validators.required,
-        Validators.pattern('^[1-9]\d*(\.\d+)?$')
+        Validators.pattern('^[0-9]+(\.[0-9]{1,3})?$')
       ]),
       Quantity: new FormControl(this.revertQuantity, [
         Validators.required,
-        Validators.pattern('^[1-9]\d*$')
+        Validators.pattern('^[0-9]*[1-9][0-9]*$')
       ]),
       Supplier: new FormControl(this.revertSupplier, [
         Validators.required,
@@ -98,7 +98,7 @@ export class OStockCardPage implements OnInit {
       ]),
       thresholdQuantity: new FormControl(this.revertThreshold, [
         Validators.required,
-        Validators.pattern('^[1-9]\d*$')
+        Validators.pattern('^[0-9]*[1-9][0-9]*$')
       ]),
     });
     this.ionicForm2.disable();
@@ -279,7 +279,7 @@ export class OStockCardPage implements OnInit {
     this.revertName = "";
     this.revertDemand = "";
     this.revertCategory = ''
-    this.revertPrice = 0
+    this.revertPrice = 0.0
     this.revertQuantity = 0
     this.revertSupplier= ""
     this.revertThreshold = 0
@@ -303,11 +303,12 @@ export class OStockCardPage implements OnInit {
       ]),
       Price: new FormControl(this.revertPrice, [
         Validators.required,
-        Validators.pattern('^[1-9]\d*(\.\d+)?$')
+        Validators.pattern('^[0-9]+(\.[0-9]{1,3})?$')
+                            
       ]),
       Quantity: new FormControl(this.revertQuantity, [
         Validators.required,
-        Validators.pattern('^[1-9]\d*$')
+        Validators.pattern('^[0-9]*[1-9][0-9]*$')
       ]),
       Supplier: new FormControl(this.revertSupplier, [
         Validators.required,
@@ -316,7 +317,7 @@ export class OStockCardPage implements OnInit {
       ]),
       thresholdQuantity: new FormControl(this.revertThreshold, [
         Validators.required,
-        Validators.pattern('^[1-9]\d*$')
+        Validators.pattern('^[0-9]*[1-9][0-9]*$')
       ]),
       dateAdded: new FormControl(this.revertThreshold, [
         Validators.required,
@@ -329,6 +330,9 @@ export class OStockCardPage implements OnInit {
     // part of modal add
     this.presentingElement = document.querySelector('.ion-page') as any;
     this.items = this.dataService.getItems();
+    this.suppliers = this.dataService.getSuppliers();
+    this.ionicForm.reset();
+
 
   }
   // VALIDATION FOR CONFIRM PASSWORD

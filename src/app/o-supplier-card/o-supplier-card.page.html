@@ -16,7 +16,7 @@
     </ion-toolbar>
   </ion-header>
   <ion-content class="ion-padding" [fullscreen]="true">
-    <ion-searchbar show-clear-button="focus" value=""></ion-searchbar>
+    <ion-searchbar [(ngModel)]="searchTerm" show-clear-button="focus" value=""></ion-searchbar>
 
     <ion-grid [fixed]="true">
       <ion-row>
@@ -56,7 +56,7 @@
       <ion-row
         (click)="view(members)"
         class="entry"
-        *ngFor="let members of (suppliers|async); let i = index"
+        *ngFor="let members of (suppliers|async) | filter:searchTerm; let i = index"
       >
         <ion-col size="2">
           <ion-label>

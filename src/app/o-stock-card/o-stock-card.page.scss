@@ -1,0 +1,40 @@
+ion-toolbar, ion-header{
+    --ion-background-color:#fffafa;
+}
+
+ion-content{
+    --ion-background-color:#D8F3DC    ;
+    
+}
+ 
+
+
+.headline{
+    background-color: #52B788;
+}
+.entry{
+    height: 2.5em;
+    padding: 2%;
+}
+.entry:nth-child(odd){
+    
+    background-color: #95D5B2;   
+}
+
+.entry:nth-child(even){
+    
+    background-color: #B7E4C7;   
+}
+.labels{
+    // padding: 1.5%;
+    // background-color: rgb(233, 255, 245);
+    // color: #fffafa;
+}
+// B7E4C7
+// 74C69D
+// 95D5B2
+// .viewContent{
+//     background-color: #d8f3dc;
+// }
+
+
