@@ -16,6 +16,28 @@ export interface Orders {
   orderNumber: string
 }
 
+export interface Notifications{
+  id?: string,
+  type: string,
+  description: string,
+  exists : boolean,
+
+  from?: string,
+  fromDate?: string,
+  fromShift?: string,
+  to?: string,
+  toDate?: string,
+  toShift: string,
+  permit?: string,
+
+  currentQty?: number,
+  itemID?: string,
+
+  orderID?: string,
+  supplierID?: string,
+
+}
+
 export interface Invoices {
   id?: string,
   invoiceNumber: string,
@@ -50,6 +72,9 @@ export class FBsrvService {
 
   public items: Observable<Items[]>;
   public itemsCollection: AngularFirestoreCollection<Items>;
+
+  public notifications: Observable<Notifications[]>;
+  public notificationsCollection: AngularFirestoreCollection<Notifications>;
 
   constructor(private afs: AngularFirestore) {
     this.employeeCollection = this.afs.collection<Employees>('Employees');
@@ -96,6 +121,17 @@ export class FBsrvService {
       })
     );
 
+    this.notificationsCollection = this.afs.collection<Notifications>('Notifications');
+    this.notifications = this.notificationsCollection.snapshotChanges().pipe(
+      map(actions => {
+        return actions.map(a => {
+          const data = a.payload.doc.data();
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        });
+      })
+    );
+
   }
 
   getEmployees(): Observable<Employees[]> {
@@ -113,6 +149,22 @@ export class FBsrvService {
 
   deleteEmployee(id: string): Promise<void> {
     return this.employeeCollection.doc(id).delete();
+  }
+  
+  getNotifications(): Observable<Notifications[]> {
+    return this.notifications;
+  }
+
+  addNotifications(notifications: Notifications): Promise<DocumentReference> {
+    return this.notificationsCollection.add(notifications);
+  }
+
+  updateNotifications(notifications: Notifications): Promise<void> {
+    return this.notificationsCollection.doc(notifications.id).update({ exists: notifications.exists });
+  }
+
+  deleteNotification(id: string): Promise<void> {
+    return this.notificationsCollection.doc(id).delete();
   }
 
   getOrders(): Observable<Orders[]> {
