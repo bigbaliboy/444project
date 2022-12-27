@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
-import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { DocumentReference } from '@angular/fire/compat/firestore';
 import { map, take } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { AlertController } from '@ionic/angular';
 
 
 export interface Employees {
@@ -64,7 +65,7 @@ export class FBsrvService {
   public favoriteItem: Observable<Favorites[]>;
   public favoritesCollection: AngularFirestoreCollection<Favorites>;
 
-  constructor(private afs: AngularFirestore, private afAuth: AngularFireAuthModule) {
+  constructor(private afs: AngularFirestore, private afAuth: AngularFireAuth, public alertCtrl: AlertController) {
     this.employeeCollection = this.afs.collection<Employees>('Employees');
     this.employees = this.employeeCollection.snapshotChanges().pipe(
       map(actions => {
@@ -122,15 +123,43 @@ export class FBsrvService {
 
   }
 
-  // loginUser(newEmail: string, newPassword: string): Promise<any> {
-  //   return this.afAuth.auth.signInWithEmailAndPassword
-  //     (newEmail, newPassword);
-  // }
+  async Msg(header: any, msg: any) {
+    let alert = await this.alertCtrl.create({
+      header: header,
+      message: msg,
+      buttons: ['OK']
+    });
+    alert.present();
+  }
+  SignOut(): Promise<void> {
+    return this.afAuth.signOut();
+  }
+  SignUp(newEmail: string, newPassword: string): Promise<any> {
+    return this.afAuth.createUserWithEmailAndPassword(newEmail, newPassword);
+  }
+
+  SignIn(newUsername: string, newPassword: string): Promise<any> {
+    return this.afAuth.signInWithEmailAndPassword
+      (newUsername, newPassword);
+  }
 
 
   getEmployees(): Observable<Employees[]> {
     return this.employees;
   }
+
+
+  // getEmployee(id: string): Observable<Employees | undefined> {
+  //   //@ts-ignore
+  //   return this.employeeCollection.doc<Employees>(id).valueChanges().pipe(
+  //     map(employee => {
+  //       if (employee != undefined)
+  //         employee.id = id;
+  //       return employee
+  //     })
+  //   );
+  // }
+
 
 
   addEmployee(employees: Employees): Promise<DocumentReference> {

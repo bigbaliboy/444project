@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Observable} from 'rxjs';
 import { FBsrvService, Employees, Orders, Invoices, Items, Favorites } from '../fbsrv.service';
 
 
@@ -24,18 +25,25 @@ export class OrdersPage implements OnInit {
   public favorites!: Observable<Favorites[]>;
   public favorite: Favorites = {} as Favorites;
 
-  constructor(private dataService: FBsrvService) { }
+  constructor(private dataService: FBsrvService, private firestore: AngularFirestore ) { }
 
   segmentChanged(ev: any) {
     console.log('Segment changed', ev);
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.employees = this.dataService.getEmployees();
     this.orders = this.dataService.getOrders();
     this.invoices = this.dataService.getInvoices();
     this.items = this.dataService.getItems();
     this.favorites = this.dataService.getFavorites();
+    let x = this.firestore.collection('Employees', ref=>
+    ref.where('gender', '==', 'Male'))
+    .get();
+    // let y = await lastValueFrom(x);
+    // this.employee.cpr = y.size;
+    console.log(x);
+    console.log('Hi');
   }
 
 

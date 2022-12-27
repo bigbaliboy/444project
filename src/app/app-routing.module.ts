@@ -29,7 +29,8 @@ const routes: Routes = [
   {
     path: 'reports',
     loadChildren: () => import('./reports/reports.module').then( m => m.ReportsPageModule)
-  },  {
+  },
+  {
     path: 'orders',
     loadChildren: () => import('./orders/orders.module').then( m => m.OrdersPageModule)
   },
@@ -37,6 +38,18 @@ const routes: Routes = [
     path: 'create-order',
     loadChildren: () => import('./create-order/create-order.module').then( m => m.CreateOrderPageModule)
   }
+  // {
+  //   path: 'employee-view',
+  //   loadChildren: () => import('./employee-view/employee-view.module').then( m => m.EmployeeViewPageModule)
+  // },
+  // {
+  //   path: 'employee-view1',
+  //   loadChildren: () => import('./employee-view1/employee-view1.module').then( m => m.EmployeeView1PageModule)
+  // },
+  // {
+  //   path: 'employee-view2',
+  //   loadChildren: () => import('./employee-view2/employee-view2.module').then( m => m.EmployeeView2PageModule)
+  // }
 
 
 ];

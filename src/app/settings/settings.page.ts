@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { FBsrvService } from '../fbsrv.service';
 
 @Component({
   selector: 'app-settings',
@@ -9,7 +11,11 @@ import { AlertController } from '@ionic/angular';
 export class SettingsPage implements OnInit {
 
 
-  constructor(public alertCtrl: AlertController) {
+  constructor(public alertCtrl: AlertController, public FB:FBsrvService, public router: Router) {
+  }
+  signOut(){
+    this.FB.SignOut()
+    this.router.navigateByUrl('/home')
   }
   ngOnInit() {
   }
