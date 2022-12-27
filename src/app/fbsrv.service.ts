@@ -111,6 +111,12 @@ export interface Suppliers{
 export class FBsrvService {
   public masterEmail: string;
   public userType: string;
+  public loggedUser: Employees ={} as Employees
+  public loggedSup:  Suppliers ={} as Suppliers
+
+
+
+
   public employees: Observable<Employees[]>;
   public employeeCollection: AngularFirestoreCollection<Employees>;
   public test: Employees ={} as Employees
@@ -136,7 +142,7 @@ export class FBsrvService {
   public tobeorderedCollection: AngularFirestoreCollection<ToBeOrdered>;
 
   constructor(private afs: AngularFirestore, private afAuth: AngularFireAuth, public alertCtrl: AlertController) {
-
+    
     this.masterEmail=''
     this.userType=''
     this.employeeCollection = this.afs.collection<Employees>('Employees');
@@ -412,5 +418,7 @@ export class FBsrvService {
   deleteItems(id?: string): Promise<void> {
     return this.itemsCollection.doc(id).delete();
   }
+
+  
 
   }

@@ -3,6 +3,8 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { FBsrvService } from '../fbsrv.service';
 import { AnimationController } from "@ionic/angular"
+import { lastValueFrom } from 'rxjs/internal/lastValueFrom';
+import { Employee, Supplier } from '../data.service';
 
 
 @Component({
@@ -21,15 +23,54 @@ export class HomePage implements OnInit {
 
 
 
-  constructor(public router: Router, public FB: FBsrvService, private animationCtrl: AnimationController) { }
+  constructor(public router: Router, public FB: FBsrvService, private animationCtrl: AnimationController, private firestore: AngularFirestore) { }
   ngAfterViewInit() {
     this.pulseButton()
   }
-
-  setUType(uName: string) {
+  log:any
+  async setUType(uName: string) {
     this.userSplit = uName.split('@')
     this.userSplit = this.userSplit[1].split('.')
     this.FB.userType = this.userSplit[0]
+    if(this.FB.userType=='supplier'){
+      let x = this.firestore
+      .collection('Suppliers', (ref) => ref.where('email', '==', this.FB.masterEmail))
+      .get();
+    let y = await lastValueFrom(x);
+    this.log = y.docs.map(doc => doc.data())
+
+    this.FB.loggedSup=<Supplier>this.FB.loggedSup
+    this.FB.loggedSup.name=this.log[0].name
+    this.FB.loggedSup.email=this.log[0].email
+    this.FB.loggedSup.website= this.log[0].website
+    this.FB.loggedSup.itemSup=this.log[0].itemSup
+    this.FB.loggedSup.pwd=this.log[0].pwd
+    this.FB.loggedSup.mobile=this.log[0].mobile
+    console.log(this.log[0])
+    }
+    else{
+      let x = this.firestore
+      .collection('Employees', (ref) => ref.where('email', '==', this.FB.masterEmail))
+      .get();
+    let y = await lastValueFrom(x);
+    this.log = y.docs.map(doc => doc.data())
+    console.log(this.log)
+
+    this.FB.loggedUser=<Employee>this.FB.loggedUser
+    this.FB.loggedUser.name=this.log[0].name
+    this.FB.loggedUser.email=this.log[0].email
+    this.FB.loggedUser.pwd=this.log[0].pwd
+    this.FB.loggedUser.cpr=this.log[0].cpr
+    this.FB.loggedUser.mobile=this.log[0].mobile
+    this.FB.loggedUser.jobRole=this.log[0].jobRole
+    this.FB.loggedUser.gender=this.log[0].gender
+    }
+
+
+
+  console.log(this.FB.userType)
+
+
   }
 
   SignIn() {
@@ -43,7 +84,7 @@ export class HomePage implements OnInit {
         if (this.FB.userType == "owner")
           this.router.navigateByUrl('/tabs');
         else if (this.FB.userType == "supplier")
-          this.router.navigateByUrl('/settings');
+          this.router.navigateByUrl('/tabs');
         else
           this.router.navigateByUrl('/employee-view');
       })
