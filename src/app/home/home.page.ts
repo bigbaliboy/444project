@@ -3,7 +3,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { FBsrvService } from '../fbsrv.service';
 import { AnimationController } from "@ionic/angular"
-import { lastValueFrom } from 'rxjs/internal/lastValueFrom';
+import { lastValueFrom } from 'rxjs';
 import { Employee, Supplier } from '../data.service';
 
 
