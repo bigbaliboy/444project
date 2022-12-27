@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { DocumentReference } from '@angular/fire/compat/firestore';
 import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, lastValueFrom} from 'rxjs';
 
 
 export interface Employees {
@@ -91,6 +91,7 @@ export class FBsrvService {
   public masterID: string;
   public employees: Observable<Employees[]>;
   public employeeCollection: AngularFirestoreCollection<Employees>;
+  public test: Employees ={} as Employees
 
   public suppliers: Observable<Suppliers[]>;
   public supplierCollection: AngularFirestoreCollection<Suppliers>;
@@ -191,6 +192,23 @@ export class FBsrvService {
 
   }
 
+
+  // getEmployee(id: string): Observable<Employees | undefined> {
+  //   //@ts-ignore
+  //   return this.employeeCollection.doc<Employees>(id).valueChanges().pipe(
+  //     map(employee => {
+  //       if (employee != undefined)
+  //         employee.id = id;
+  //       return employee
+  //     })
+  //   );
+  // }
+  // getEmployeebyID(id: any):Employees {
+  //   // return this.supplierCollection.doc(id);
+  //   this.employees.subscribe((data)=>{
+  //   this.test.id=data[id].id})
+  //   return this.test
+  // }
 
   
   getEmployees(): Observable<Employees[]> {
