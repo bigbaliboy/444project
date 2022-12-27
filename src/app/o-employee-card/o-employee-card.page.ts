@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {
   ActionSheetController,
-  AlertController
+  AlertController,NavController
 } from '@ionic/angular';
 import { DataService } from '../data.service';
 import { Router } from '@angular/router';
@@ -241,7 +241,8 @@ export class OEmployeeCardPage implements OnInit {
     public DataSrv: DataService,
     public formBuilder: FormBuilder,
     public formBuilder2: FormBuilder,
-    private dataService: FBsrvService
+    private dataService: FBsrvService,
+    private navCtrl: NavController
   ) {
     
     this.isEdit = true;
@@ -416,5 +417,9 @@ export class OEmployeeCardPage implements OnInit {
 
   // END OF ADD PAGE FUNCTIONS
   // Modal page for View
+
+  previous() {
+    this.navCtrl.back();
+}
 }
 // --------------------------

@@ -16,6 +16,7 @@ export class Tab3Page {
   }
 
   Edit(){
+    
     this.isEdit=false
     this.isSave=true
   }

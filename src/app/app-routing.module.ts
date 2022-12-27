@@ -54,6 +54,24 @@ const routes: Routes = [
   //   path: 'employee-view2',
   //   loadChildren: () => import('./employee-view2/employee-view2.module').then( m => m.EmployeeView2PageModule)
   // }
+    path: 'employee-profile',
+    loadChildren: () => import('./employee-profile/employee-profile.module').then( m => m.EmployeeProfilePageModule)
+  },
+  {
+    path: 'employee-home',
+    loadChildren: () => import('./employee-home/employee-home.module').then( m => m.EmployeeHomePageModule)
+  },
+  {
+    path: 'supplier-profile',
+    loadChildren: () => import('./supplier-profile/supplier-profile.module').then( m => m.SupplierProfilePageModule)
+  },
+  {
+    path: 'supplier-home',
+    loadChildren: () => import('./supplier-home/supplier-home.module').then( m => m.SupplierHomePageModule)
+  },
+
+  
+    
 
 
 ];

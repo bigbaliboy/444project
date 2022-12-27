@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { FBsrvService } from '../fbsrv.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-settings',
@@ -11,14 +12,12 @@ import { FBsrvService } from '../fbsrv.service';
 export class SettingsPage implements OnInit {
 
 
-  constructor(public alertCtrl: AlertController, public FB:FBsrvService, public router: Router) {
+  constructor(public alertCtrl: AlertController, public FB:FBsrvService, public router: Router, ) {
   }
   signOut(){
     this.FB.SignOut()
     this.router.navigateByUrl('/home')
-  }
-  ngOnInit() {
-  }
+
 
 
   // async showContacts() {
@@ -58,5 +57,9 @@ export class SettingsPage implements OnInit {
 
     }
   }
+
+  previous() {
+    this.navCtrl.back();
+}
 }
 
