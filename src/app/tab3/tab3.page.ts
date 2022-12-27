@@ -20,16 +20,14 @@ export class Tab3Page {
     this.isEdit = true;
   }
 
-  loggedUsers:any;
+  loggedUser:any;
 
   async ngOnInit() {
     let x = this.firestore
-      .collection('Employees', (ref) => ref.where('cpr', '==', 'nwsAJKS94WswgDzexue8'))
+      .collection('Employees', (ref) => ref.where('email', '==', this.dataService.masterEmail))
       .get();
-      let z = this.firestore.collection('Employees', (ref) => ref.where('cpr', '==', 'nwsAJKS94WswgDzexue8') ).doc.toString
     let y = await lastValueFrom(x);
-    this.loggedUsers = y.docs.map(doc => doc.data())
-
+    this.loggedUser = y.docs.map(doc => doc.data())
   }
 
 

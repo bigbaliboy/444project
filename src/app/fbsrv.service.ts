@@ -109,7 +109,8 @@ export interface Suppliers{
   providedIn: 'root'
 })
 export class FBsrvService {
-  public masterID: string;
+  public masterEmail: string;
+  public userType: string;
   public employees: Observable<Employees[]>;
   public employeeCollection: AngularFirestoreCollection<Employees>;
   public test: Employees ={} as Employees
@@ -136,7 +137,8 @@ export class FBsrvService {
 
   constructor(private afs: AngularFirestore, private afAuth: AngularFireAuth, public alertCtrl: AlertController) {
 
-    this.masterID='nwsAJKS94WswgDzexue8'
+    this.masterEmail=''
+    this.userType=''
     this.employeeCollection = this.afs.collection<Employees>('Employees');
     this.employees = this.employeeCollection.snapshotChanges().pipe(
       map(actions => {
@@ -259,7 +261,6 @@ export class FBsrvService {
   SignIn(newUsername: string, newPassword: string): Promise<any> {
 
     return this.afAuth.signInWithEmailAndPassword
-
       (newUsername, newPassword);
 
   }
