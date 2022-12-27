@@ -12,13 +12,14 @@ import { NavController } from '@ionic/angular';
 export class SettingsPage implements OnInit {
 
 
-  constructor(public alertCtrl: AlertController, public FB:FBsrvService, public router: Router, ) {
+  constructor(public alertCtrl: AlertController, public FB:FBsrvService, public router: Router, private navCtrl: NavController) {
+  }
+  ngOnInit() {
   }
   signOut(){
     this.FB.SignOut()
     this.router.navigateByUrl('/home')
-
-
+  }
 
   // async showContacts() {
   //   let alert = await this.alertCtrl.create({
@@ -60,6 +61,6 @@ export class SettingsPage implements OnInit {
 
   previous() {
     this.navCtrl.back();
-}
+  }
 }
 

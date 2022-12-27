@@ -78,6 +78,7 @@ export interface Favorites {
   orderSupplier: string,
   orderQuantity: number
   orderItems: string
+}
 export interface Items{
   id?:string,
   Name: string,
@@ -126,15 +127,14 @@ export class FBsrvService {
 
   public favoriteItem: Observable<Favorites[]>;
   public favoritesCollection: AngularFirestoreCollection<Favorites>;
-
-  constructor(private afs: AngularFirestore, private afAuth: AngularFireAuth, public alertCtrl: AlertController) {
   public notifications: Observable<Notifications[]>;
   public notificationsCollection: AngularFirestoreCollection<Notifications>;
 
   public tobeordered: Observable<ToBeOrdered[]>;
   public tobeorderedCollection: AngularFirestoreCollection<ToBeOrdered>;
 
-  constructor(private afs: AngularFirestore) {
+  constructor(private afs: AngularFirestore, private afAuth: AngularFireAuth, public alertCtrl: AlertController) {
+
     this.masterID='nwsAJKS94WswgDzexue8'
     this.employeeCollection = this.afs.collection<Employees>('Employees');
     this.employees = this.employeeCollection.snapshotChanges().pipe(
@@ -193,6 +193,15 @@ export class FBsrvService {
 
     this.favoritesCollection = this.afs.collection<Favorites>('Favorites');
     this.favoriteItem = this.favoritesCollection.snapshotChanges().pipe(
+      map(actions => {
+        return actions.map(a => {
+          const data = a.payload.doc.data();
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        });
+      })
+    );
+
     this.notificationsCollection = this.afs.collection<Notifications>('Notifications');
     this.notifications = this.notificationsCollection.snapshotChanges().pipe(
       map(actions => {
@@ -346,6 +355,7 @@ export class FBsrvService {
 
   addFavorites(favorites: Favorites): Promise<DocumentReference> {
     return this.favoritesCollection.add(favorites);
+  }
   addItems(items: Items): Promise<DocumentReference> {
     return this.itemsCollection.add(items);
   }
@@ -367,6 +377,4 @@ export class FBsrvService {
     return this.itemsCollection.doc(id).delete();
   }
 
-
-
-}
+  }
