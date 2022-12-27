@@ -30,9 +30,9 @@
   <br /><br />
   
   <ion-list>
-    <ion-item lines="inset" style="font-size: 1.5em">
+    <ion-item [(ngModel)]="name" lines="inset" style="font-size: 1.5em">
       <ion-icon size="large" slot="start" name="person-outline"></ion-icon>
-      <ion-input [disabled]="isEdit">Akheel Nazim</ion-input>
+      <ion-input [disabled]="isEdit">{{name}}</ion-input>
     </ion-item>
     <ion-item lines="inset" style="font-size: 1.5em">
       <ion-icon size="large" slot="start" name="call-outline"></ion-icon>

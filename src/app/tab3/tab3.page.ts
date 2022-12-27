@@ -12,6 +12,7 @@ import { Employees, FBsrvService } from '../fbsrv.service';
 export class Tab3Page {
   isEdit: boolean;
   isSave: boolean = false;
+  
   constructor(
     private firestore: AngularFirestore,
     private dataService: FBsrvService,
@@ -20,14 +21,11 @@ export class Tab3Page {
     this.isEdit = true;
   }
 
-  loggedUser:any;
-
-  async ngOnInit() {
-    let x = this.firestore
-      .collection('Employees', (ref) => ref.where('email', '==', this.dataService.masterEmail))
-      .get();
-    let y = await lastValueFrom(x);
-    this.loggedUser = y.docs.map(doc => doc.data())
+  name!:string
+  
+  ngOnInit() {
+    this.name=this.dataService.loggedUser.name
+    
   }
 
 
