@@ -16,7 +16,7 @@ export class SupplierHomePage implements OnInit {
 
   today:any;
   constructor(private dataService: FBsrvService) { 
-  const loginID=this.dataService.masterID
+  // const loginID=this.dataService.masterID
   this.today = Date.now();
   }
   ngOnInit() {

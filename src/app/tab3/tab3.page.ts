@@ -1,28 +1,45 @@
-import { Component } from '@angular/core';
-
-
+import { Component, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { ActivatedRoute } from '@angular/router';
+import { Observable, lastValueFrom } from 'rxjs';
+import { Employees, FBsrvService } from '../fbsrv.service';
 
 @Component({
   selector: 'app-tab3',
   templateUrl: 'tab3.page.html',
-  styleUrls: ['tab3.page.scss']
+  styleUrls: ['tab3.page.scss'],
 })
-
 export class Tab3Page {
-   isEdit:boolean;
-   isSave:boolean = false;
-  constructor() {
-    this.isEdit=true
+  isEdit: boolean;
+  isSave: boolean = false;
+  constructor(
+    private firestore: AngularFirestore,
+    private dataService: FBsrvService,
+    private activatedRoute: ActivatedRoute
+  ) {
+    this.isEdit = true;
   }
+
+  loggedUser:any;
+
+  async ngOnInit() {
+    let x = this.firestore
+      .collection('Employees', (ref) => ref.where('email', '==', this.dataService.masterEmail))
+      .get();
+    let y = await lastValueFrom(x);
+    this.loggedUser = y.docs.map(doc => doc.data())
+  }
+
+
 
   Edit(){
     
     this.isEdit=false
     this.isSave=true
   }
-  Save(){
-    this.isEdit=true
-    this.isSave=false
+  Save() {
+    this.isEdit = true;
+    this.isSave = false;
   }
   
-}
+  }

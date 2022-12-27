@@ -25,7 +25,7 @@ export class Tab2Page {
   
 
   constructor(private dataService: FBsrvService) {
-    const loginID=this.dataService.masterID
+    // const loginID=this.dataService.masterID
     this.today = Date.now();
 
   //   this.firestore.collection('Employees', ref => 

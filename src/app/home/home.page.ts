@@ -18,7 +18,7 @@ export class HomePage implements OnInit {
   public password!: string;
 
   private userSplit!: string[];
-  public userType!: string;
+
 
 
   constructor(public router: Router, public FB: FBsrvService, private animationCtrl: AnimationController) { }
@@ -29,22 +29,20 @@ export class HomePage implements OnInit {
   setUType(uName: string) {
     this.userSplit = uName.split('@')
     this.userSplit = this.userSplit[1].split('.')
-    this.userType = this.userSplit[0]
-    console.log(this.userType)
+    this.FB.userType = this.userSplit[0]
   }
 
   SignIn() {
     this.FB.SignIn(this.userName, this.password)
       .then(() => {
-        console.log(this.userName);
-        console.log(this.userType);
+        this.FB.masterEmail=this.userName
         this.setUType(this.userName);
       })
       .then(() => {
         this.FB.Msg("SignIn", "Welcome " + this.userName);
-        if (this.userType == "owner")
+        if (this.FB.userType == "owner")
           this.router.navigateByUrl('/tabs');
-        else if (this.userType == "supplier")
+        else if (this.FB.userType == "supplier")
           this.router.navigateByUrl('/settings');
         else
           this.router.navigateByUrl('/employee-view');
