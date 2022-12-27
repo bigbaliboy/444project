@@ -109,9 +109,11 @@ export interface Suppliers{
   providedIn: 'root'
 })
 export class FBsrvService {
-  public masterID: string;
+  public masterEmail: string;
+  public userType: string;
   public employees: Observable<Employees[]>;
   public employeeCollection: AngularFirestoreCollection<Employees>;
+  public test: Employees ={} as Employees
 
   public suppliers: Observable<Suppliers[]>;
   public supplierCollection: AngularFirestoreCollection<Suppliers>;
@@ -135,7 +137,8 @@ export class FBsrvService {
 
   constructor(private afs: AngularFirestore, private afAuth: AngularFireAuth, public alertCtrl: AlertController) {
 
-    this.masterID='nwsAJKS94WswgDzexue8'
+    this.masterEmail=''
+    this.userType=''
     this.employeeCollection = this.afs.collection<Employees>('Employees');
     this.employees = this.employeeCollection.snapshotChanges().pipe(
       map(actions => {
@@ -225,28 +228,61 @@ export class FBsrvService {
     );
 
   }
-
   async Msg(header: any, msg: any) {
+
     let alert = await this.alertCtrl.create({
+
       header: header,
+
       message: msg,
+
       buttons: ['OK']
+
     });
+
     alert.present();
+
   }
+
   SignOut(): Promise<void> {
+
     return this.afAuth.signOut();
+
   }
+
   SignUp(newEmail: string, newPassword: string): Promise<any> {
+
     return this.afAuth.createUserWithEmailAndPassword(newEmail, newPassword);
+
   }
+
+
 
   SignIn(newUsername: string, newPassword: string): Promise<any> {
+
     return this.afAuth.signInWithEmailAndPassword
       (newUsername, newPassword);
+
   }
 
+  // getEmployee(id: string): Observable<Employees | undefined> {
+  //   //@ts-ignore
+  //   return this.employeeCollection.doc<Employees>(id).valueChanges().pipe(
+  //     map(employee => {
+  //       if (employee != undefined)
+  //         employee.id = id;
+  //       return employee
+  //     })
+  //   );
+  // }
+  // getEmployeebyID(id: any):Employees {
+  //   // return this.supplierCollection.doc(id);
+  //   this.employees.subscribe((data)=>{
+  //   this.test.id=data[id].id})
+  //   return this.test
+  // }
 
+  
   getEmployees(): Observable<Employees[]> {
     return this.employees;
   }
