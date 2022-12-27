@@ -33,7 +33,27 @@ const routes: Routes = [
   {
     path: 'reports',
     loadChildren: () => import('./reports/reports.module').then( m => m.ReportsPageModule)
-  }
+  },
+  {
+    path: 'employee-profile',
+    loadChildren: () => import('./employee-profile/employee-profile.module').then( m => m.EmployeeProfilePageModule)
+  },
+  {
+    path: 'employee-home',
+    loadChildren: () => import('./employee-home/employee-home.module').then( m => m.EmployeeHomePageModule)
+  },
+  {
+    path: 'supplier-profile',
+    loadChildren: () => import('./supplier-profile/supplier-profile.module').then( m => m.SupplierProfilePageModule)
+  },
+  {
+    path: 'supplier-home',
+    loadChildren: () => import('./supplier-home/supplier-home.module').then( m => m.SupplierHomePageModule)
+  },
+
+  
+    
+
 
 ];
 @NgModule({

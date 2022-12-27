@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-settings',
@@ -9,7 +10,7 @@ import { AlertController } from '@ionic/angular';
 export class SettingsPage implements OnInit {
 
 
-  constructor(public alertCtrl: AlertController) {
+  constructor(public alertCtrl: AlertController,private navCtrl: NavController) {
   }
   ngOnInit() {
   }
@@ -52,5 +53,9 @@ export class SettingsPage implements OnInit {
 
     }
   }
+
+  previous() {
+    this.navCtrl.back();
+}
 }
 
