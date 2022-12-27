@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { DocumentReference } from '@angular/fire/compat/firestore';
 import { map } from 'rxjs/operators';
-import { Observable, lastValueFrom} from 'rxjs';
+import { Observable } from 'rxjs';
+import { AlertController } from '@ionic/angular';
+
 
 
 export interface Employees {
@@ -18,9 +21,10 @@ export interface Employees {
 
 export interface Orders {
   id?: string,
-  Quantity: string,
+  Quantity: number,
+  items: string,
   Supplier: string,
-  orderNumber: string
+  orderNumber?: string
 }
 
 export interface Notifications{
@@ -53,11 +57,28 @@ export interface ToBeOrdered {
 export interface Invoices {
   id?: string,
   invoiceNumber: string,
-  Products: string, 
+  Products: string,
   Quantity: string,
   totalPrice: string
 }
 
+export interface Items {
+  id?: string,
+  Demand: string,
+  Category: string,
+  Price: number,
+  Quantity: number,
+  Supplier: string,
+  Name: string,
+  thresholdQuantity: number
+}
+
+export interface Favorites {
+  id?: string,
+  orderSupplier: string,
+  orderQuantity: number
+  orderItems: string
+}
 export interface Items{
   id?:string,
   Name: string,
@@ -105,13 +126,16 @@ export class FBsrvService {
   public items: Observable<Items[]>;
   public itemsCollection: AngularFirestoreCollection<Items>;
 
+  public favoriteItem: Observable<Favorites[]>;
+  public favoritesCollection: AngularFirestoreCollection<Favorites>;
   public notifications: Observable<Notifications[]>;
   public notificationsCollection: AngularFirestoreCollection<Notifications>;
 
   public tobeordered: Observable<ToBeOrdered[]>;
   public tobeorderedCollection: AngularFirestoreCollection<ToBeOrdered>;
 
-  constructor(private afs: AngularFirestore) {
+  constructor(private afs: AngularFirestore, private afAuth: AngularFireAuth, public alertCtrl: AlertController) {
+
     this.masterID='nwsAJKS94WswgDzexue8'
     this.employeeCollection = this.afs.collection<Employees>('Employees');
     this.employees = this.employeeCollection.snapshotChanges().pipe(
@@ -168,6 +192,17 @@ export class FBsrvService {
       })
     );
 
+    this.favoritesCollection = this.afs.collection<Favorites>('Favorites');
+    this.favoriteItem = this.favoritesCollection.snapshotChanges().pipe(
+      map(actions => {
+        return actions.map(a => {
+          const data = a.payload.doc.data();
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        });
+      })
+    );
+
     this.notificationsCollection = this.afs.collection<Notifications>('Notifications');
     this.notifications = this.notificationsCollection.snapshotChanges().pipe(
       map(actions => {
@@ -214,6 +249,19 @@ export class FBsrvService {
   getEmployees(): Observable<Employees[]> {
     return this.employees;
   }
+
+
+  // getEmployee(id: string): Observable<Employees | undefined> {
+  //   //@ts-ignore
+  //   return this.employeeCollection.doc<Employees>(id).valueChanges().pipe(
+  //     map(employee => {
+  //       if (employee != undefined)
+  //         employee.id = id;
+  //       return employee
+  //     })
+  //   );
+  // }
+
 
 
   addEmployee(employees: Employees): Promise<DocumentReference> {
@@ -283,14 +331,30 @@ export class FBsrvService {
     return this.orders;
   }
 
-  getInvoices(): Observable<Invoices[]>{
+  getInvoices(): Observable<Invoices[]> {
     return this.invoices;
   }
- 
-  getItems(): Observable<Items[]>{
+
+  addInvoices(invoices: Invoices): Promise<DocumentReference> {
+    return this.invoicesCollection.add(invoices);
+  }
+
+  addOrders(orders: Orders): Promise<DocumentReference> {
+    return this.ordersCollection.add(orders);
+  }
+
+
+  getItems(): Observable<Items[]> {
     return this.items;
   }
 
+  getFavorites(): Observable<Favorites[]> {
+    return this.favoriteItem;
+  }
+
+  addFavorites(favorites: Favorites): Promise<DocumentReference> {
+    return this.favoritesCollection.add(favorites);
+  }
   addItems(items: Items): Promise<DocumentReference> {
     return this.itemsCollection.add(items);
   }
@@ -312,6 +376,4 @@ export class FBsrvService {
     return this.itemsCollection.doc(id).delete();
   }
 
-
-
-}
+  }

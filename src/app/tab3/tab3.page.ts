@@ -32,13 +32,16 @@ export class Tab3Page {
 
   }
 
-  Edit() {
-    this.isEdit = false;
-    this.isSave = true;
 
+
+  Edit(){
+    
+    this.isEdit=false
+    this.isSave=true
   }
   Save() {
     this.isEdit = true;
     this.isSave = false;
   }
-}
+  
+  }

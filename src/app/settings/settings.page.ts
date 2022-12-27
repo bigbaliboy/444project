@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { FBsrvService } from '../fbsrv.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-settings',
@@ -9,11 +12,14 @@ import { AlertController } from '@ionic/angular';
 export class SettingsPage implements OnInit {
 
 
-  constructor(public alertCtrl: AlertController) {
+  constructor(public alertCtrl: AlertController, public FB:FBsrvService, public router: Router, private navCtrl: NavController) {
   }
   ngOnInit() {
   }
-
+  signOut(){
+    this.FB.SignOut()
+    this.router.navigateByUrl('/home')
+  }
 
   // async showContacts() {
   //   let alert = await this.alertCtrl.create({
@@ -51,6 +57,10 @@ export class SettingsPage implements OnInit {
       document.body.setAttribute('color-theme', 'light');
 
     }
+  }
+
+  previous() {
+    this.navCtrl.back();
   }
 }
 

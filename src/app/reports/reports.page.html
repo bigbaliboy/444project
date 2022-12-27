@@ -85,13 +85,11 @@
         <ion-card-title>Order {{order.orderNumber}}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        Total Price:
+        Total Price: 
         Supplier: {{order.Supplier}}
         Quantity: {{order.Quantity}}
       </ion-card-content>
     </ion-card>
-
-
   </div>
 
   <div *ngIf="selectTabs == 'invoices'">
@@ -110,29 +108,169 @@
   <div *ngIf="selectTabs == 'filteredList'">
     <ion-searchbar placeholder="Search" [(ngModel)]="searchTerm" showCancelButton="focus" animated>
     </ion-searchbar>
+
     <!-- <ion-list>
-      <ion-item *ngFor="let item of (items|async) | filter:searchTerm">
-        <ion-label>{{item.Name}}</ion-label>
-        <ion-label>{{item.Price}}</ion-label>
-        <ion-label>{{item.Category}}</ion-label>
-        <ion-label>{{item.Quantity}}</ion-label>
-        <ion-label>{{item.Supplier}}</ion-label>
-        <ion-label>{{item.Demand}}</ion-label>
-        <ion-label>{{item.thresholdQuantity}}</ion-label>
-      </ion-item>
-    </ion-list> -->
-
-    <ion-list>
       <ion-item-divider>
-        <ion-label>CATEGORY</ion-label>
-      </ion-item-divider>
-      <ion-item>
-        <ion-checkbox></ion-checkbox>
-        <ion-label>Rabie</ion-label>
-      </ion-item>
-    </ion-list>
+        <ion-label>SUPPLIER</ion-label>
+      </ion-item-divider> -->
+    <!-- <ion-item>
+        <ion-checkbox value="Rabie"></ion-checkbox>
+        <ion-label style="padding-left: 3%;">Rabie</ion-label>
+        <ion-checkbox value="Marai"></ion-checkbox>
+        <ion-label style="padding-left: 3%;">Marai</ion-label>
+      </ion-item> -->
 
-    <ion-item-group *ngFor="let item of (items|async) | filter:searchTerm">
+    <div>
+      <ion-button id="open-modal">Filter</ion-button>
+      <ion-modal #modal trigger="open-modal" [presentingElement]="presentingElement">
+        <ng-template>
+          <ion-header>
+            <ion-toolbar>
+              <ion-title>Filters</ion-title>
+              <ion-buttons slot="end">
+                <ion-button (click)="clear()" slot="end">Clear</ion-button>
+                <ion-button (click)="testAndClose()" (click)="modal.dismiss()" slot="start">
+                  <ion-icon name="close"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-toolbar>
+          </ion-header>
+
+          <ion-content>
+            <ion-list>
+              <ion-item-group>
+                <ion-item-divider>
+                  <ion-label>
+                    Supplier
+                  </ion-label>
+                </ion-item-divider>
+              </ion-item-group>
+
+              <ion-grid>
+                <ion-radio-group [(ngModel)]="Supplier">
+                  <ion-row>
+                    <ion-col>
+                      <ion-item>
+                        <ion-label>Rabie</ion-label>
+                        <ion-radio slot="start" value="Rabie"></ion-radio>
+                      </ion-item>
+                    </ion-col>
+                    <ion-col>
+                      <ion-item>
+                        <ion-label>Marai</ion-label>
+                        <ion-radio slot="start" value="Marai"></ion-radio>
+                      </ion-item>
+                    </ion-col>
+                  </ion-row>
+                </ion-radio-group>
+              </ion-grid>
+
+
+
+              <ion-item-group>
+                <ion-item-divider>
+                  <ion-label>
+                    Demand
+                  </ion-label>
+                </ion-item-divider>
+              </ion-item-group>
+
+              <ion-grid>
+                <ion-radio-group [(ngModel)]="Demand">
+                  <ion-row>
+                    <ion-col>
+                      <ion-item>
+                        <ion-label>Fast-moving Items</ion-label>
+                        <ion-radio slot="start" value="High"></ion-radio>
+                      </ion-item>
+                    </ion-col>
+                    <ion-col>
+                      <ion-item>
+                        <ion-label>Slow-moving Items</ion-label>
+                        <ion-radio slot="start" value="Low"></ion-radio>
+                      </ion-item>
+                    </ion-col>
+                  </ion-row>
+                </ion-radio-group>
+              </ion-grid>
+
+
+              <ion-item-group>
+                <ion-item-divider>
+                  <ion-label>
+                    Category
+                  </ion-label>
+                </ion-item-divider>
+              </ion-item-group>
+
+              <ion-grid>
+                <ion-radio-group [(ngModel)]="Category">
+                  <ion-row>
+                    <ion-col>
+                      <ion-item>
+                        <ion-label>Beverages</ion-label>
+                        <ion-radio slot="start" value="Beverages"></ion-radio>
+                      </ion-item>
+                    </ion-col>
+                    <ion-col>
+                      <ion-item>
+                        <ion-label>Dairy Products</ion-label>
+                        <ion-radio slot="start" value="Dairy Products"></ion-radio>
+                      </ion-item>
+                    </ion-col>
+                  </ion-row>
+                </ion-radio-group>
+              </ion-grid>
+
+              <ion-item-group>
+                <ion-item-divider>
+                  <ion-label>
+                    Quantity
+                  </ion-label>
+                </ion-item-divider>
+              </ion-item-group>
+
+              <ion-item>
+                <ion-label>
+                  <ion-range [ticks]="true" [snaps]="true" [min]="0" [max]="30" [pin]="true" [pinFormatter]="pinFormatter" [(ngModel)]="qt"></ion-range>
+                </ion-label>
+              </ion-item>
+
+
+              <ion-item-group>
+                <ion-item-divider>
+                  <ion-label>
+                    Price
+                  </ion-label>
+                </ion-item-divider>
+              </ion-item-group>
+
+              <ion-item>
+                <ion-label>
+                  <ion-range [pin]="true" [pinFormatter]="pinFormatter" [(ngModel)]="qt"></ion-range>
+                </ion-label>
+              </ion-item>
+
+            </ion-list>
+          </ion-content>
+        </ng-template>
+      </ion-modal>
+    </div>
+
+    <!-- </ion-list> -->
+
+    <ion-item-group
+      *ngFor="let item of (items|async) | filter:Supplier | filter: searchTerm | filter:Demand | filter: Category | filter: Quantity">
+      <ion-item>
+        <ion-thumbnail>
+          <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+        </ion-thumbnail>
+        <ion-label style="padding-left: 4%;">{{item.Name}}</ion-label>
+        <ion-label>{{item.Quantity}} Pieces</ion-label>
+      </ion-item>
+    </ion-item-group>
+
+    <!-- <ion-item-group *ngFor="let item of (items|async) | filter:searchTerm">
       <ion-item>
         <ion-thumbnail>
           <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
@@ -140,33 +278,8 @@
         <ion-label style="padding-left: 4%;">{{item.Name}}</ion-label>
         <ion-label>{{item.Quantity}}</ion-label>
       </ion-item>
-      <!-- <ion-item-divider>
-        <ion-label>{{item.Name}}</ion-label>
-      </ion-item-divider>
-      <ion-item>
-        <ion-label>Price:</ion-label>
-        <ion-label>{{item.Price}}</ion-label>
-      </ion-item>
-      <ion-item>
-        <ion-label>Category</ion-label>
-        <ion-label>{{item.Category}}</ion-label>
-      </ion-item>
-      <ion-item>
-        <ion-label>Quantity</ion-label>
-        <ion-label>{{item.Quantity}}</ion-label>
-      </ion-item>
-      <ion-item>
-        <ion-label>Supplier:</ion-label>
-        <ion-label>{{item.Supplier}}</ion-label>
-      </ion-item>
-      <ion-item>
-        <ion-label>Demand:</ion-label>
-        <ion-label>{{item.Demand}}</ion-label>
-      </ion-item>
-      <ion-item>
-        <ion-label>Threshold Quantity:</ion-label>
-        <ion-label>{{item.thresholdQuantity}}</ion-label>
-      </ion-item> -->
-    </ion-item-group> 
+    </ion-item-group> -->
   </div>
+
+
 </ion-content>

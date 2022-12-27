@@ -1,0 +1,222 @@
+
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar>
+    <div class="titleLogo">
+      <ion-grid fixed>
+        <ion-row>
+          <ion-col size="1">
+            <ion-button fill="clear" id="settings" routerLink="/settings" routerDirection="root">
+              <ion-icon
+                slot="start"
+                fill="clear"
+                name="settings"
+                style="color: #424242"
+              ></ion-icon>
+            </ion-button>
+          </ion-col>
+          <ion-col offset="2" size="8">
+            <ion-title>
+              <span style="font-size: 2rem; font-family: 'Courgette', cursive">
+                Coldstore
+              </span>
+              <ion-icon
+                name="storefront"
+                style="font-size: 1.2rem; padding-left: 0.4rem"
+                class="logo"
+              ></ion-icon>
+            </ion-title>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-tabs>
+
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button routerLink="/employee-home" routerDirection="root">
+        <ion-icon name="home"></ion-icon>
+        <ion-label>Home</ion-label>
+      </ion-tab-button>
+  
+      <ion-tab-button routerLink="/employee-profile" routerDirection="root">
+        <ion-icon name="person"></ion-icon>
+        <ion-label>Profile</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  
+  </ion-tabs>
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Home</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <div
+    style="
+      background-color: #fffbf9;
+      border-top-left-radius: 50px;
+      border-top-right-radius: 50px;
+      height: auto;
+      margin-top: 7%;
+    "
+  >
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6" offset="0.7">
+          
+          <img src="\assets\images\salman.jpeg" alt="userimg" style="height:150px; border-radius:50%;"/>
+          
+          
+          </ion-col>
+          <br>
+          <ion-col size="12" offset="1">
+          <ion-label style="font-weight: bold; font-size: xx-large">
+            Hi Akheel!
+          </ion-label>
+          <br /><br />
+          <ion-label style="font-weight: 400; font-size: larger">
+            Good Morning
+          </ion-label>
+          <br />
+          <ion-label style="font-weight: 400; font-size:larger;">
+            You have 2 notifications today
+          </ion-label>
+        </ion-col>
+        <!-- <br> -->
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" offset="1">
+          <label style="font-weight: 400; font-size: x-large; text-decoration: underline;">
+            {{ today | date: 'dd/MM/yyyy' }}
+          </label>
+        </ion-col>
+      </ion-row>
+      <br>
+      <ion-row>
+        <ion-col
+          offset="0.5"
+          size="11"
+          style="
+            margin-top: 10px;
+            background-color: rgba(190, 185, 185, 0.167);
+            border-radius: 25px;">
+          <ion-item lines="none" color="rgba(190, 185, 185, 0.167);">
+            <ion-icon slot="start" name="person"></ion-icon>
+            <ion-label class="ion-text-wrap">Notification 1</ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row style="margin-top: 5%">
+        <ion-col
+          offset="0.5"
+          size="11"
+          style="
+            background-color: rgba(190, 185, 185, 0.167);
+            border-radius: 25px;
+          "
+        >
+          <ion-item lines="none" color="rgba(190, 185, 185, 0.167);">
+            <ion-icon slot="start" name="person"></ion-icon>
+            <ion-label class="ion-text-wrap">Notification 2</ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid>
+      <ion-row style="margin-top: 5%">
+        <ion-col
+          offset="0.5"
+          size="11"
+          style="background-color: rgba(190, 185, 185, 0.167)"
+        >
+          <ion-slides style="height: auto">
+            <ion-slide>
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="6">
+                    <ion-card
+                      class="card"
+                      style="border-radius: 13%"
+                      align="center"
+                      color="mint"
+                    >
+                      <ion-card-header>
+                        <ion-icon style="font-size: 6em" name="cube"></ion-icon>
+                        <ion-card-title>Stock</ion-card-title>
+                        <ion-card-subtitle
+                          >Add, edit stock and more.
+                          </ion-card-subtitle>
+                      </ion-card-header>
+                    </ion-card>
+                  </ion-col>
+                  <ion-col size="6">
+                    <ion-card
+                      class="card"
+                      style="border-radius: 13%"
+                      align="center"
+                      color="mint"
+                    >
+                      <ion-card-header>
+                        <ion-icon style="font-size: 6em" name="cube"></ion-icon>
+                        <ion-card-title>Stock</ion-card-title>
+                        <ion-card-subtitle
+                          >Add, edit stock and more.</ion-card-subtitle
+                        >
+                      </ion-card-header>
+                    </ion-card>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-slide>
+
+            <ion-slide>
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="6">
+                    <ion-card
+                      class="card"
+                      style="border-radius: 13%"
+                      align="center"
+                      color="mint"
+                    >
+                      <ion-card-header>
+                        <ion-icon style="font-size: 6em" name="cube"></ion-icon>
+                        <ion-card-title>Stock</ion-card-title>
+                        <ion-card-subtitle
+                          >Add, edit stock and more.</ion-card-subtitle
+                        >
+                      </ion-card-header>
+                    </ion-card>
+                  </ion-col>
+                  <ion-col size="6">
+                    <ion-card
+                      class="card"
+                      style="border-radius: 13%"
+                      align="center"
+                      color="mint"
+                    >
+                      <ion-card-header>
+                        <ion-icon style="font-size: 6em" name="cube"></ion-icon>
+                        <ion-card-title>Stock</ion-card-title>
+                        <ion-card-subtitle
+                          >Add, edit stock and more.</ion-card-subtitle
+                        >
+                      </ion-card-header>
+                    </ion-card>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-slide>
+          </ion-slides>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>

@@ -6,7 +6,7 @@
     <ion-grid fixed>
       <ion-row>
         <ion-col size="1">
-          <ion-button fill="none" routerLink="/" routerDirection="root">
+          <ion-button fill="none" (click)='previous()'>
             <ion-icon name="arrow-back-circle-outline" size="large" slot="start"></ion-icon>
           </ion-button>
         </ion-col>
@@ -97,7 +97,7 @@
 
     <ion-item>
       <ion-icon slot="start" name="log-out"></ion-icon>
-      <ion-label>Sign Out</ion-label>
+      <ion-button fill="clear" (click)="signOut()">Sign Out</ion-button>
       <ion-icon slot="end" name="chevron-down"></ion-icon>
     </ion-item>
   </ion-list>
