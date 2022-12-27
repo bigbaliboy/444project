@@ -1,9 +1,688 @@
-<ion-header>
+<ion-header color="primary">
   <ion-toolbar>
-    <ion-title>o-stock-card</ion-title>
+    <ion-item lines="none">
+      <ion-button routerLink="/" routerDirection="root" fill="clear"
+        ><ion-icon
+          size="large"
+          slot="start"
+          name="arrow-back-circle-outline"
+        ></ion-icon
+      ></ion-button>
+      <ion-label>
+        <h1>Stock</h1>
+      </ion-label>
+    </ion-item>
   </ion-toolbar>
 </ion-header>
+<ion-content class="ion-padding" [fullscreen]="true">
+  <ion-searchbar [(ngModel)]="searchTerm" show-clear-button="focus" value=""></ion-searchbar>
 
-<ion-content>
+  <ion-grid [fixed]="true">
+    <ion-row>
+      <ion-col offset="3" size="6">
+        <ion-button id="open-modal" color="danger" fill="clear">
+          <ion-icon
+            size="medium"
+            slot="start"
+            name="person-add-outline"
+          ></ion-icon>
+          <ion-label>Add New Item</ion-label>
+        </ion-button>
+      </ion-col>
+    </ion-row>
 
+    <!-- Titles of table -->
+    <br />
+    <ion-row class="headline">
+      <ion-col size="2">
+        <ion-label>
+          <h3><b>S.NO</b></h3>
+        </ion-label>
+      </ion-col>
+      <ion-col size="6">
+        <ion-label>
+          <h3><b>Name</b></h3>
+        </ion-label>
+      </ion-col>
+      <ion-col size="3">
+        <ion-label>
+          <h3><b>Quantity</b></h3>
+        </ion-label>
+      </ion-col>
+    </ion-row>
+    <!-- Entries -->
+    
+    <ion-row
+      (click)="view(x)"
+      class="entry"
+      *ngFor="let x of (items|async) | filter:searchTerm ; let i = index"
+      [ngStyle]="{'background-color': x.Quantity<x.thresholdQuantity? 'red' : 'none'}"
+
+    >
+      <ion-col size="2">
+        <ion-label>
+          <h3>{{i+1}}</h3>
+        </ion-label>
+      </ion-col>
+      <ion-col size="6">
+        <ion-label>
+          <h3>{{x.Name}}</h3>
+        </ion-label>
+      </ion-col>
+      <ion-col size="4">
+        <ion-label>
+          <h3>{{x.Quantity}}</h3>
+        </ion-label>
+      </ion-col>
+    </ion-row>
+    <!-- End of Entries -->
+  </ion-grid>
+    <!-- Modal Page for Add Itmes -->
+    <ion-modal
+      #modal
+      trigger="open-modal"
+      [swipeToClose]="true"
+      [canDismiss]="canDismiss"
+      [presentingElement]="presentingElement"
+    >
+      <ng-template>
+        <ion-header>
+          <ion-toolbar>
+            <ion-item lines="none">
+              <ion-button (click)="modal.dismiss()" fill="clear"
+                ><ion-icon
+                  size="large"
+                  slot="start"
+                  name="arrow-back-circle-outline"
+                ></ion-icon
+              ></ion-button>
+              <!-- Add Item Form  -->
+              <ion-label>
+                <h1>Add a New Item</h1>
+              </ion-label>
+            </ion-item>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding">
+          <form [formGroup]="ionicForm" (ngSubmit)="confirmAdd()" novalidate>
+            <ion-list>
+              <ion-list-header>
+                <ion-label>
+                  <h1>Enter new Item details</h1>
+                </ion-label>
+              </ion-list-header>
+              <!-- Name -->
+              <ion-item lines="none">
+                <ion-label size="large"
+                  >Item Name:<span style="color: red">*</span></ion-label
+                >
+              </ion-item>
+              <ion-item lines="inset">
+                <ion-input
+                  formControlName="Name"
+                  placeholder="Name"
+                ></ion-input>
+              </ion-item>
+              <!-- Error prompt for Name -->
+              <ion-item
+                lines="none"
+                *ngIf="ionicForm.controls['Name'].hasError('minlength') &&!ionicForm.controls['Name'].hasError('required') && ionicForm.controls['Name'].touched && isSubmitted==true"
+              >
+                <p>
+                  <ion-label color="danger">
+                    Sorry, Name size should be 3-30 characters</ion-label
+                  >
+                </p>
+              </ion-item>
+              <ion-item
+                lines="none"
+                *ngIf="ionicForm.controls['Name'].hasError('required') && ionicForm.controls['Name'].touched && isSubmitted==true"
+              >
+                <p>
+                  <ion-label color="danger">
+                    Sorry, Name is a required field</ion-label
+                  >
+                </p>
+              </ion-item>
+
+              <!-- DEMAND -->
+              <ion-item lines="none">
+                <ion-label size="large"
+                  >Select Demand:<span style="color: red">*</span></ion-label
+                >
+              </ion-item>
+              <ion-item>
+                <ion-select
+                  formControlName="Demand"
+                  interface="popover"
+                  placeholder="Select Demand"
+                >
+                  <ion-select-option value="High">High</ion-select-option>
+                  <ion-select-option value="Normal"
+                    >Normal</ion-select-option
+                  >
+                  <ion-select-option value="Low"
+                    >Low</ion-select-option
+                  >
+                </ion-select>
+              </ion-item>
+              <!-- Error prompt for Demand -->
+              <ion-item
+                lines="none"
+                *ngIf="ionicForm.controls['Demand'].hasError('required') && ionicForm.controls['Demand'].touched && isSubmitted==true"
+              >
+                <p>
+                  <ion-label color="danger">
+                    Sorry, Demand is a required field</ion-label
+                  >
+                </p>
+              </ion-item>
+
+              
+
+
+              <!-- Category -->
+              <ion-item lines="none">
+                <ion-label size="large"
+                  >Select Category:<span style="color: red">*</span></ion-label
+                >
+              </ion-item>
+              <ion-item>
+                <ion-select
+                  formControlName="Category"
+                  interface="popover"
+                  placeholder="Select Category"
+                >
+                  <ion-select-option value="Bakery">Bakery</ion-select-option>
+                  <ion-select-option value="Beverages"
+                    >Beverages</ion-select-option
+                  >
+                  <ion-select-option value="Fruits and Vegetables"
+                    >Fruits and Vegetables</ion-select-option
+                  >
+                <ion-select-option value="Chips and Snacks"
+                >Fresh Food</ion-select-option
+              >
+              <ion-select-option value="Confectionery"
+              >Confectionery</ion-select-option
+            >
+            <ion-select-option value="Dairy Products"
+            >Dairy Products</ion-select-option
+            >
+            </ion-select>
+              </ion-item>
+              <!-- Error prompt for Category -->
+              <ion-item
+                lines="none"
+                *ngIf="ionicForm.controls['Category'].hasError('required') && ionicForm.controls['Category'].touched && isSubmitted==true"
+              >
+                <p>
+                  <ion-label color="danger">
+                    Sorry, Category is a required field</ion-label
+                  >
+                </p>
+              </ion-item>
+
+
+
+              <!-- Price  -->
+              <ion-item lines="none">
+                <ion-label size="large"
+                  >Price:<span style="color: red">*</span></ion-label
+                >
+              </ion-item>
+              <ion-item lines="inset">
+                <ion-input
+                  formControlName="Price"
+                  type="number"
+                  placeholder="Price"
+                ></ion-input>
+              </ion-item>
+              <!-- Error prompt for Price Number -->
+              <ion-item
+                lines="none"
+                *ngIf="(ionicForm.controls['Price'].hasError('required')||ionicForm.controls['Price'].hasError('pattern')  )&& ionicForm.controls['Price'].touched && isSubmitted==true"
+              >
+                <p>
+                  <ion-label color="danger">
+                    Sorry, Price should be a decimal</ion-label
+                  >
+                </p>
+              </ion-item>
+
+
+
+
+              
+              <!-- Quantity  -->
+              <ion-item lines="none">
+                <ion-label size="large"
+                  >Quantity:<span style="color: red">*</span></ion-label
+                >
+              </ion-item>
+              <ion-item lines="inset">
+                <ion-input
+                  formControlName="Quantity"
+                  type="number"
+                  placeholder="Quantity"
+                ></ion-input>
+              </ion-item>
+              <!-- Error prompt for Quantity Number -->
+              <ion-item
+                lines="none"
+                *ngIf="(ionicForm.controls['Quantity'].hasError('required')||ionicForm.controls['Quantity'].hasError('pattern')  )&& ionicForm.controls['Quantity'].touched && isSubmitted==true"
+              >
+                <p>
+                  <ion-label color="danger">
+                    Sorry, Quantity should be a decimal</ion-label
+                  >
+                </p>
+              </ion-item>
+
+              <!-- Supplier -->
+              <ion-item lines="none">
+                <ion-label size="large"
+                  >Item Supplier:<span style="color: red">*</span></ion-label
+                >
+              </ion-item>
+              <ion-item lines="inset">
+                <ion-select 
+                formControlName="Supplier"
+                interface="popover"
+                placeholder="Select Category"
+              >
+                <ion-select-option  *ngFor="let x of (suppliers|async)" value="x.name">{{x.name}}</ion-select-option>
+
+              </ion-select>
+ 
+              </ion-item>
+              <!-- Error prompt for Name -->
+              <ion-item
+                lines="none"
+                *ngIf="ionicForm.controls['Supplier'].hasError('minlength') &&!ionicForm.controls['Supplier'].hasError('required') && ionicForm.controls['Supplier'].touched && isSubmitted==true"
+              >
+                <p>
+                  <ion-label color="danger">
+                    Sorry, Supplier size should be 5-30 characters</ion-label
+                  >
+                </p>
+              </ion-item>
+              <ion-item
+                lines="none"
+                *ngIf="ionicForm.controls['Supplier'].hasError('required') && ionicForm.controls['Supplier'].touched && isSubmitted==true"
+              >
+                <p>
+                  <ion-label color="danger">
+                    Sorry, Supplier is a required field</ion-label
+                  >
+                </p>
+              </ion-item>
+
+
+              <!-- thresholdQuantity  -->
+              <ion-item lines="none">
+                <ion-label size="large"
+                  >thresholdQuantity:<span style="color: red">*</span></ion-label
+                >
+              </ion-item>
+              <ion-item lines="inset">
+                <ion-input
+                  formControlName="thresholdQuantity"
+                  type="number"
+                  placeholder="thresholdQuantity"
+                ></ion-input>
+              </ion-item>
+              <!-- Error prompt for thresholdQuantity Number -->
+              <ion-item
+                lines="none"
+                *ngIf="(ionicForm.controls['thresholdQuantity'].hasError('required')||ionicForm.controls['thresholdQuantity'].hasError('pattern')  )&& ionicForm.controls['thresholdQuantity'].touched && isSubmitted==true"
+              >
+                <p>
+                  <ion-label color="danger">
+                    Sorry, thresholdQuantity should be a decimal</ion-label
+                  >
+                </p>
+              </ion-item>
+
+
+
+
+
+
+
+
+
+              <!-- <ion-searchbar placeholder="Search" [(ngModel)]="searchTerm" showCancelButton="focus" animated>
+              </ion-searchbar> -->
+          
+              <!-- <ion-item-group *ngFor="let item of DataSrv.itemObj | filter:searchTerm">
+                <ion-item>
+                  <ion-thumbnail>
+                    <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+                  </ion-thumbnail>
+                  <ion-label style="padding-left: 4%;">{{item.name}}</ion-label>
+                  <ion-label>{{item.quantity}}</ion-label>
+                </ion-item>
+              </ion-item-group>-->
+            </ion-list> 
+
+
+
+
+
+
+            <ion-button
+              size="large"
+              type="submit"
+              expand="block"
+              fill="clear"
+              shape="round"
+            >
+              <ion-icon slot="start" name="add"></ion-icon>
+              <ion-label>Add</ion-label>
+            </ion-button>
+          </form>
+
+          
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+
+    <!-------------------------------- End of add items---------------------------------------->
+
+    <!-- MODAL PAGE FOR VIEWING EACH Item -->
+    <ion-content class="ion-padding">
+      <ion-modal [isOpen]="isModalOpen">
+        <ng-template>
+          <ion-header>
+            <ion-toolbar>
+              <ion-item lines="none">
+                <ion-button (click)="close()" fill="clear"
+                  ><ion-icon
+                    size="large"
+                    slot="start"
+                    name="arrow-back-circle-outline"
+                  ></ion-icon
+                ></ion-button>
+                <ion-label>
+                  <h1>View Details</h1>
+                </ion-label>
+              </ion-item>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content class="ion-padding">
+            <div
+              align="center"
+              style="
+                height: 200px;
+                border-bottom-left-radius: 50px;
+                border-bottom-right-radius: 50px;
+              "
+            >
+              <div style="padding-top: 50px">
+                <ion-icon
+                  style="font-size: 7em; color: black"
+                  name="cube"
+                ></ion-icon>
+              </div>
+            </div>
+
+            <br /><br />
+            <br /><br />
+
+            <!-- View Details Form -->
+            <form [formGroup]="ionicForm2" novalidate>
+              <ion-list>
+                <ion-item lines="inset" style="font-size: 1.5em">
+                  <ion-label class="labels">Name: </ion-label>
+                  <ion-input  formControlName="Name"></ion-input>
+                </ion-item>
+                <!-- Error prompt for Name -->
+                <ion-item
+                  lines="none"
+                  *ngIf="ionicForm2.controls['Name'].hasError('minlength') &&!ionicForm2.controls['Name'].hasError('required') && ionicForm2.controls['Name'].touched && isShowError==true"
+                >
+                  <p>
+                    <ion-label color="danger">
+                      Sorry, name size should be 5-30 characters</ion-label
+                    >
+                  </p>
+                </ion-item>
+                <ion-item
+                  lines="none"
+                  *ngIf="ionicForm2.controls['Name'].hasError('required') && ionicForm2.controls['Name'].touched && isShowError==true"
+                >
+                  <p>
+                    <ion-label color="danger">
+                      Sorry, Name is a required field</ion-label
+                    >
+                  </p>
+                </ion-item>
+
+
+                <ion-item lines="inset" style="font-size: 1.5em">
+                  <ion-label class="labels">Demand: </ion-label>
+
+                  <ion-select
+                  formControlName="Demand"
+                  interface="popover"
+                >
+                  <ion-select-option value="High">High</ion-select-option>
+                  <ion-select-option value="Normal"
+                    >Normal</ion-select-option
+                  >
+                  <ion-select-option value="Low"
+                    >Low</ion-select-option
+                  >
+                </ion-select>
+                </ion-item>
+                <!-- Error prompt for Demand -->
+                <ion-item
+                  lines="none"
+                  *ngIf="(ionicForm2.controls['Demand'].hasError('required') && ionicForm2.controls['Demand'].touched && isShowError==true)"
+                >
+                  <p>
+                    <ion-label color="danger">
+                      Sorry, Demand is a required field</ion-label
+                    >
+                  </p>
+                </ion-item>
+
+                <ion-item lines="inset" style="font-size: 1.5em">
+                  <ion-label class="labels">Category: </ion-label>
+                  <ion-select
+                  formControlName="Category"
+                  interface="popover"
+                >
+                  <ion-select-option value="Bakery">Bakery</ion-select-option>
+                  <ion-select-option value="Beverages"
+                    >Beverages</ion-select-option
+                  >
+                  <ion-select-option value="Fruits and Vegetables"
+                    >Fruits and Vegetables</ion-select-option
+                  >
+                <ion-select-option value="Chips and Snacks"
+                >Fresh Food</ion-select-option
+              >
+              <ion-select-option value="Confectionery"
+              >Confectionery</ion-select-option
+            >
+            <ion-select-option value="Dairy Products"
+            >Dairy Products</ion-select-option
+          >
+            </ion-select>                </ion-item>
+                <!-- Error prompt for Category -->
+                <ion-item
+                  lines="none"
+                  *ngIf="(ionicForm2.controls['Category'].hasError('required') && ionicForm2.controls['Category'].touched && isShowError==true)"
+                >
+                  <p>
+                    <ion-label color="danger">
+                      Sorry, Category is a required field</ion-label
+                    >
+                  </p>
+                </ion-item>
+
+
+                <ion-item lines="inset" style="font-size: 1.5em">
+                  <ion-label class="labels">Price: </ion-label>
+                  <ion-input
+                  formControlName="Price"
+                  type="number"
+                  placeholder="Price"
+                ></ion-input>
+              </ion-item>
+              <!-- Error prompt for Price Number -->
+              <ion-item
+                lines="none"
+                *ngIf="(ionicForm2.controls['Price'].hasError('required')||ionicForm2.controls['Price'].hasError('pattern')  )&& ionicForm2.controls['Price'].touched && isSubmitted==true"
+              >
+                <p>
+                  <ion-label color="danger">
+                    Sorry, Price should be a decimal</ion-label
+                  >
+                </p>
+              </ion-item>
+
+
+
+
+              <ion-item lines="inset" style="font-size: 1.5em">
+                <ion-label class="labels">Quantity: </ion-label>
+                <ion-input
+                formControlName="Quantity"
+                type="number"
+                placeholder="Quantity"
+              ></ion-input>
+            </ion-item>
+            <!-- Error prompt for Quantity Number -->
+            <ion-item
+              lines="none"
+              *ngIf="(ionicForm2.controls['Quantity'].hasError('required')||ionicForm2.controls['Quantity'].hasError('pattern')  )&& ionicForm2.controls['Quantity'].touched && isSubmitted==true"
+            >
+              <p>
+                <ion-label color="danger">
+                  Sorry, Quantity should be a decimal</ion-label
+                >
+              </p>
+            </ion-item>
+
+
+
+            <ion-item lines="inset" style="font-size: 1.5em">
+              <ion-label class="labels">Supplier: </ion-label>
+              <ion-input  formControlName="Supplier"></ion-input>
+            </ion-item>
+            <!-- Error prompt for Supplier -->
+            <ion-item
+              lines="none"
+              *ngIf="ionicForm2.controls['Supplier'].hasError('minlength') &&!ionicForm2.controls['Supplier'].hasError('required') && ionicForm2.controls['Supplier'].touched && isShowError==true"
+            >
+              <p>
+                <ion-label color="danger">
+                  Sorry, Supplier size should be 5-30 characters</ion-label
+                >
+              </p>
+            </ion-item>
+            <ion-item
+              lines="none"
+              *ngIf="ionicForm2.controls['Supplier'].hasError('required') && ionicForm2.controls['Supplier'].touched && isShowError==true"
+            >
+              <p>
+                <ion-label color="danger">
+                  Sorry, Supplier is a required field</ion-label
+                >
+              </p>
+            </ion-item>
+
+
+
+            <ion-item lines="inset" style="font-size: 1.5em">
+              <ion-label class="labels">Threshold Quantity: </ion-label>
+              <ion-input
+              formControlName="thresholdQuantity"
+              type="number"
+            ></ion-input>
+          </ion-item>
+          <!-- Error prompt for Threshold Quantity Number -->
+          <ion-item
+            lines="none"
+            *ngIf="(ionicForm2.controls['thresholdQuantity'].hasError('required')||ionicForm2.controls['thresholdQuantity'].hasError('pattern')  )&& ionicForm2.controls['thresholdQuantity'].touched && isSubmitted==true"
+          >
+            <p>
+              <ion-label color="danger">
+                Sorry, Threshold Quantity should be a decimal</ion-label
+              >
+            </p>
+          </ion-item>
+
+
+
+            
+              </ion-list>
+            </form>
+            
+              <ion-button
+              size="large"
+              (click)="edit()"
+              expand="block"
+              fill="outline"
+              shape="round"
+              *ngIf="isEdit"
+            >
+              <ion-icon slot="start" name="pencil"></ion-icon>
+              <ion-label>Edit</ion-label>
+            </ion-button>
+            
+            
+
+            <ion-item-group *ngIf="isSave" lines="none">
+              <ion-button
+                size="large"
+                (click)="save()"
+                expand="block"
+                fill="outline"
+                shape="round"
+              >
+                <ion-icon slot="start" name="save"></ion-icon>
+                <ion-label>Save</ion-label>
+              </ion-button>
+
+              <ion-button
+              size="large"
+              color="danger"
+              (click)="delete()"
+              expand="block"
+              fill="outline"
+              shape="round"
+            >
+              <ion-icon slot="start" name="close-outline"></ion-icon>
+              <ion-label>Delete</ion-label>
+            </ion-button>
+
+
+              <ion-button
+                size="large"
+                color="danger"
+                (click)="cancel()"
+                expand="block"
+                fill="outline"
+                shape="round"
+              >
+                <ion-icon slot="start" name="close-outline"></ion-icon>
+                <ion-label>Cancel</ion-label>
+              </ion-button>
+            </ion-item-group>
+
+
+
+
+            
+            
+          </ion-content>
+        </ng-template>
+      </ion-modal>
+    </ion-content>
+    <!-- -------------------------------End of View Member MODAL----------------------------------------------------------------- -->
+   
 </ion-content>

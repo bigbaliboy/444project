@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { OEmployeeCardPageRoutingModule } from './o-employee-card-routing.module';
+import {Ng2SearchPipeModule} from 'ng2-search-filter';
 
 import { OEmployeeCardPage } from './o-employee-card.page';
 
@@ -15,7 +16,9 @@ import { OEmployeeCardPage } from './o-employee-card.page';
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
-    OEmployeeCardPageRoutingModule
+    OEmployeeCardPageRoutingModule,
+    Ng2SearchPipeModule
+
   ],
   declarations: [OEmployeeCardPage]
 })

@@ -1,26 +1,24 @@
 <ion-header color="primary">
   <ion-toolbar>
     <ion-item lines="none">
-    <ion-icon size="large" slot="start" name="arrow-back-circle-outline"></ion-icon>
+      <ion-button routerLink="/" routerDirection="root" fill="clear"
+      ><ion-icon
+        size="large"
+        slot="start"
+        name="arrow-back-circle-outline"
+      ></ion-icon
+    ></ion-button>
 
         <ion-label><h1>Notifications</h1></ion-label>
       </ion-item>
   </ion-toolbar>
 </ion-header>
 
-
-
-
  <ion-content [fullscreen]="true">
-
-
-  
-  
-
    
    <ion-segment [(ngModel)]="selectTabs">
     <ion-segment-button value="stock">
-      <ion-label><b>stock</b>
+      <ion-label ><b>stock</b>
         <ion-badge>3</ion-badge>
       </ion-label>
     </ion-segment-button>
@@ -42,73 +40,43 @@
   
   <div *ngIf="selectTabs == 'stock'">
   <ion-list>
-    <ion-item-sliding>
-      <ion-item>
-        <ion-label>Arwa Drinking Water 6 x 1.5Litre is running low</ion-label>
+    <ion-item-sliding *ngFor="let notif of (notifications|async);">
+      <ion-item *ngIf="notif.type=='Threshold'&&notif.exists==true">
+        <ion-label class="ion-text-wrap">{{notif.description}}</ion-label>
       </ion-item>
-  
       <ion-item-options side="end">
-        <ion-item-option>Reorder</ion-item-option>
-        <ion-item-option color="danger">Delete</ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
-
-    <ion-item-sliding>
-      <ion-item>
-        <ion-label><h2>Almarai Orange Juice 1Litre is running low</h2></ion-label>
-      </ion-item>
-  
-      <ion-item-options side="end">
-        <ion-item-option>Reorder</ion-item-option>
-        <ion-item-option color="danger">Delete</ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
-
-    <ion-item-sliding>
-      <ion-item>
-        <ion-label>Banana Yellow India 1kg is running low</ion-label>
-      </ion-item>
-  
-      <ion-item-options side="end">
-        <ion-item-option>Reorder</ion-item-option>
-        <ion-item-option color="danger">Delete</ion-item-option>
+        <ion-item-option (click)="reorder(notif)">Reorder</ion-item-option>
+        <ion-item-option color="danger" (click)="remove(notif)">Dismiss</ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
    </ion-list>
   </div>
   <div *ngIf="selectTabs == 'shifts'">
-    <ion-item-sliding>
-      <ion-item>
-        <ion-label class="ion-text-wrap">Ahmad Ali has requested to change morning shift on 24/12/22 with Khalid Salman</ion-label>
+    <ion-item-sliding *ngFor="let notif of (notifications|async);">
+      <ion-item *ngIf="notif.type=='Schedule'&&notif.exists==true">
+        <ion-label class="ion-text-wrap">{{notif.description}}</ion-label>
       </ion-item>
-  
       <ion-item-options side="end">
         <ion-item-option>Approve</ion-item-option>
-        <ion-item-option color="danger">Reject</ion-item-option>
+        <ion-item-option color="danger" (click)="reject(notif)">Reject</ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
   </div>
   <div *ngIf="selectTabs == 'suppliers'">
-    <ion-item-sliding>
-      <ion-item>
-        <ion-label class="ion-text-wrap">Almarai has accepted your order request of 10 Lacto Free Milk 1 Litre</ion-label>
+    <ion-item-sliding *ngFor="let notif of (notifications|async);">
+      <ion-item *ngIf="notif.type=='OrderStatus'&&notif.exists==true">
+        <ion-label class="ion-text-wrap">{{notif.description}}</ion-label>
       </ion-item>
   
       <ion-item-options side="end">
-        <ion-item-option color="danger" expandable>Reject</ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
-
-    <ion-item-sliding>
-      <ion-item>
-        <ion-label class="ion-text-wrap">Awal has accepted your order request of 30 Full Cream Yoghurt 6 x 160 g</ion-label>
-      </ion-item>
-  
-      <ion-item-options side="end">
-        <ion-item-option color="danger" expandable>Reject</ion-item-option>
+        <ion-item-option color="danger" (click)="remove(notif)" expandable>Dismiss</ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
   </div>
+
+  
+
+
 
 
 </ion-content>

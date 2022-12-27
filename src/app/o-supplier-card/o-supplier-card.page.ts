@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs/internal/Observable';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {
   ActionSheetController,
   AlertController
@@ -12,93 +11,88 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { FBsrvService, Items, Suppliers } from '../fbsrv.service';
+import {Employee, Items } from '../data.service';
+import { FBsrvService, Suppliers } from '../fbsrv.service';
+import { Observable } from 'rxjs/internal/Observable';
 
-
-
-
+// export interface Supplier {
+//   id: string;
+//   name: string;
+//   // jobRole: string;
+//   items:string[]
+//   website: string;
+//   mobile: string;
+//   //gender: string;
+//   email: string;
+//   pwd: string;
+// }
 
 @Component({
-  selector: 'app-o-stock-card',
-  templateUrl: './o-stock-card.page.html',
-  styleUrls: ['./o-stock-card.page.scss'],
+  selector: 'app-o-supplier-card',
+  templateUrl: './o-supplier-card.page.html',
+  styleUrls: ['./o-supplier-card.page.scss'],
 })
-export class OStockCardPage implements OnInit {
+export class OSupplierCardPage implements OnInit {
 
   public supplier: Suppliers = {} as Suppliers;
   public suppliers!: Observable<Suppliers[]>;
-
-  //check if isModalOpen is needed
-  public item: Items = {} as Items;
-  public items!: Observable<Items[]>;
-//for adding todays date
-  today:any;
-
-
+  // test = document.querySelector('#test');
   searchTerm!: string;
   isModalOpen = false;
-  chosenModel: Items;
+  chosenModel: Suppliers;
   revertName: string;
-  revertDemand!: string;
-  revertCategory!: string;
-  revertPrice!: number;
-  revertQuantity!: number;
-  revertSupplier!: string;
-  revertThreshold!: number;
+  revertwebsite: string;
+  revertMobile: string;
+  revertEmail: string;
 
-
+  itemList:string[];
 
   // If clicked on an Supplier
-  view(members: Items) {
+  view(members: Suppliers) {
     this.isEdit = true;
     this.isSave = false;
     this.isShowError = false;
     this.isModalOpen = true;
     this.chosenModel = members;
-    this.revertName = this.chosenModel.Name;
-    this.revertDemand = this.chosenModel.Demand;
-    this.revertCategory = this.chosenModel.Category;
-    this.revertPrice = this.chosenModel.Price;
-    this.revertQuantity = this.chosenModel.Quantity;
-    this.revertSupplier= this.chosenModel.Supplier;
-    this.revertThreshold = this.chosenModel.thresholdQuantity;
-
-
+    this.revertName = this.chosenModel.name;
+    this.revertwebsite = this.chosenModel.website;
+    this.revertMobile = this.chosenModel.mobile;
+    this.revertEmail = this.chosenModel.email;
     
-
+    this.itemList = []
+if(members.itemSup){
+  console.log("hello")
+    for(let items of members.itemSup)
+    {
+     this.itemList.push(items.itemName)
+    }
+  }
 
     // Form Group for Edit Supplier Details and its Validators
     this.ionicForm2 = new FormGroup({
-      Name: new FormControl(
+      name: new FormControl(
         this.revertName,
         Validators.compose([
           Validators.required,
-          Validators.minLength(3),
+          Validators.minLength(5),
           Validators.maxLength(30),
         ])
       ),
-      Demand: new FormControl(this.revertDemand, [
+      email: new FormControl(this.revertEmail, [
         Validators.required,
+        Validators.email,
       ]),
-      Category: new FormControl(this.revertCategory, [
+      mobile: new FormControl(this.revertMobile, [
         Validators.required,
+        Validators.pattern('^[0-9]+$'),
+        Validators.minLength(8),
+        Validators.maxLength(8),
       ]),
-      Price: new FormControl(this.revertPrice, [
+      website: new FormControl(this.revertwebsite, [
         Validators.required,
-        Validators.pattern('^[0-9]+(\.[0-9]{1,3})?$')
-      ]),
-      Quantity: new FormControl(this.revertQuantity, [
-        Validators.required,
-        Validators.pattern('^[0-9]*[1-9][0-9]*$')
-      ]),
-      Supplier: new FormControl(this.revertSupplier, [
-        Validators.required,
-        Validators.minLength(5),
+        Validators.pattern("(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?"),
+        Validators.minLength(4),
         Validators.maxLength(30),
-      ]),
-      thresholdQuantity: new FormControl(this.revertThreshold, [
-        Validators.required,
-        Validators.pattern('^[0-9]*[1-9][0-9]*$')
       ]),
     });
     this.ionicForm2.disable();
@@ -130,9 +124,9 @@ export class OStockCardPage implements OnInit {
 //to delete a supplier
   delete(){
 
-    this.item=this.chosenModel
-    this.dataService.deleteItems(this.item.id).then(async (response) => {
-      console.log(this.item)
+    this.supplier=this.chosenModel
+    this.dataService.deleteSupplier(this.supplier.id).then(async (response) => {
+      console.log(this.supplier)
       const alert = await this.alertController.create({
         header: 'Deleted Succesfully!',
         message: '',
@@ -174,19 +168,20 @@ export class OStockCardPage implements OnInit {
 
       await alert.present();
     } else {
-      this.item.Name = this.ionicForm2.value.Name;
-      this.item.Demand = this.ionicForm2.value.Demand;
-      this.item.Category = this.ionicForm2.value.Category;
-      this.item.Price = this.ionicForm2.value.Price;
-      this.item.Quantity = this.ionicForm2.value.Quantity;
-      this.item.Supplier = this.ionicForm2.value.Supplier;
-      this.item.thresholdQuantity = this.ionicForm2.value.thresholdQuantity;
-      this.item.dateAdded= <string> <unknown>Date.now();
-
-      this.item.id=this.chosenModel.id
-
+      this.supplier.name = this.ionicForm2.value.name;
+      this.supplier.website = this.ionicForm2.value.website;
+      this.supplier.mobile = this.ionicForm2.value.mobile;
+      this.supplier.email = this.ionicForm2.value.email;
+      this.supplier.id=this.chosenModel.id
+      this.itemList = []
+      if(this.chosenModel.itemSup){
+          for(let items of this.chosenModel.itemSup)
+          {
+           this.itemList.push(items.itemName)
+          }
+        }
       // this.supplier.itemSup=this.chosenModel.itemSup
-      this.dataService.updateItems(this.item).then(async (response) => {
+      this.dataService.updateSupplier(this.supplier).then(async (response) => {
 
         const alert = await this.alertController.create({
           header: 'Updated Succesfully!',
@@ -200,20 +195,17 @@ export class OStockCardPage implements OnInit {
             },
           ],
         });
-        this.item = {} as Items;
+        this.supplier = {} as Suppliers;
         await alert.present();
         this.ionicForm2.disable();
         this.isEdit = true;
         this.isSave = false;
   
 
-        this.revertName = this.chosenModel.Name;
-        this.revertDemand = this.chosenModel.Demand;
-        this.revertCategory = this.chosenModel.Category;
-        this.revertPrice = this.chosenModel.Price;
-        this.revertQuantity = this.chosenModel.Quantity;
-        this.revertSupplier= this.chosenModel.Supplier;
-        this.revertThreshold = this.chosenModel.thresholdQuantity;
+      this.revertName = this.chosenModel.name;
+      this.revertwebsite = this.chosenModel.website;
+      this.revertEmail = this.chosenModel.email;
+      this.revertMobile = this.chosenModel.mobile;
     });
     }
   }
@@ -224,40 +216,33 @@ export class OStockCardPage implements OnInit {
     this.isSave = false;
     this.isShowError = false;
     this.ionicForm2.reset({
-      Name: { value: this.revertName, disabled: true },
-      Demand: { value: this.revertDemand, disabled: true },
-      Category: { value: this.revertCategory, disabled: true },
-      Price: { value: this.revertPrice, disabled: true },
-      Quantity: { value: this.revertQuantity, disabled: true },
-      Supplier: { value: this.revertSupplier, disabled: true },
-      thresholdQuantity: { value: this.revertThreshold, disabled: true },
-
+      name: { value: this.revertName, disabled: true },
+      // jobRole: { value: this.revertJobRole, disabled: true },
+      website: { value: this.revertwebsite, disabled: true },
+      mobile: { value: this.revertMobile, disabled: true },
+      email: { value: this.revertEmail, disabled: true },
     });
   }
   
 
   // Form Group of View Member
   ionicForm2 = new FormGroup({
-    Name: new FormControl(),
-    Demand: new FormControl(),
-    Category: new FormControl(),
-    Price: new FormControl(),
-    Quantity: new FormControl(),
-    Supplier: new FormControl(), 
-    thresholdQuantity: new FormControl(),
-    // dateAdded: new FormControl()
+    name: new FormControl(),
+    email: new FormControl(),
+    mobile: new FormControl(),
+    website: new FormControl(),
+    // jobRole: new FormControl(),
   });
 
   // Form Group of Add Member
   ionicForm = new FormGroup({
-    Name: new FormControl(),
-    Demand: new FormControl(),
-    Category: new FormControl(),
-    Price: new FormControl(),
-    Quantity: new FormControl(),
-    Supplier: new FormControl(), 
-    thresholdQuantity: new FormControl(),
-    dateAdded: new FormControl()
+    name: new FormControl(),
+    email: new FormControl(),
+    mobile: new FormControl(),
+    website: new FormControl(),
+    pwd: new FormControl(),
+    confirmPwd: new FormControl(),
+    //gender: new FormControl(),
   });
 
   // for add Supplier modal
@@ -275,64 +260,69 @@ export class OStockCardPage implements OnInit {
 
   ) {
     this.isEdit = true;
-    this.chosenModel = {} as Items
-    this.revertName = "";
-    this.revertDemand = "";
-    this.revertCategory = ''
-    this.revertPrice = 0.0
-    this.revertQuantity = 0
-    this.revertSupplier= ""
-    this.revertThreshold = 0
+    this.chosenModel = this.SupplierList[0];
+    this.revertName = '';
+    this.revertMobile = '';
+    this.revertEmail = '';
+    this.revertwebsite = '';
+    // this.revertJobRole = '';
+    this.itemList = ['']
 
 
     // Validators for Add Supplier
-    this.ionicForm = new FormGroup({
-      Name: new FormControl(
-        this.revertName,
-        Validators.compose([
+    this.ionicForm = this.formBuilder.group(
+      {
+        name: [
+          '',
+          Validators.compose([
+            Validators.required,
+            Validators.minLength(5),
+            Validators.maxLength(30),
+          ]),
+        ],
+        website: [
+          '',
+          [
+            Validators.required,
+             Validators.pattern("(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?"),
+            Validators.minLength(5),
+            Validators.maxLength(18),
+          ],
+        ],
+        pwd: [
+          '',
+          Validators.compose([
+            Validators.required,
+            Validators.minLength(8),
+            Validators.maxLength(30),
+            Validators.pattern('^[0-9]+$'),
+          ]),
+        ],
+        //gender: ['', [Validators.required]],
+        confirmPwd: ['', [Validators.required]],
+        email: new FormControl('', [
           Validators.required,
-          Validators.minLength(3),
-          Validators.maxLength(30),
-        ])
-      ),
-      Demand: new FormControl(this.revertDemand, [
-        Validators.required,
-      ]),
-      Category: new FormControl(this.revertCategory, [
-        Validators.required,
-      ]),
-      Price: new FormControl(this.revertPrice, [
-        Validators.required,
-        Validators.pattern('^[0-9]+(\.[0-9]{1,3})?$')
-                            
-      ]),
-      Quantity: new FormControl(this.revertQuantity, [
-        Validators.required,
-        Validators.pattern('^[0-9]*[1-9][0-9]*$')
-      ]),
-      Supplier: new FormControl(this.revertSupplier, [
-        Validators.required,
-        Validators.minLength(5),
-        Validators.maxLength(30),
-      ]),
-      thresholdQuantity: new FormControl(this.revertThreshold, [
-        Validators.required,
-        Validators.pattern('^[0-9]*[1-9][0-9]*$')
-      ]),
-      dateAdded: new FormControl(this.revertThreshold, [
-        Validators.required,
-      ]),
-    });
+          Validators.email,
+        ]),
+        mobile: new FormControl('', [
+          Validators.required,
+          Validators.pattern('^[0-9]+$'),
+          Validators.minLength(8),
+          Validators.maxLength(8),
+        ]),
+      }
+      //   {
+      //   validators: this.pwd.bind(this)
+      // }
+    );
+
     
   }
 
   ngOnInit() {
     // part of modal add
     this.presentingElement = document.querySelector('.ion-page') as any;
-    this.items = this.dataService.getItems();
     this.suppliers = this.dataService.getSuppliers();
-    this.ionicForm.reset();
-
 
   }
   // VALIDATION FOR CONFIRM PASSWORD
@@ -345,8 +335,7 @@ export class OStockCardPage implements OnInit {
   // }
 
   // Calling SupplierObj from DataService
-
-  // ItemsList = this.DataSrv.itemObj;
+  SupplierList = this.DataSrv.SupplierObj;
 
   // Modal page for add
   canDismiss = async () => {
@@ -377,7 +366,7 @@ export class OStockCardPage implements OnInit {
 
   // fuction to Add emplyee
   async confirmAdd() {
-    let newMember = {} as Items;
+    let newMember = {} as Suppliers;
     this.isSubmitted = true;
 
     console.log(this.ionicForm.status)
@@ -400,16 +389,14 @@ export class OStockCardPage implements OnInit {
       return;
     } else {
 
-      this.item.Name = this.ionicForm.value.Name;
-      this.item.Demand = this.ionicForm.value.Demand;
-      this.item.Category = this.ionicForm.value.Category;
-      this.item.Price = this.ionicForm.value.Price;
-      this.item.Quantity = this.ionicForm.value.Quantity;
-      this.item.Supplier = this.ionicForm.value.Supplier;
-      this.item.thresholdQuantity = this.ionicForm.value.thresholdQuantity;
-      this.item.dateAdded= <string> <unknown>Date.now();
+      this.supplier.name = this.ionicForm.value.name;
+      this.supplier.website = this.ionicForm.value.website;
+      this.supplier.mobile = this.ionicForm.value.mobile;
+      this.supplier.email = this.ionicForm.value.email;
+      this.supplier.pwd = this.ionicForm.value.pwd;
 
-      this.dataService.addItems(this.item).then(async (response) => {
+
+      this.dataService.addSupplier(this.supplier).then(async (response) => {
 
         const alert = await this.alertController.create({
           header: 'Added Succesfully!',
@@ -423,7 +410,7 @@ export class OStockCardPage implements OnInit {
             },
           ],
         });
-        this.item = {} as Items;
+        this.supplier = {} as Suppliers;
         await alert.present();
       });
     
