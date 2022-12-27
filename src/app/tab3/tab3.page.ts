@@ -22,10 +22,21 @@ export class Tab3Page {
   }
 
   name!:string
+  cpr!:string
+  email!:string
+  gender!:string
+  jobRole!:string
+  mobile!:string
+
   
   ngOnInit() {
     this.name=this.dataService.loggedUser.name
-    
+    this.cpr=this.dataService.loggedUser.cpr
+    this.email=this.dataService.loggedUser.email
+    this.mobile=this.dataService.loggedUser.mobile
+    this.jobRole=this.dataService.loggedUser.jobRole
+    this.gender=this.dataService.loggedUser.gender
+
   }
 
 
