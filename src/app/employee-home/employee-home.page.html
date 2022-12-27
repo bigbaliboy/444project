@@ -1,3 +1,6 @@
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Courgette&family=Poppins:wght@400;500;600;700&display=swap');
+</style>
 
 <ion-header [translucent]="true" class="ion-no-border">
   <ion-toolbar>
@@ -35,7 +38,7 @@
 <ion-content [fullscreen]="true">
   <ion-tabs>
 
-    <ion-tab-bar slot="bottom">
+    <ion-tab-bar slot="bottom" >
       <ion-tab-button routerLink="/employee-home" routerDirection="root">
         <ion-icon name="home"></ion-icon>
         <ion-label>Home</ion-label>
@@ -148,10 +151,10 @@
                       color="mint"
                     >
                       <ion-card-header>
-                        <ion-icon style="font-size: 6em" name="cube"></ion-icon>
-                        <ion-card-title>Stock</ion-card-title>
+                        <ion-icon style="font-size: 6em" name="receipt"></ion-icon>
+                        <ion-card-title>Invocies</ion-card-title>
                         <ion-card-subtitle
-                          >Add, edit stock and more.
+                          >View and edit invoices
                           </ion-card-subtitle>
                       </ion-card-header>
                     </ion-card>
@@ -164,10 +167,10 @@
                       color="mint"
                     >
                       <ion-card-header>
-                        <ion-icon style="font-size: 6em" name="cube"></ion-icon>
-                        <ion-card-title>Stock</ion-card-title>
+                        <ion-icon style="font-size: 6em" name="calendar"></ion-icon>
+                        <ion-card-title>Schedule</ion-card-title>
                         <ion-card-subtitle
-                          >Add, edit stock and more.</ion-card-subtitle
+                          >View schedule and shift timings</ion-card-subtitle
                         >
                       </ion-card-header>
                     </ion-card>
@@ -185,12 +188,14 @@
                       style="border-radius: 13%"
                       align="center"
                       color="mint"
+                      routerLink="/notification"
+                      routerDirection="root"
                     >
                       <ion-card-header>
-                        <ion-icon style="font-size: 6em" name="cube"></ion-icon>
-                        <ion-card-title>Stock</ion-card-title>
+                        <ion-icon style="font-size: 6em" name="notifications"></ion-icon>
+                        <ion-card-title>Notifications</ion-card-title>
                         <ion-card-subtitle
-                          >Add, edit stock and more.</ion-card-subtitle
+                          >View all notifications</ion-card-subtitle
                         >
                       </ion-card-header>
                     </ion-card>
@@ -206,7 +211,7 @@
                         <ion-icon style="font-size: 6em" name="cube"></ion-icon>
                         <ion-card-title>Stock</ion-card-title>
                         <ion-card-subtitle
-                          >Add, edit stock and more.</ion-card-subtitle
+                          >Add, edit stock and more</ion-card-subtitle
                         >
                       </ion-card-header>
                     </ion-card>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FBsrvService, Employees, Orders, Invoices, Items, Notifications,ToBeOrdered } from '../fbsrv.service';
-
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-notification',
@@ -16,7 +16,7 @@ public notification: Notifications = {} as Notifications;
 
 public tobeordereds!: Observable<ToBeOrdered[]>;
 public tobeordered: ToBeOrdered = {} as ToBeOrdered;
-  constructor(private dataService:FBsrvService) { }
+  constructor(private dataService:FBsrvService, private navCtrl: NavController) { }
 
   ngOnInit() {
     this.notifications = this.dataService.getNotifications();
@@ -52,6 +52,10 @@ public tobeordered: ToBeOrdered = {} as ToBeOrdered;
       this.tobeordered = {} as ToBeOrdered;
 
     });
+  }
+
+  previous() {
+    this.navCtrl.back();
   }
 
   
