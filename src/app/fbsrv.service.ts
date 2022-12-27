@@ -226,7 +226,43 @@ export class FBsrvService {
     );
 
   }
+  async Msg(header: any, msg: any) {
 
+    let alert = await this.alertCtrl.create({
+
+      header: header,
+
+      message: msg,
+
+      buttons: ['OK']
+
+    });
+
+    alert.present();
+
+  }
+
+  SignOut(): Promise<void> {
+
+    return this.afAuth.signOut();
+
+  }
+
+  SignUp(newEmail: string, newPassword: string): Promise<any> {
+
+    return this.afAuth.createUserWithEmailAndPassword(newEmail, newPassword);
+
+  }
+
+
+
+  SignIn(newUsername: string, newPassword: string): Promise<any> {
+
+    return this.afAuth.signInWithEmailAndPassword
+
+      (newUsername, newPassword);
+
+  }
 
   // getEmployee(id: string): Observable<Employees | undefined> {
   //   //@ts-ignore
