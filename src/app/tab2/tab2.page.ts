@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
+import { FBsrvService, Employees, Notifications } from '../fbsrv.service';
+import { Firestore } from '@angular/fire/firestore';
 
 
 @Component({
@@ -10,13 +13,24 @@ import { Component } from '@angular/core';
 
 export class Tab2Page {
 
+  
+  public employees!: Observable<Employees[]>;
+  public employee: Employees = {} as Employees;
+
+  public notifications!: Observable<Notifications[]>;
+  public notification: Notifications = {} as Notifications;
+
   today:any;
 
   
 
-  constructor() {
-    
+  constructor(private dataService: FBsrvService) {
+    const loginID=this.dataService.masterID
     this.today = Date.now();
-    
-  }
-  }
+
+  //   this.firestore.collection('Employees', ref => 
+  // ref.where('jobRole', '==', 'Cashier'))
+  // }
+  }}
+
+  

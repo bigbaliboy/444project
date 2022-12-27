@@ -4,6 +4,7 @@ import { DocumentReference } from '@angular/fire/compat/firestore';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
+
 export interface Employees {
   id?: string
   name: string
@@ -87,6 +88,7 @@ export interface Suppliers{
   providedIn: 'root'
 })
 export class FBsrvService {
+  public masterID: string;
   public employees: Observable<Employees[]>;
   public employeeCollection: AngularFirestoreCollection<Employees>;
 
@@ -109,6 +111,7 @@ export class FBsrvService {
   public tobeorderedCollection: AngularFirestoreCollection<ToBeOrdered>;
 
   constructor(private afs: AngularFirestore) {
+    this.masterID='nwsAJKS94WswgDzexue8'
     this.employeeCollection = this.afs.collection<Employees>('Employees');
     this.employees = this.employeeCollection.snapshotChanges().pipe(
       map(actions => {
