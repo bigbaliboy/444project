@@ -46,7 +46,7 @@
       <ion-row style="margin-top: 10%;">
         <ion-col size="6">
 
-          <ion-card (click)="goTo()" class="card" style="border-radius:13% ;" align="center" color="mint">
+          <ion-card (click)="goTo('/o-employee-card')" class="card" style="border-radius:13% ;" align="center" color="mint">
 
             <ion-card-header>
 
@@ -55,10 +55,10 @@
               <ion-card-subtitle>Manage employee details and timings.</ion-card-subtitle>
 
             </ion-card-header>
-          </ion-card>
+          </ion-card >
         </ion-col>
         <ion-col size="6">
-          <ion-card class="card" style="border-radius:13% ;" align="center" color="mint">
+          <ion-card (click)="goTo('/o-stock-card')" class="card" style="border-radius:13% ;" align="center" color="mint">
             <ion-card-header>
               <ion-icon style="font-size:6em;" name="cube"></ion-icon>
               <ion-card-title>Stock</ion-card-title>
@@ -70,7 +70,7 @@
       </ion-row>
       <ion-row>
         <ion-col size="6">
-          <ion-card class="card" style="border-radius:13% ;" align="center" color="mint">
+          <ion-card (click)="goTo('/o-supplier-card')" class="card" style="border-radius:13% ;" align="center" color="mint">
             <ion-card-header>
               <ion-icon style="font-size:6em;" name="people"></ion-icon>
               <ion-card-title>Supplier</ion-card-title>
@@ -79,7 +79,7 @@
           </ion-card>
         </ion-col>
         <ion-col size="6">
-          <ion-card class="card" style="border-radius:13% ;" align="center" color="mint">
+          <ion-card (click)="goTo('/orders')" class="card" style="border-radius:13% ;" align="center" color="mint">
             <ion-card-header>
               <!-- <ion-img style="height: 6em;" src='assets/images/order-delivery.png'></ion-img> -->
               <ion-icon style="font-size: 6em;" name="clipboard"></ion-icon>
@@ -91,7 +91,7 @@
       </ion-row>
       <ion-row>
         <ion-col size="6">
-          <ion-card class="card" style="border-radius:13% ;" align="center" color="mint">
+          <ion-card (click)="goTo('/reports')" class="card" style="border-radius:13% ;" align="center" color="mint">
             <ion-card-header>
               <ion-icon style="font-size:6em;" name="bar-chart"></ion-icon>
               <ion-card-title>Reports</ion-card-title>
@@ -100,7 +100,7 @@
           </ion-card>
         </ion-col>
         <ion-col size="6">
-          <ion-card class="card" style="border-radius:13% ;" align="center" color="mint">
+          <ion-card (click)="goTo('/notification')" class="card" style="border-radius:13% ;" align="center" color="mint">
             <ion-card-header>
               <ion-icon style="font-size:6em;" name="notifications"></ion-icon>
               <ion-card-title>Notifications</ion-card-title>

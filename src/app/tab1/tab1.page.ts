@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController, NavController } from '@ionic/angular';
 import { alertController } from '@ionic/core';
 import { FBsrvService } from '../fbsrv.service';
 
@@ -10,13 +10,13 @@ import { FBsrvService } from '../fbsrv.service';
 })
 export class Tab1Page implements OnInit {
 
-  constructor() {}
+  constructor(public navCtrl: NavController) {}
 
   ngOnInit() {
   
   }
 
-  goTo(){
-    alert("Fsrt")
+  goTo(route: string){
+    this.navCtrl.navigateForward(route);
   }
 }
