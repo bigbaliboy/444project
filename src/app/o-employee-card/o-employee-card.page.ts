@@ -14,6 +14,9 @@ import {
 import { FBsrvService,Employees } from '../fbsrv.service';
 import { Observable } from 'rxjs';
 
+
+
+
 export interface Employee {
   name: string;
   jobRole: string;
@@ -30,6 +33,8 @@ export interface Employee {
   styleUrls: ['./o-employee-card.page.scss'],
 })
 export class OEmployeeCardPage implements OnInit {
+
+
 
   public employee: Employees = {} as Employees;
   public employees!: Observable<Employees[]>;
@@ -244,7 +249,7 @@ export class OEmployeeCardPage implements OnInit {
     private dataService: FBsrvService,
     private navCtrl: NavController
   ) {
-    
+    // this.authorization(this.dataService.userType)
     this.isEdit = true;
     this.chosenModel = this.EmployeeList[0];
     this.revertName = '';
@@ -309,6 +314,26 @@ export class OEmployeeCardPage implements OnInit {
     this.presentingElement = document.querySelector('.ion-page') as any;
     this.employees = this.dataService.getEmployees();
   }
+
+
+async authorization(check:string){
+  if(check!='owner'){
+    this.router.navigateByUrl('/home')
+    const alert = await this.alertController.create({
+      header: 'Please Login to get access.',
+      message: '',
+      buttons: [
+        {
+          text: 'Okay',
+          handler: () => {
+        },
+        },
+      ],
+    });
+    await alert.present();
+  }
+}
+
   // VALIDATION FOR CONFIRM PASSWORD
   // pwd(formGroup: FormGroup) {
   //   console.log("working")

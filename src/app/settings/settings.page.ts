@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
-import { FBsrvService } from '../fbsrv.service';
+import { Employees, FBsrvService, Suppliers } from '../fbsrv.service';
 import { NavController } from '@ionic/angular';
 
 @Component({
@@ -19,6 +19,11 @@ export class SettingsPage implements OnInit {
   signOut(){
     this.FB.SignOut()
     this.router.navigateByUrl('/home')
+    this.FB.loggedSup={} as Suppliers
+    this.FB.loggedUser={} as Employees
+    this.FB.masterEmail=''
+    this.FB.userType=''
+
   }
 
   // async showContacts() {
