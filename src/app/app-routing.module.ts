@@ -57,7 +57,11 @@ const routes: Routes = [
   {
     path: 'supplier-home',
     loadChildren: () => import('./supplier-home/supplier-home.module').then( m => m.SupplierHomePageModule)
+  },  {
+    path: 'employee-stock',
+    loadChildren: () => import('./employee-stock/employee-stock.module').then( m => m.EmployeeStockPageModule)
   },
+
 
   
     
