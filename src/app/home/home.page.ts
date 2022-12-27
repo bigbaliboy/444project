@@ -86,7 +86,7 @@ export class HomePage implements OnInit {
         else if (this.FB.userType == "supplier")
           this.router.navigateByUrl('/tabs');
         else
-          this.router.navigateByUrl('/employee-view');
+          this.router.navigateByUrl('/employee-home');
       })
 
       .catch(() => {

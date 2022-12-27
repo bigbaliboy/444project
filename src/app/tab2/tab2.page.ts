@@ -21,6 +21,7 @@ export class Tab2Page {
   public notification: Notifications = {} as Notifications;
 
   today:any;
+  name!:string
 
   
 
@@ -31,6 +32,11 @@ export class Tab2Page {
   //   this.firestore.collection('Employees', ref => 
   // ref.where('jobRole', '==', 'Cashier'))
   // }
+  }
+
+  ngOnInit() {
+    this.name=this.dataService.loggedUser.name
+
   }}
 
   

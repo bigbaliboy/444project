@@ -10,16 +10,28 @@ import { FBsrvService, Employees, Notifications } from '../fbsrv.service';
 export class EmployeeHomePage implements OnInit {
   public employees!: Observable<Employees[]>;
   public employee: Employees = {} as Employees;
+  
 
   public notifications!: Observable<Notifications[]>;
   public notification: Notifications = {} as Notifications;
 
+  name!:string
+  
   today:any;
-  constructor(private dataService: FBsrvService) { 
+  constructor(public dataService: FBsrvService) { 
+    this.initName()
   // const loginID=this.dataService.masterID
   this.today = Date.now();
+
+  }
+
+  initName(){
+    this.name=this.dataService.loggedUser.name
+
   }
   ngOnInit() {
+    
+
   }
 
 }

@@ -14,7 +14,6 @@
     "
     
   >
-    <div  style="padding-top: 60px; font-size: 1.5em;"><ion-label><span style="padding-top:40px;"><b>Akheel is good</b></span></ion-label></div>
 
     <div style="padding-top: 50px">
       <ion-icon
@@ -25,71 +24,98 @@
   </div>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content class="ion-padding"[fullscreen]="true">
   <br /><br />
   <br /><br />
-  
-  <ion-list>
-    <ion-item [(ngModel)]="name" lines="inset" style="font-size: 1.5em">
-      <ion-icon size="large" slot="start" name="person-outline"></ion-icon>
-      <ion-input [disabled]="isEdit">{{name}}</ion-input>
-    </ion-item>
-    <ion-item lines="inset" style="font-size: 1.5em">
-      <ion-icon size="large" slot="start" name="call-outline"></ion-icon>
-      <ion-input [disabled]="isEdit">35653271</ion-input>
-    </ion-item>
-    <ion-item lines="inset" style="font-size: 1.5em">
-      <ion-icon
-        size="large"
-        slot="start"
-        name="calendar-number-outline"
-      ></ion-icon>
-      <ion-input [disabled]="isEdit">20/05/2001</ion-input>
-    </ion-item>
-    <ion-item lines="inset" style="font-size: 1.5em">
-      <ion-icon size="large" slot="start" name="add"></ion-icon>
-      <ion-input [disabled]="isEdit">Awesome Label</ion-input>
-    </ion-item>
-    <ion-item lines="inset" style="font-size: 1.5em">
-      <ion-icon size="large" slot="start" name="add"></ion-icon>
-      <ion-input [disabled]="isEdit">Awesome Label</ion-input>
-    </ion-item>
-  </ion-list>
+     
+        <ion-content class="ion-padding">
 
-  <ion-button
-    size="large"
-    (click)="Edit()"
-    expand="block"
-    fill="clear"
-    shape="round"
-    *ngIf="isEdit"
-  >
-    <ion-icon slot="start" name="pencil"></ion-icon>
-    <ion-label>Edit</ion-label>
-  </ion-button>
 
-  <ion-item *ngIf="isSave" lines="none">
-    <ion-button
-      size="large"
-      (click)="Save()"
-      expand="block"
-      fill="clear"
-      shape="round"
-    >
-      <ion-icon slot="start" name="save"></ion-icon>
-      <ion-label>Save</ion-label>
-    </ion-button>
+          <br /><br />
+          <br /><br />
 
-    <ion-button
-      size="large"
-      color="danger"
-      (click)="Edit()"
-      expand="block"
-      fill="clear"
-      shape="round"
-    >
-      <ion-icon slot="start" name="close-outline"></ion-icon>
-      <ion-label>Cancel</ion-label>
-    </ion-button>
-  </ion-item>
-</ion-content>
+          <!-- View Details Form -->
+          <ion-list>
+            <ion-item [(ngModel)]="name" lines="inset" style="font-size: 1.5em">
+              <ion-icon
+                    size="large"
+                    slot="start"
+                    name="person-outline"
+                  ></ion-icon>
+              <ion-label class="labels">{{name}}</ion-label>
+            </ion-item>
+
+            <ion-item [(ngModel)]="gender" lines="inset" style="font-size: 1.5em">
+              <ion-icon
+                    size="large"
+                    slot="start"
+                    name="transgender-outline"
+                  ></ion-icon>
+              <ion-label class="labels">{{gender}} </ion-label>
+            </ion-item>
+
+             <ion-item [(ngModel)]="jobRole" lines="inset" style="font-size: 1.5em">
+              <ion-icon
+                    size="large"
+                    slot="start"
+                    name="bag-handle-outline"
+                  ></ion-icon>
+              <ion-label class="labels">{{jobRole}} </ion-label>
+            </ion-item>
+
+            <ion-item [(ngModel)]="cpr" lines="inset" style="font-size: 1.5em">
+              <ion-icon
+                    size="large"
+                    slot="start"
+                    name="id-card-outline"
+                  ></ion-icon>
+              <ion-label class="labels">{{cpr}} </ion-label>
+            </ion-item>
+
+            <ion-item [(ngModel)]="mobile" lines="inset" style="font-size: 1.5em">
+              <ion-icon
+                    size="large"
+                    slot="start"
+                    name="call-outline"
+                  ></ion-icon>
+              <ion-label class="labels">{{mobile}} </ion-label>
+            </ion-item>
+
+            <ion-item [(ngModel)]="email" lines="inset" style="font-size: 1.5em">
+              <ion-icon
+                    size="large"
+                    slot="start"
+                    name="mail-outline"
+                  ></ion-icon>
+              <ion-label class="labels">{{email}} </ion-label>
+            </ion-item>
+            
+            
+            
+
+           <!-- <ion-item lines="inset" style="font-size: 1.5em">
+              <ion-label class="labels">Category: </ion-label>
+              <ion-input [(ngModel)]="Category"></ion-input>
+            </ion-item>
+
+            <ion-item lines="inset" style="font-size: 1.5em">
+              <ion-label class="labels">Price: </ion-label>
+              <ion-input [(ngModel)]="Price"></ion-input>
+            </ion-item>
+
+            <ion-item lines="inset" style="font-size: 1.5em">
+              <ion-label class="labels">Quantity: </ion-label>
+              <ion-input [(ngModel)]="Quantity"></ion-input>
+            </ion-item>
+
+            <ion-item lines="inset" style="font-size: 1.5em">
+              <ion-label class="labels">Supplier: </ion-label>
+              <ion-input [(ngModel)]="Supplier"></ion-input>
+            </ion-item>
+
+            <ion-item lines="inset" style="font-size: 1.5em">
+              <ion-label class="labels">Threshold Qty: </ion-label>
+              <ion-input [(ngModel)]="Threshold"></ion-input>
+            </ion-item> -->
+          </ion-list>
+        </ion-content>
