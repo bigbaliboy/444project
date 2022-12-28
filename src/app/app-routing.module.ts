@@ -60,8 +60,6 @@ const routes: Routes = [
     loadChildren: () => import('./supplier-home/supplier-home.module').then( m => m.SupplierHomePageModule)
   },
   {
-<<<<<<< Updated upstream
-=======
     path: 'employee-stock',
     loadChildren: () => import('./employee-stock/employee-stock.module').then( m => m.EmployeeStockPageModule)
   },
@@ -79,7 +77,6 @@ const routes: Routes = [
   },
   
   {
->>>>>>> Stashed changes
     path: 'employee-stock',
     loadChildren: () => import('./employee-stock/employee-stock.module').then( m => m.EmployeeStockPageModule)
   },
@@ -91,14 +88,11 @@ const routes: Routes = [
 
 
 
-<<<<<<< Updated upstream
-=======
 
   
     
 
 
->>>>>>> Stashed changes
 ];
 @NgModule({
   imports: [
