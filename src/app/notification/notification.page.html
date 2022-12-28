@@ -1,3 +1,7 @@
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Courgette&family=Poppins:wght@400;500;600;700&display=swap');
+</style>
+
 <ion-header color="primary">
   <ion-toolbar>
     <ion-item lines="none">
@@ -5,16 +9,18 @@
         <ion-icon name="arrow-back-circle-outline" size="large" slot="start"></ion-icon>
       </ion-button>
 
-        <ion-label><h1>Notifications</h1></ion-label>
-      </ion-item>
+      <ion-label>
+        <h1 style="font-size: 1.5rem; font-family: 'Courgette', cursive;">Notifications</h1>
+      </ion-label>
+    </ion-item>
   </ion-toolbar>
 </ion-header>
 
- <ion-content [fullscreen]="true">
-   
-   <ion-segment [(ngModel)]="selectTabs">
+<ion-content [fullscreen]="true">
+
+  <ion-segment [(ngModel)]="selectTabs">
     <ion-segment-button value="stock">
-      <ion-label ><b>stock</b>
+      <ion-label><b>stock</b>
         <ion-badge>3</ion-badge>
       </ion-label>
     </ion-segment-button>
@@ -30,22 +36,22 @@
         <ion-badge>2</ion-badge>
       </ion-label>
     </ion-segment-button>
-    
+
   </ion-segment>
 
-  
+
   <div *ngIf="selectTabs == 'stock'">
-  <ion-list>
-    <ion-item-sliding *ngFor="let notif of (notifications|async);">
-      <ion-item *ngIf="notif.type=='Threshold'&&notif.exists==true">
-        <ion-label class="ion-text-wrap">{{notif.description}}</ion-label>
-      </ion-item>
-      <ion-item-options side="end">
-        <ion-item-option (click)="reorder(notif)">Reorder</ion-item-option>
-        <ion-item-option color="danger" (click)="remove(notif)">Dismiss</ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
-   </ion-list>
+    <ion-list>
+      <ion-item-sliding *ngFor="let notif of (notifications|async);">
+        <ion-item *ngIf="notif.type=='Threshold'&&notif.exists==true">
+          <ion-label class="ion-text-wrap">{{notif.description}}</ion-label>
+        </ion-item>
+        <ion-item-options side="end">
+          <ion-item-option (click)="reorder(notif)">Reorder</ion-item-option>
+          <ion-item-option color="danger" (click)="remove(notif)">Dismiss</ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
   </div>
   <div *ngIf="selectTabs == 'shifts'">
     <ion-item-sliding *ngFor="let notif of (notifications|async);">
@@ -63,14 +69,14 @@
       <ion-item *ngIf="notif.type=='OrderStatus'&&notif.exists==true">
         <ion-label class="ion-text-wrap">{{notif.description}}</ion-label>
       </ion-item>
-  
+
       <ion-item-options side="end">
         <ion-item-option color="danger" (click)="remove(notif)" expandable>Dismiss</ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
   </div>
 
-  
+
 
 
 

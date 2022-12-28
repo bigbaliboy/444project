@@ -67,7 +67,7 @@ export class CreateOrderPage implements OnInit {
     // this.newOrder.id='0'
     console.log(this.newOrder);
     if(!this.isNumber(<string><unknown>this.orderQuantity)){
-      alert("FAAAAAAAAAATTTTTTTTTTTTTT ema")
+      // alert("FAAAAAAAAAATTTTTTTTTTTTTT ema")
     }
     this.newOrder.items = x.Name;
     this.newOrder.Quantity= this.orderQuantity;
