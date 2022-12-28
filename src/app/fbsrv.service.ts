@@ -25,6 +25,7 @@ export interface Orders {
   items: string,
   Supplier: string,
   orderNumber?: string
+  status:string;
 }
 
 export interface Notifications{
