@@ -80,18 +80,13 @@ export class HomePage implements OnInit {
         this.setUType(this.userName);
       })
       .then(() => {
-        
-        if (this.FB.userType == "owner"){
-          this.FB.Msg("SignIn", "Welcome " + this.FB.loggedUser.name);
+        this.FB.Msg("SignIn", "Welcome " + this.userName);
+        if (this.FB.userType == "owner")
           this.router.navigateByUrl('/tabs');
-        }
-        else if (this.FB.userType == "supplier"){
-          this.FB.Msg("SignIn", "Welcome " + this.FB.loggedSup.name);
+        else if (this.FB.userType == "supplier")
           this.router.navigateByUrl('/supplier-home');
-        }
-        else{
-        this.FB.Msg("SignIn", "Welcome " + this.FB.loggedUser.name);
-          this.router.navigateByUrl('/employee-home');}
+        else
+          this.router.navigateByUrl('/employee-home');
       })
 
       .catch(() => {

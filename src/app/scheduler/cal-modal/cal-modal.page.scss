@@ -1,0 +1,16 @@
+:host ::ng-deep{
+    .event-detail-container{
+        display: none;
+    }
+
+    .monthview-container{
+        height: auto !important;
+    }
+}
+ion-content{
+    --ion-background-color:#FFFBF9;
+}
+
+ion-header{
+    --ion-background-color: #B7E4C7;
+}

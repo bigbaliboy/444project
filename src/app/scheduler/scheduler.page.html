@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-item lines="none">
+      <ion-button fill="none" routerLink="/o-employee-card" slot="start" style="margin-left: -15%;"> </ion-button>
+      <ion-header lines="none"> View Schedule </ion-header>
+      <ion-icon name="close" size="large" slot="start"></ion-icon>
+    </ion-item>
+    <ion-buttons slot="end">
+      <ion-button (click)="openCalModal()">
+        <ion-icon name="add" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- <ion-row>
+		<ion-col size="6">
+		  <ion-button (click)="createRandomEvents()" expand="block" fill="outline">
+			Add random events
+		  </ion-button>
+		</ion-col>
+		<ion-col size="6">
+		  <ion-button (click)="removeEvents()" expand="block" fill="outline">
+			Remove all events
+		  </ion-button>
+		</ion-col>
+	  </ion-row> -->
+
+  <ion-row>
+    <!-- Move back one screen of the slides -->
+    <ion-col size="2">
+      <ion-button fill="clear" (click)="back()">
+        <ion-icon name="arrow-back" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-col>
+
+    <ion-col size="8" class="ion-text-center">
+      <h2>{{ viewTitle }}</h2>
+    </ion-col>
+
+    <!-- Move forward one screen of the slides -->
+    <ion-col size="2">
+      <ion-button fill="clear" (click)="next()">
+        <ion-icon name="arrow-forward" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
+  <calendar
+    [eventSource]="eventSource"
+    [calendarMode]="calendar.mode"
+    [currentDate]="calendar.currentDate"
+    (onEventSelected)="onEventSelected($event)"
+    (onTitleChanged)="onViewTitleChanged($event)"
+    allDayLabel="Name:"
+  >
+  </calendar>
+</ion-content>
