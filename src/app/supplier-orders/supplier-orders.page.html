@@ -21,65 +21,46 @@
 
 <ion-content>
 
-  <ion-button style="margin:7% 25%;" color="forestgreen" routerLink="/create-order">
-    Create New Order
-    <ion-icon name="add"></ion-icon>
-  </ion-button>
 
   <ion-segment (ionChange)="segmentChanged($event)" [(ngModel)]="selectTabs" color="forestgreen">
     <ion-segment-button value="orders">
       <ion-label>Order History</ion-label>
     </ion-segment-button>
     <ion-segment-button value="toBeOrdered">
-      <ion-label>To Be Ordered</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="favs">
-      <ion-label>Favs List</ion-label>
+      <ion-label>Current Orders</ion-label>
     </ion-segment-button>
   </ion-segment>
 
   <div *ngIf="selectTabs == 'orders'">
     <ion-card *ngFor="let order of (orders|async)">
+      <div *ngIf="(order.Supplier==dataService.loggedSup.name )&&(order.status=='completed')">
       <ion-card-header>
-        <ion-button fill="clear" (click)="changeFav(order)">
-          <ion-icon name={{favIcon}} ></ion-icon>
-        </ion-button>
         <ion-card-title>Order {{order.orderNumber}}</ion-card-title>
       </ion-card-header>
-      <ion-card-content>
-        Items: {{order.items}}
-        Supplier: {{order.Supplier}}
-        Quantity: {{order.Quantity}}
+      <ion-card-content >
+        Items: {{order.items}} <br>
+        Supplier: {{order.Supplier}} <br>
+        Quantity: {{order.Quantity}} <br>
+        Status: {{order.status}}
       </ion-card-content>
+    </div>
     </ion-card>
   </div>
 
   <div *ngIf="selectTabs == 'toBeOrdered'">
-    <ion-card *ngFor="let i of (items|async)">
-      <div *ngIf="i.Quantity<=i.thresholdQuantity">
+    <ion-card *ngFor="let order of (orders|async)">
+      <div *ngIf="(order.Supplier==dataService.loggedSup.name )&&(order.status!=='completed')">
         <ion-card-header>
-          <ion-card-title>{{i.Name}}</ion-card-title>
+          <ion-card-title>Order {{order.orderNumber}}</ion-card-title>
         </ion-card-header>
-        <ion-card-content>
-          Available Quantity: {{i.Quantity}}
+        <ion-card-content >
+          Items: {{order.items}} <br>
+          Supplier: {{order.Supplier}} <br>
+          Quantity: {{order.Quantity}} <br>
+          Status: {{order.status}}
         </ion-card-content>
       </div>
     </ion-card>
-  </div>
-
-  <div *ngIf="selectTabs == 'favs'">
-    <div *ngIf="favIcon == 'star'">
-      <ion-card *ngFor="let fav of (favorites|async)">
-        <ion-card-header>
-          <ion-card-title>Order</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-          Items: {{fav.orderItems}}
-          Supplier: {{fav.orderSupplier}}
-          Quantity: {{fav.orderQuantity}}
-        </ion-card-content>
-      </ion-card>
-    </div>
   </div>
 
 </ion-content>

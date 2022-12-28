@@ -61,6 +61,10 @@ const routes: Routes = [
     path: 'employee-stock',
     loadChildren: () => import('./employee-stock/employee-stock.module').then( m => m.EmployeeStockPageModule)
   },
+  {
+    path: 'supplier-orders',
+    loadChildren: () => import('./supplier-orders/supplier-orders.module').then( m => m.SupplierOrdersPageModule)
+  },
 
 
   

@@ -2,19 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { NavController } from '@ionic/angular';
 import { Observable} from 'rxjs';
-import { FBsrvService, Employees, Orders, Invoices, Items, Favorites } from '../fbsrv.service';
-
-
+import { Supplier } from '../data.service';
+import { FBsrvService, Employees, Orders, Invoices, Items, Favorites, Suppliers } from '../fbsrv.service';
 @Component({
-  selector: 'app-orders',
-  templateUrl: './orders.page.html',
-  styleUrls: ['./orders.page.scss'],
+  selector: 'app-supplier-orders',
+  templateUrl: './supplier-orders.page.html',
+  styleUrls: ['./supplier-orders.page.scss'],
 })
-export class OrdersPage implements OnInit {
-
+export class SupplierOrdersPage implements OnInit {
   selectTabs = 'orders';
   favIcon = 'star-outline';
 
+  public suppliers!: Observable<Suppliers[]>;
+  public supplier: Suppliers = {} as Suppliers;
   public employees!: Observable<Employees[]>;
   public employee: Employees = {} as Employees;
   public orders!: Observable<Orders[]>;
@@ -26,7 +26,9 @@ export class OrdersPage implements OnInit {
   public favorites!: Observable<Favorites[]>;
   public favorite: Favorites = {} as Favorites;
 
-  constructor(private dataService: FBsrvService, private firestore: AngularFirestore, private navCtrl: NavController ) { }
+  constructor(public dataService: FBsrvService, private firestore: AngularFirestore, private navCtrl: NavController ) { }
+
+  name!:string;
 
   segmentChanged(ev: any) {
     console.log('Segment changed', ev);
@@ -34,6 +36,8 @@ export class OrdersPage implements OnInit {
 
   async ngOnInit() {
     this.employees = this.dataService.getEmployees();
+    this.name=this.dataService.loggedSup.name
+    this.suppliers = this.dataService.getSuppliers();
     this.orders = this.dataService.getOrders();
     this.invoices = this.dataService.getInvoices();
     this.items = this.dataService.getItems();
@@ -43,23 +47,16 @@ export class OrdersPage implements OnInit {
     .get();
     // let y = await lastValueFrom(x);
     // this.employee.cpr = y.size;
-    console.log(x);
-    console.log('Hi');
   }
 
 
-  newFav = {} as Favorites;
 
-  changeFav(favOrder: Orders){
-    this.favIcon = 'star';
-    this.newFav.orderItems = favOrder.items;
-    this.newFav.orderQuantity = favOrder.Quantity;
-    this.newFav.orderSupplier = favOrder.Supplier;
-    this.dataService.addFavorites(this.newFav);
-  }
+  
 
   previous() {
     this.navCtrl.back();
   }
 
 }
+
+

@@ -13,12 +13,20 @@ export class SupplierHomePage implements OnInit {
 
   public notifications!: Observable<Notifications[]>;
   public notification: Notifications = {} as Notifications;
+  name!:string
 
   today:any;
-  constructor(private dataService: FBsrvService) { 
+  constructor(public dataService: FBsrvService) { 
   // const loginID=this.dataService.masterID
+  this.initName()
   this.today = Date.now();
   }
+
+  initName(){
+    this.name=this.dataService.loggedSup.name
+
+  }
+
   ngOnInit() {
   }
 

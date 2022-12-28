@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FBsrvService } from '../fbsrv.service';
 
 @Component({
   selector: 'app-supplier-profile',
@@ -8,11 +9,23 @@ import { Component, OnInit } from '@angular/core';
 export class SupplierProfilePage implements OnInit {
   isEdit:boolean;
   isSave:boolean = false;
-  constructor() {
+  constructor(public dataService:FBsrvService) {
     this.isEdit=true
    }
+   name!:string
+   email!:string
+   mobile!:string
+   website!:string
 
   ngOnInit() {
+    this.name=this.dataService.loggedSup.name
+    this.email=this.dataService.loggedSup.email
+    this.mobile=this.dataService.loggedSup.mobile
+    this.website=this.dataService.loggedSup.website
+
+
+
+
   }
   Edit(){
     console.log('hiiiiiiiiiiii');
