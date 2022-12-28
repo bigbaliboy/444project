@@ -1,0 +1,59 @@
+<ion-toolbar color="primary">
+  <ion-buttons slot="start">
+    <ion-button (click)="close()">
+      <ion-icon name="close" slot="icon-only"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+  <ion-title>{{ viewTitle }}</ion-title>
+  <ion-buttons slot="end">
+    <ion-button (click)="save()">
+      <ion-icon name="checkmark" slot="icon-only"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar>
+
+<ion-content>
+  <ion-item>
+    <ion-label position="stacked">Staff</ion-label>
+    <ion-select [(ngModel)]="event.title" >
+      <ion-select-option  *ngFor="let employee of (employees|async)" value="{{employee.name}}">{{employee.name}}</ion-select-option>
+      <ion-input [disabled]="false" [(ngModel)]="event.employeeEmail" value="{{employee.email}}"></ion-input>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">Shift</ion-label>
+    <ion-select [(ngModel)]="event.shift">
+      <ion-select-option  value="Day Shift">Day Shift</ion-select-option>
+      <ion-select-option  value="Night Shift">Night Shift</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-row>
+  <ion-col size="2">
+    <ion-button fill="clear" (click)="back()">
+    <ion-icon name="arrow-back" slot="icon-only"></ion-icon>
+    </ion-button>
+  </ion-col>
+
+  <ion-col size="8" class="ion-text-center">
+    <h2>{{ viewTitle }}</h2>
+  </ion-col>
+
+  <!-- Move forward one screen of the slides -->
+  <ion-col size="2">
+    <ion-button fill="clear" (click)="next()">
+    <ion-icon name="arrow-forward" slot="icon-only"></ion-icon>
+    </ion-button>
+  </ion-col>
+  </ion-row>
+
+  <calendar
+  *ngIf="modalReady"
+    [calendarMode]="calendar.mode"
+    [currentDate]="calendar.currentDate"
+    (onTitleChanged)="onViewTitleChanged($event)"
+    (onTimeSelected)="onTimeSelected($event)"
+    [markDisabled]="markDisabled"
+  >
+  </calendar>
+</ion-content>
