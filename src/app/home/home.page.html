@@ -7,15 +7,15 @@
 
 <ion-content [fullscreen]="true" class="content">
 
-  <div class="container" style="margin-top: 30%;" #idk>
+  <div class="container" style="margin-top: 40%;" #idk>
 
 
-    <div align="center" >
+    <div align="center">
       <ion-icon name="storefront" class="cartIcon"></ion-icon>
       <ion-header class="title" style="font-family: 'Patrick Hand', cursive;">Fatema Coldstore</ion-header>
     </div>
 
-    <div class="inputs">
+    <div class="inputs" style="margin-top: 5%;">
       <!-- <ion-item>
         <ion-icon slot="start" name="at" class="userIcon" style="padding-right: 2px; border-right: 1px solid"></ion-icon>
         <span>
@@ -26,16 +26,14 @@
 
       <ion-item class="usernameInput" style="width: 90%">
         <ion-label position="stacked">E-MAIL:</ion-label>
-        <!-- <ion-icon slot="start" name="at" class="userIcon"></ion-icon> -->
+        <ion-icon slot="start" name="at" class="userIcon" color="white"></ion-icon>
         <ion-input [(ngModel)]="userName"></ion-input>
       </ion-item>
 
       <ion-item class="passwordInput" style="width: 90%">
         <ion-label type="password" position="stacked">PASSWORD:</ion-label>
-        <ion-item>
-          <!-- <ion-icon name="lock-closed"></ion-icon> -->
+          <ion-icon slot="start" name="lock-closed" class="userIcon"  color="white"></ion-icon>
           <ion-input [(ngModel)]="password" type="password"></ion-input>
-        </ion-item>
       </ion-item>
     </div>
 

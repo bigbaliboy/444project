@@ -61,7 +61,7 @@
           <br>
           <ion-col size="12" offset="1">
           <ion-label style="font-weight: bold; font-size: xx-large">
-            Hi <ion-label>{{name}}</ion-label>
+            Hi <ion-label>{{this.dataService.loggedUser.name}}</ion-label>
           </ion-label>
           <br /><br />
           <ion-label style="font-weight: 400; font-size: larger">
@@ -134,12 +134,13 @@
                       style="border-radius: 13%"
                       align="center"
                       color="mint"
+                      (click)="goTo('/notification')"
                     >
                       <ion-card-header>
                         <ion-icon style="font-size: 6em" name="cube"></ion-icon>
-                        <ion-card-title>Stock</ion-card-title>
+                        <ion-card-title>Notifications</ion-card-title>
                         <ion-card-subtitle
-                          >Add, edit stock and more.</ion-card-subtitle
+                          >View notifications and shift trades</ion-card-subtitle
                         >
                       </ion-card-header>
                     </ion-card>
@@ -150,6 +151,7 @@
                       style="border-radius: 13%"
                       align="center"
                       color="mint"
+                      (click)="goTo('/o-stock-card')"
                     >
                       <ion-card-header>
                         <ion-icon style="font-size: 6em" name="cube"></ion-icon>
@@ -173,12 +175,13 @@
                       style="border-radius: 13%"
                       align="center"
                       color="mint"
+                      (click)="goTo('/reports')"
                     >
                       <ion-card-header>
                         <ion-icon style="font-size: 6em" name="cube"></ion-icon>
-                        <ion-card-title>Stock</ion-card-title>
+                        <ion-card-title>Reports</ion-card-title>
                         <ion-card-subtitle
-                          >Add, edit stock and more.</ion-card-subtitle
+                          >View items, sales and stock reports</ion-card-subtitle
                         >
                       </ion-card-header>
                     </ion-card>
@@ -189,12 +192,13 @@
                       style="border-radius: 13%"
                       align="center"
                       color="mint"
+                      (click)="goTo('/orders')"
                     >
                       <ion-card-header>
                         <ion-icon style="font-size: 6em" name="cube"></ion-icon>
-                        <ion-card-title>Stock</ion-card-title>
+                        <ion-card-title>Orders</ion-card-title>
                         <ion-card-subtitle
-                          >Add, edit stock and more.</ion-card-subtitle
+                          >Make new orders or view history</ion-card-subtitle
                         >
                       </ion-card-header>
                     </ion-card>

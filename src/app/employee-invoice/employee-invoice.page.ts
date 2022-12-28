@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController, NavController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { FBsrvService, Invoices, Items, Orders } from '../fbsrv.service';
 
@@ -18,7 +18,7 @@ export class EmployeeInvoicePage implements OnInit {
   searchTerm!: string;
 
   
-  constructor( private dataService: FBsrvService, private alertCtrl: AlertController) { 
+  constructor( private dataService: FBsrvService, private alertCtrl: AlertController, public navCtrl:NavController) { 
     this.items = this.dataService.getItems();
     //  this.newOrder.items = '';
     // this.newOrder.Quantity= 0;
@@ -123,5 +123,8 @@ temp!:number
 
     
 
+  }
+  previous() {
+    this.navCtrl.back();
   }
 }

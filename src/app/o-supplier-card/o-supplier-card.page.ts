@@ -260,6 +260,8 @@ if(members.itemSup){
     private navCtrl: NavController
 
   ) {
+    // this.authorization(this.dataService.userType)
+
     this.isEdit = true;
     this.chosenModel = this.SupplierList[0];
     this.revertName = '';
@@ -325,6 +327,23 @@ if(members.itemSup){
     this.presentingElement = document.querySelector('.ion-page') as any;
     this.suppliers = this.dataService.getSuppliers();
 
+  }
+  async authorization(check:string){
+    if(check!='owner'){
+      this.router.navigateByUrl('/home')
+      const alert = await this.alertController.create({
+        header: 'Please Login to get access.',
+        message: '',
+        buttons: [
+          {
+            text: 'Okay',
+            handler: () => {
+          },
+          },
+        ],
+      });
+      await alert.present();
+    }
   }
   // VALIDATION FOR CONFIRM PASSWORD
   // pwd(formGroup: FormGroup) {

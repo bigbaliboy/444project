@@ -164,6 +164,8 @@ export class SchedulerPage implements OnInit {
     });
   }
 
- 
+  previous() {
+    this.navCtrl.back();
+  }
 
 }

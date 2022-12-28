@@ -392,7 +392,11 @@ export class FBsrvService {
   addOrders(orders: Orders): Promise<DocumentReference> {
     return this.ordersCollection.add(orders);
   }
-
+  updateOrder(orders: Orders): Promise<void> {
+    return this.ordersCollection.doc(orders.id).update({ 
+      status: orders.status
+     });
+  }
 
   getItems(): Observable<Items[]> {
     return this.items;

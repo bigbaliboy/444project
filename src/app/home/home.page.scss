@@ -45,7 +45,7 @@
   
   ion-content{
     // --ion-background-color: #5E8A77;
-    --background: linear-gradient(to bottom right, #5c8c77, #456356);
+    --background: linear-gradient(to bottom right, #85ad9c, #456356);
   }
   
   ion-item {
@@ -77,5 +77,6 @@
   
   .userIcon{
     margin-top: 0.75rem;
+    padding-right: 5%;
     border-right: 1px solid mintcream;
   }

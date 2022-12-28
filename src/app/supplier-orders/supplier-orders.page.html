@@ -57,8 +57,27 @@
           Items: {{order.items}} <br>
           Supplier: {{order.Supplier}} <br>
           Quantity: {{order.Quantity}} <br>
-          Status: {{order.status}}
+          Status:
+          <ion-select [(ngModel)]="order.status"
+          interface="popover"
+        >
+          <ion-select-option value="Waiting">Waiting</ion-select-option>
+          <ion-select-option value="Processing"
+            >Processing</ion-select-option
+          >
+          <ion-select-option value="Delivering"
+            >Delivering</ion-select-option
+          >
+        <ion-select-option value="completed"
+        >completed</ion-select-option
+      >
+
+    </ion-select>  
+     <!-- {{order.status}} -->
         </ion-card-content>
+        <ion-button (click)="saveStatus(order)" expand="block" fill="clear" shape="round">
+          Save
+        </ion-button>
       </div>
     </ion-card>
   </div>

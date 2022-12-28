@@ -275,6 +275,8 @@ export class OStockCardPage implements OnInit {
     private navCtrl: NavController
 
   ) {
+    this.authorization(this.dataService.userType)
+
     this.isEdit = true;
     this.chosenModel = {} as Items
     this.revertName = "";
@@ -334,7 +336,24 @@ export class OStockCardPage implements OnInit {
     this.suppliers = this.dataService.getSuppliers();
     this.ionicForm.reset();
 
+  }
 
+  async authorization(check:string){
+    if(check!='owner'){
+      this.router.navigateByUrl('/home')
+      const alert = await this.alertController.create({
+        header: 'Please Login to get access.',
+        message: '',
+        buttons: [
+          {
+            text: 'Okay',
+            handler: () => {
+          },
+          },
+        ],
+      });
+      await alert.present();
+    }
   }
   // VALIDATION FOR CONFIRM PASSWORD
   // pwd(formGroup: FormGroup) {

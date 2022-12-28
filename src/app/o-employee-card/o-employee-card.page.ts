@@ -249,7 +249,7 @@ export class OEmployeeCardPage implements OnInit {
     private dataService: FBsrvService,
     private navCtrl: NavController
   ) {
-    // this.authorization(this.dataService.userType)
+    this.authorization(this.dataService.userType)
     this.isEdit = true;
     this.chosenModel = this.EmployeeList[0];
     this.revertName = '';
@@ -317,6 +317,7 @@ export class OEmployeeCardPage implements OnInit {
 
 
 async authorization(check:string){
+  console.log(check)
   if(check!='owner'){
     this.router.navigateByUrl('/home')
     const alert = await this.alertController.create({

@@ -50,7 +50,12 @@ export class SupplierOrdersPage implements OnInit {
   }
 
 
-
+  changedOrder: Orders= {} as Orders
+saveStatus(order : Orders){
+  this.changedOrder=order
+  this.dataService.updateOrder(this.changedOrder)
+  
+}
   
 
   previous() {

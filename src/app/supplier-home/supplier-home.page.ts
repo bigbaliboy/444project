@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { FBsrvService, Employees, Notifications } from '../fbsrv.service';
 
@@ -16,11 +18,13 @@ export class SupplierHomePage implements OnInit {
   name!:string
 
   today:any;
-  constructor(public dataService: FBsrvService) { 
-  // const loginID=this.dataService.masterID
+  constructor(public dataService: FBsrvService, private router: Router, private alertController: AlertController) { 
+  // this.authorization(this.dataService.userType)
   this.initName()
   this.today = Date.now();
   }
+
+  
 
   initName(){
     this.name=this.dataService.loggedSup.name
@@ -28,6 +32,23 @@ export class SupplierHomePage implements OnInit {
   }
 
   ngOnInit() {
+  }
+  async authorization(check:string){
+    if(check!='supplier'){
+      this.router.navigateByUrl('/home')
+      const alert = await this.alertController.create({
+        header: 'Please Login to get access.',
+        message: '',
+        buttons: [
+          {
+            text: 'Okay',
+            handler: () => {
+          },
+          },
+        ],
+      });
+      await alert.present();
+    }
   }
 
 }

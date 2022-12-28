@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FBsrvService, Employees, Notifications } from '../fbsrv.service';
 import { Firestore } from '@angular/fire/firestore';
+import { NavController } from '@ionic/angular';
 
 
 @Component({
@@ -25,7 +26,7 @@ export class Tab2Page {
 
   
 
-  constructor(private dataService: FBsrvService) {
+  constructor(public dataService: FBsrvService, private navCtrl:NavController) {
     // const loginID=this.dataService.masterID
     this.today = Date.now();
 
@@ -37,6 +38,11 @@ export class Tab2Page {
   ngOnInit() {
     this.name=this.dataService.loggedUser.name
 
+  }
+
+
+  goTo(route: string){
+    this.navCtrl.navigateForward(route);
   }}
 
   
