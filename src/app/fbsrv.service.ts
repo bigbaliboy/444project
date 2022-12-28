@@ -43,7 +43,7 @@ export interface Notifications{
   permit?: string,
 
   currentQty?: number,
-  itemID?: string,
+  itemName?: string,
 
   orderID?: string,
   supplierID?: string,
@@ -52,7 +52,8 @@ export interface Notifications{
 
 export interface ToBeOrdered {
   id?: string,
-  itemID: string
+  itemName: string,
+  itemQuantity: number
 }
 
 export interface Invoices {
@@ -340,6 +341,10 @@ export class FBsrvService {
 
   deleteNotification(id: string): Promise<void> {
     return this.notificationsCollection.doc(id).delete();
+  }
+
+  getToBeOrdered(): Observable<ToBeOrdered[]> {
+    return this.tobeordered;
   }
 
   addToBeOrdered(tobeordered: ToBeOrdered): Promise<DocumentReference> {

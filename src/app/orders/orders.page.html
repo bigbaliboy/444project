@@ -55,15 +55,13 @@
   </div>
 
   <div *ngIf="selectTabs == 'toBeOrdered'">
-    <ion-card *ngFor="let i of (items|async)">
-      <div *ngIf="i.Quantity<=i.thresholdQuantity">
+    <ion-card *ngFor="let toOrder of (toBeOrdered|async)">
         <ion-card-header>
-          <ion-card-title>{{i.Name}}</ion-card-title>
+          <ion-card-title>{{toOrder.itemName}}</ion-card-title>
         </ion-card-header>
-        <ion-card-content>
-          Available Quantity: {{i.Quantity}}
-        </ion-card-content>
-      </div>
+        <!-- <ion-card-content>
+          Current available quantity: {{toBe.itemQuantity}}
+        </ion-card-content> -->
     </ion-card>
   </div>
 

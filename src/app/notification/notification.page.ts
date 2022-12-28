@@ -44,8 +44,8 @@ public tobeordered: ToBeOrdered = {} as ToBeOrdered;
 
   reorder(notif:Notifications){
    // this.reject(notif)
-    if(notif.itemID){
-    this.tobeordered.itemID=notif.itemID
+    if(notif.itemName){
+    this.tobeordered.itemName=notif.itemName
     }
     this.dataService.addToBeOrdered(this.tobeordered).then((response) => {
       
